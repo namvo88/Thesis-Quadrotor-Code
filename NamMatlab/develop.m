@@ -5,7 +5,12 @@ clear; clc; close all;
 % equal to or less than this value.  You can disable this diagnostic by setting 'Automatic solver
 % parameter selection' diagnostic to 'none' in the Diagnostics page of the configuration
 % parameters dialog 
-% >> Turned to 'none'
+% >> Changed to 'none'
+
+% The 'Array' format for saving outputs to the workspace requires all signals connected to the 
+% root outports to be scalar or 1-D arrays. For model 'QRsim' set the Format option in the 
+% 'Data Import/Export' page of the Configuration Parameters dialog to either 'Structure' or 'Structure with time'.
+% >> Changed to 'Structure with time'
 
 %% Input signals 
 
@@ -25,6 +30,8 @@ Ir     = 0.5;
 l      = 0.12; %wingspan bebop 248 mm
 g      = 9.81;
 
+e3 = [0;0;1];
+
 %% Initial Conditions
 x0 = 0;
 y0 = 0;
@@ -39,6 +46,9 @@ dpsi0 = 0;
 dphi0 = 0;
 dtheta0 = 0;
 
+R = timeseries(zeros(3,3));
+M = timeseries(zeros(3,1));
+
 %%
 
 % u = [t;u]';
@@ -50,6 +60,6 @@ sim('developsim')
 
 figure
 subplot 211
-plot(simout)
-% subplot 212
-% plot(simout.signal2)
+plot(angles)
+subplot 212
+plot(Omega)

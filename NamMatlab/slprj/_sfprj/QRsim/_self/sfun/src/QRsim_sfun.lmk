@@ -6,16 +6,16 @@ LDFLAGS = -s -dll -L"C:\Program Files\MATLAB\R2013b\sys\lcc64\lcc64\lib64" -entr
 LIBFLAGS = 
 
 OBJECTS = \
-	"developsim_sfun.obj"\
-	"c1_developsim.obj"\
-	"c2_developsim.obj"\
-	"c3_developsim.obj"\
-	"c4_developsim.obj"\
-	"c6_developsim.obj"\
-	"c7_developsim.obj"\
-	"developsim_sfun_registry.obj"\
+	"QRsim_sfun.obj"\
+	"c1_QRsim.obj"\
+	"c2_QRsim.obj"\
+	"c7_QRsim.obj"\
+	"c8_QRsim.obj"\
+	"c9_QRsim.obj"\
+	"c10_QRsim.obj"\
+	"QRsim_sfun_registry.obj"\
 	"lccstub.obj"\
-	"developsim_sfun.def"\
+	"QRsim_sfun.def"\
 	"C:\Program Files\MATLAB\R2013b\stateflow\c\mex\lib\win64\sfc_mexlcc64.lib"\
 	"C:\Program Files\MATLAB\R2013b\stateflow\c\debugger\lib\win64\sfc_debuglcc64.lib"\
 	"C:\Program Files\MATLAB\R2013b\extern\lib\win64\microsoft\libmwblas.lib"\
@@ -31,23 +31,23 @@ OBJECTS = \
 INCLUDE_PATH= -I"C:\Program Files\MATLAB\R2013b\sys\lcc64\lcc64\include64"  -I"C:\Program Files\MATLAB\R2013b\extern\include"  -I"C:\Program Files\MATLAB\R2013b\simulink\include"  -I"C:\Program Files\MATLAB\R2013b\rtw\c\src"  -I"C:\Program Files\MATLAB\R2013b\stateflow\c\mex\include"  -I"C:\Program Files\MATLAB\R2013b\stateflow\c\debugger\include"  -I"C:\Program Files\MATLAB\R2013b\toolbox\stateflow\src\sf_runtime\export\include\sf_runtime" 
  
 
-developsim_sfun.mexw64 : $(MAKEFILE) $(OBJECTS)
-	$(LD) $(LDFLAGS) -o developsim_sfun.mexw64 @developsim_sfun.lmko
-developsim_sfun.obj :	"developsim_sfun.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "developsim_sfun.c"
-c1_developsim.obj :	"c1_developsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c1_developsim.c"
-c2_developsim.obj :	"c2_developsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c2_developsim.c"
-c3_developsim.obj :	"c3_developsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c3_developsim.c"
-c4_developsim.obj :	"c4_developsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c4_developsim.c"
-c6_developsim.obj :	"c6_developsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c6_developsim.c"
-c7_developsim.obj :	"c7_developsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c7_developsim.c"
-developsim_sfun_registry.obj :	"developsim_sfun_registry.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "developsim_sfun_registry.c"
+QRsim_sfun.mexw64 : $(MAKEFILE) $(OBJECTS)
+	$(LD) $(LDFLAGS) -o QRsim_sfun.mexw64 @QRsim_sfun.lmko
+QRsim_sfun.obj :	"QRsim_sfun.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "QRsim_sfun.c"
+c1_QRsim.obj :	"c1_QRsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c1_QRsim.c"
+c2_QRsim.obj :	"c2_QRsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c2_QRsim.c"
+c7_QRsim.obj :	"c7_QRsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c7_QRsim.c"
+c8_QRsim.obj :	"c8_QRsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c8_QRsim.c"
+c9_QRsim.obj :	"c9_QRsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c9_QRsim.c"
+c10_QRsim.obj :	"c10_QRsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c10_QRsim.c"
+QRsim_sfun_registry.obj :	"QRsim_sfun_registry.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "QRsim_sfun_registry.c"
 lccstub.obj :	"C:\Program Files\MATLAB\R2013b\sys\lcc64\lcc64\mex\lccstub.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "C:\Program Files\MATLAB\R2013b\sys\lcc64\lcc64\mex\lccstub.c"
