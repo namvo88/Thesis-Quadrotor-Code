@@ -35,7 +35,7 @@ e3 = [0;0;1];
 %% Initial Conditions
 x0 = 0;
 y0 = 0;
-z0 = 0;
+z0 = -2;
 psi0 = 0;
 phi0 = 0;
 theta0 = 0;
@@ -57,9 +57,3 @@ M = timeseries(zeros(3,1));
 
 open('developsim')
 sim('developsim')
-
-figure
-subplot 211
-plot(angles)
-subplot 212
-plot(Omega)
