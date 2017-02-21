@@ -33,27 +33,33 @@ g      = 9.81;
 e3 = [0;0;1];
 
 %% Initial Conditions
-x0 = 0;
-y0 = 0;
-z0 = -2;
-psi0 = 0;
-phi0 = 0;
-theta0 = 0;
-dx0 = 0;
-dy0 = 0;
-dz0 = 0;
-dpsi0 = 0;
-dphi0 = 0;
+x0      = 0;
+y0      = 0;
+z0      = -2;
+psi0    = 0;
+phi0    = 0;
+theta0  = 0;
+dx0     = 0;
+dy0     = 0;
+dz0     = 0;
+dpsi0   = 0;
+dphi0   = 0;
 dtheta0 = 0;
 
-R = timeseries(zeros(3,3));
+% syms phi theta psi
+
+% R = [];
 M = timeseries(zeros(3,1));
 
-%%
-
-% u = [t;u]';
-% u      = timeseries(u');
-% f      = timeseries(f);
+%% Gain Matrices
+kR_phi       = 0.5;
+kR_theta     = 0.5;
+kR_psi       = 0.5;
+kR           = diag([kR_phi;kR_theta;kR_psi]);
+kOmega_phi   = 0.5;
+kOmega_theta = 0.5;
+kOmega_psi   = 0.5;
+kOmega       = diag([kOmega_phi;kOmega_theta;kOmega_psi]);
 
 open('developsim')
 sim('developsim')
