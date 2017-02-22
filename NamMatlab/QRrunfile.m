@@ -64,5 +64,5 @@ kOmega_psi   = 0.5;
 % kOmega       = diag([kOmega_phi;kOmega_theta;kOmega_psi]);
 kOmega = kOmega_phi*eye(3);
 
-open('developsim')
-sim('developsim')
+open('QRsim')
+sim('QRsim')

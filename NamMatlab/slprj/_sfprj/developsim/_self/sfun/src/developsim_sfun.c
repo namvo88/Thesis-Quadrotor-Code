@@ -240,10 +240,10 @@ unsigned int sf_developsim_process_check_sum_call( int nlhs, mxArray * plhs[],
       return 0;
     }
   } else {
-    ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1979278144U);
-    ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(3971298062U);
-    ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(1320798666U);
-    ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(2637726819U);
+    ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(3880513151U);
+    ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1311202564U);
+    ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(1585391872U);
+    ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(3703056941U);
   }
 
   return 1;
@@ -293,7 +293,7 @@ unsigned int sf_developsim_autoinheritance_info( int nlhs, mxArray * plhs[], int
 
      case 2:
       {
-        if (strcmp(aiChksum, "pIm2BFZNhZ0Ri885mUAkCH") == 0) {
+        if (strcmp(aiChksum, "t33lRdD10qJmJaIsPlgROG") == 0) {
           extern mxArray *sf_c2_developsim_get_autoinheritance_info(void);
           plhs[0] = sf_c2_developsim_get_autoinheritance_info();
           break;
@@ -389,7 +389,7 @@ unsigned int sf_developsim_autoinheritance_info( int nlhs, mxArray * plhs[], int
 
      case 10:
       {
-        if (strcmp(aiChksum, "Po0wJcHQ5BshxSIAeahMoE") == 0) {
+        if (strcmp(aiChksum, "voR0fzAnd4nzHuttPhAWkD") == 0) {
           extern mxArray *sf_c10_developsim_get_autoinheritance_info(void);
           plhs[0] = sf_c10_developsim_get_autoinheritance_info();
           break;
@@ -636,7 +636,7 @@ unsigned int sf_developsim_third_party_uses_info( int nlhs, mxArray * plhs[],
 
      case 2:
       {
-        if (strcmp(tpChksum, "tS1TX0L5S9BViQGZmJEXg") == 0) {
+        if (strcmp(tpChksum, "UjCyqhu9rdII7pr3O0ZjjC") == 0) {
           extern mxArray *sf_c2_developsim_third_party_uses_info(void);
           plhs[0] = sf_c2_developsim_third_party_uses_info();
           break;
@@ -708,7 +708,7 @@ unsigned int sf_developsim_third_party_uses_info( int nlhs, mxArray * plhs[],
 
      case 10:
       {
-        if (strcmp(tpChksum, "HkNVqUqRXJmMSAZAYDWI5G") == 0) {
+        if (strcmp(tpChksum, "gnTlly7mRT2bTQrKxQzPMB") == 0) {
           extern mxArray *sf_c10_developsim_third_party_uses_info(void);
           plhs[0] = sf_c10_developsim_third_party_uses_info();
           break;
@@ -772,7 +772,7 @@ unsigned int sf_developsim_updateBuildInfo_args_info( int nlhs, mxArray * plhs[]
 
      case 2:
       {
-        if (strcmp(tpChksum, "tS1TX0L5S9BViQGZmJEXg") == 0) {
+        if (strcmp(tpChksum, "UjCyqhu9rdII7pr3O0ZjjC") == 0) {
           extern mxArray *sf_c2_developsim_updateBuildInfo_args_info(void);
           plhs[0] = sf_c2_developsim_updateBuildInfo_args_info();
           break;
@@ -844,7 +844,7 @@ unsigned int sf_developsim_updateBuildInfo_args_info( int nlhs, mxArray * plhs[]
 
      case 10:
       {
-        if (strcmp(tpChksum, "HkNVqUqRXJmMSAZAYDWI5G") == 0) {
+        if (strcmp(tpChksum, "gnTlly7mRT2bTQrKxQzPMB") == 0) {
           extern mxArray *sf_c10_developsim_updateBuildInfo_args_info(void);
           plhs[0] = sf_c10_developsim_updateBuildInfo_args_info();
           break;

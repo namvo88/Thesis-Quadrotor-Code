@@ -9,10 +9,11 @@ OBJECTS = \
 	"QRsim_sfun.obj"\
 	"c1_QRsim.obj"\
 	"c2_QRsim.obj"\
+	"c3_QRsim.obj"\
+	"c4_QRsim.obj"\
+	"c6_QRsim.obj"\
 	"c7_QRsim.obj"\
-	"c8_QRsim.obj"\
-	"c9_QRsim.obj"\
-	"c10_QRsim.obj"\
+	"c12_QRsim.obj"\
 	"QRsim_sfun_registry.obj"\
 	"lccstub.obj"\
 	"QRsim_sfun.def"\
@@ -39,14 +40,16 @@ c1_QRsim.obj :	"c1_QRsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c1_QRsim.c"
 c2_QRsim.obj :	"c2_QRsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c2_QRsim.c"
+c3_QRsim.obj :	"c3_QRsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c3_QRsim.c"
+c4_QRsim.obj :	"c4_QRsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c4_QRsim.c"
+c6_QRsim.obj :	"c6_QRsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c6_QRsim.c"
 c7_QRsim.obj :	"c7_QRsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c7_QRsim.c"
-c8_QRsim.obj :	"c8_QRsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c8_QRsim.c"
-c9_QRsim.obj :	"c9_QRsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c9_QRsim.c"
-c10_QRsim.obj :	"c10_QRsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c10_QRsim.c"
+c12_QRsim.obj :	"c12_QRsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c12_QRsim.c"
 QRsim_sfun_registry.obj :	"QRsim_sfun_registry.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "QRsim_sfun_registry.c"
 lccstub.obj :	"C:\Program Files\MATLAB\R2013b\sys\lcc64\lcc64\mex\lccstub.c"

@@ -177,7 +177,7 @@ static void sf_c7_developsim(SFc7_developsimInstanceStruct *chartInstance)
   c7_b_A = (real_T (*)[3])ssGetInputPortSignal(chartInstance->S, 0);
   _SFD_SYMBOL_SCOPE_PUSH(0U, 0U);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
-  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 5U, chartInstance->c7_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 6U, chartInstance->c7_sfEvent);
   for (c7_i2 = 0; c7_i2 < 3; c7_i2++) {
     _SFD_DATA_RANGE_CHECK((*c7_b_A)[c7_i2], 0U);
   }
@@ -187,7 +187,7 @@ static void sf_c7_developsim(SFc7_developsimInstanceStruct *chartInstance)
   }
 
   chartInstance->c7_sfEvent = CALL_EVENT;
-  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 5U, chartInstance->c7_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 6U, chartInstance->c7_sfEvent);
   for (c7_i4 = 0; c7_i4 < 3; c7_i4++) {
     c7_A[c7_i4] = (*c7_b_A)[c7_i4];
   }
@@ -230,7 +230,7 @@ static void sf_c7_developsim(SFc7_developsimInstanceStruct *chartInstance)
     (*c7_b_fcnhat)[c7_i5] = c7_fcnhat[c7_i5];
   }
 
-  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 5U, chartInstance->c7_sfEvent);
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 6U, chartInstance->c7_sfEvent);
   _SFD_SYMBOL_SCOPE_POP();
   _SFD_CHECK_FOR_STATE_INCONSISTENCY(_developsimMachineNumber_,
     chartInstance->chartNumber, chartInstance->instanceNumber);

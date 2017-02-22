@@ -230,11 +230,11 @@ static void sf_c10_developsim(SFc10_developsimInstanceStruct *chartInstance)
   c10_dtheta = c10_anglesdes[1] - c10_angles[1];
   _SFD_EML_CALL(0U, chartInstance->c10_sfEvent, 8);
   c10_dpsi = c10_anglesdes[2] - c10_angles[2];
-  _SFD_EML_CALL(0U, chartInstance->c10_sfEvent, 10);
-  c10_eRlin[0] = c10_dphi;
-  c10_eRlin[1] = c10_dtheta;
-  c10_eRlin[2] = c10_dpsi;
-  _SFD_EML_CALL(0U, chartInstance->c10_sfEvent, -10);
+  _SFD_EML_CALL(0U, chartInstance->c10_sfEvent, 12);
+  c10_eRlin[0] = -c10_dphi;
+  c10_eRlin[1] = -c10_dtheta;
+  c10_eRlin[2] = -c10_dpsi;
+  _SFD_EML_CALL(0U, chartInstance->c10_sfEvent, -12);
   _SFD_SYMBOL_SCOPE_POP();
   for (c10_i7 = 0; c10_i7 < 3; c10_i7++) {
     (*c10_b_eRlin)[c10_i7] = c10_eRlin[c10_i7];
@@ -486,10 +486,10 @@ extern void utFree(void*);
 
 void sf_c10_developsim_get_check_sum(mxArray *plhs[])
 {
-  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1222727641U);
-  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2640714200U);
-  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3506726557U);
-  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(2968554990U);
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(3821616706U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(448856660U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(957276844U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(4147878672U);
 }
 
 mxArray *sf_c10_developsim_get_autoinheritance_info(void)
@@ -501,7 +501,7 @@ mxArray *sf_c10_developsim_get_autoinheritance_info(void)
     autoinheritanceFields);
 
   {
-    mxArray *mxChecksum = mxCreateString("Po0wJcHQ5BshxSIAeahMoE");
+    mxArray *mxChecksum = mxCreateString("voR0fzAnd4nzHuttPhAWkD");
     mxSetField(mxAutoinheritanceInfo,0,"checksum",mxChecksum);
   }
 
@@ -675,7 +675,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
         /* Initialization of MATLAB Function Model Coverage */
         _SFD_CV_INIT_EML(0,1,1,0,0,0,0,0,0,0,0);
-        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,300);
+        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,303);
 
         {
           unsigned int dimVector[2];
@@ -725,7 +725,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
 static const char* sf_get_instance_specialization(void)
 {
-  return "HkNVqUqRXJmMSAZAYDWI5G";
+  return "gnTlly7mRT2bTQrKxQzPMB";
 }
 
 static void sf_opaque_initialize_c10_developsim(void *chartInstanceVar)
@@ -895,10 +895,10 @@ static void mdlSetWorkWidths_c10_developsim(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(519085857U));
-  ssSetChecksum1(S,(1555695328U));
-  ssSetChecksum2(S,(782503937U));
-  ssSetChecksum3(S,(2918536700U));
+  ssSetChecksum0(S,(3558855305U));
+  ssSetChecksum1(S,(2592963425U));
+  ssSetChecksum2(S,(217080687U));
+  ssSetChecksum3(S,(860388373U));
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
   ssSupportsMultipleExecInstances(S,1);
