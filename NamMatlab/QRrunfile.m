@@ -19,15 +19,15 @@ clear; clc; close all;
 
 %% Variables
 
-m      = 0.42; %weight bebop 420 g
-Ixx    = 1.5; %gok
-Iyy    = 1.5; %gok
-Izz    = 1.5; %gok
-I      = diag([Ixx Iyy Izz]);
+m      = 4.34; %Lee2010 %weight bebop 420 g
+Ixx    = 0.0820; %Lee2010
+Iyy    = 0.0845; %Lee2010
+Izz    = .1377; %Lee2010
+I      = diag([Ixx Iyy Izz]); %Goodarzi2014
 b      = 0.1; %gok
 d      = 0.1; %gok
 Ir     = 0.5; %gok
-l      = 0.12; %wingspan bebop 248 mm
+l      = 0.315; %Lee2010 %wingspan bebop 248 mm
 g      = 9.81;
 
 e3 = [0;0;1];
@@ -52,13 +52,13 @@ dtheta0 = 0;
 % M = timeseries(zeros(3,1));
 
 %% Gain Matrices
-kR_phi       = 25;
+kR_phi       = 8.81; %Lee2010
 kR_theta     = 0.5;
 kR_psi       = 0.5;
 % kR           = diag([kR_phi;kR_theta;kR_psi]);
 kR = kR_phi*eye(3);
 
-kOmega_phi   = 50;
+kOmega_phi   = 2.54; %Lee2010
 kOmega_theta = 0.5;
 kOmega_psi   = 0.5;
 % kOmega       = diag([kOmega_phi;kOmega_theta;kOmega_psi]);
