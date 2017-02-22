@@ -18,7 +18,6 @@ OBJECTS = \
 	"c9_developsim.obj"\
 	"c10_developsim.obj"\
 	"c11_developsim.obj"\
-	"c12_developsim.obj"\
 	"developsim_sfun_registry.obj"\
 	"lccstub.obj"\
 	"developsim_sfun.def"\
@@ -63,8 +62,6 @@ c10_developsim.obj :	"c10_developsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c10_developsim.c"
 c11_developsim.obj :	"c11_developsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c11_developsim.c"
-c12_developsim.obj :	"c12_developsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c12_developsim.c"
 developsim_sfun_registry.obj :	"developsim_sfun_registry.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "developsim_sfun_registry.c"
 lccstub.obj :	"C:\Program Files\MATLAB\R2013b\sys\lcc64\lcc64\mex\lccstub.c"

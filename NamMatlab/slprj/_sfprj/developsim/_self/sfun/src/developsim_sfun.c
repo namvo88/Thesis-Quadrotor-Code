@@ -13,7 +13,6 @@
 #include "c9_developsim.h"
 #include "c10_developsim.h"
 #include "c11_developsim.h"
-#include "c12_developsim.h"
 
 /* Type Definitions */
 
@@ -95,11 +94,6 @@ unsigned int sf_developsim_method_dispatcher(SimStruct *simstructPtr, unsigned
     return 1;
   }
 
-  if (chartFileNumber==12) {
-    c12_developsim_method_dispatcher(simstructPtr, method, data);
-    return 1;
-  }
-
   return 0;
 }
 
@@ -133,10 +127,10 @@ unsigned int sf_developsim_process_check_sum_call( int nlhs, mxArray * plhs[],
       ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(0U);
       ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(0U);
     } else if (!strcmp(commandName,"makefile")) {
-      ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(3824826540U);
-      ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(3267458626U);
-      ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(2037249668U);
-      ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(136676541U);
+      ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2738646582U);
+      ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(545931448U);
+      ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(4199527805U);
+      ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(4047319705U);
     } else if (nrhs==3 && !strcmp(commandName,"chart")) {
       unsigned int chartFileNumber;
       chartFileNumber = (unsigned int)mxGetScalar(prhs[2]);
@@ -218,13 +212,6 @@ unsigned int sf_developsim_process_check_sum_call( int nlhs, mxArray * plhs[],
           break;
         }
 
-       case 12:
-        {
-          extern void sf_c12_developsim_get_check_sum(mxArray *plhs[]);
-          sf_c12_developsim_get_check_sum(plhs);
-          break;
-        }
-
        default:
         ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(0.0);
         ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(0.0);
@@ -240,10 +227,10 @@ unsigned int sf_developsim_process_check_sum_call( int nlhs, mxArray * plhs[],
       return 0;
     }
   } else {
-    ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(3880513151U);
-    ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1311202564U);
-    ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(1585391872U);
-    ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(3703056941U);
+    ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(3284919328U);
+    ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(4215399581U);
+    ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(1201666379U);
+    ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(16831589U);
   }
 
   return 1;
@@ -411,18 +398,6 @@ unsigned int sf_developsim_autoinheritance_info( int nlhs, mxArray * plhs[], int
         break;
       }
 
-     case 12:
-      {
-        if (strcmp(aiChksum, "k3dHF4QLp4aOba2LrLFnJD") == 0) {
-          extern mxArray *sf_c12_developsim_get_autoinheritance_info(void);
-          plhs[0] = sf_c12_developsim_get_autoinheritance_info();
-          break;
-        }
-
-        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
-        break;
-      }
-
      default:
       plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
     }
@@ -579,17 +554,6 @@ unsigned int sf_developsim_get_eml_resolved_functions_info( int nlhs, mxArray *
         break;
       }
 
-     case 12:
-      {
-        extern const mxArray *sf_c12_developsim_get_eml_resolved_functions_info
-          (void);
-        mxArray *persistentMxArray = (mxArray *)
-          sf_c12_developsim_get_eml_resolved_functions_info();
-        plhs[0] = mxDuplicateArray(persistentMxArray);
-        mxDestroyArray(persistentMxArray);
-        break;
-      }
-
      default:
       plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
     }
@@ -724,15 +688,6 @@ unsigned int sf_developsim_third_party_uses_info( int nlhs, mxArray * plhs[],
         }
       }
 
-     case 12:
-      {
-        if (strcmp(tpChksum, "UxmdhIdKmLTrJ28ZhC0V1G") == 0) {
-          extern mxArray *sf_c12_developsim_third_party_uses_info(void);
-          plhs[0] = sf_c12_developsim_third_party_uses_info();
-          break;
-        }
-      }
-
      default:
       plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
     }
@@ -860,15 +815,6 @@ unsigned int sf_developsim_updateBuildInfo_args_info( int nlhs, mxArray * plhs[]
         }
       }
 
-     case 12:
-      {
-        if (strcmp(tpChksum, "UxmdhIdKmLTrJ28ZhC0V1G") == 0) {
-          extern mxArray *sf_c12_developsim_updateBuildInfo_args_info(void);
-          plhs[0] = sf_c12_developsim_updateBuildInfo_args_info();
-          break;
-        }
-      }
-
      default:
       plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
     }
@@ -880,7 +826,7 @@ unsigned int sf_developsim_updateBuildInfo_args_info( int nlhs, mxArray * plhs[]
 void developsim_debug_initialize(struct SfDebugInstanceStruct* debugInstance)
 {
   _developsimMachineNumber_ = sf_debug_initialize_machine(debugInstance,
-    "developsim","sfun",0,12,0,0,0);
+    "developsim","sfun",0,11,0,0,0);
   sf_debug_set_machine_event_thresholds(debugInstance,_developsimMachineNumber_,
     0,0);
   sf_debug_set_machine_data_thresholds(debugInstance,_developsimMachineNumber_,0);
