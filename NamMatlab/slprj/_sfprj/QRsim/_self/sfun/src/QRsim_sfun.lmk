@@ -18,7 +18,6 @@ OBJECTS = \
 	"c9_QRsim.obj"\
 	"c10_QRsim.obj"\
 	"c11_QRsim.obj"\
-	"c12_QRsim.obj"\
 	"c13_QRsim.obj"\
 	"c14_QRsim.obj"\
 	"QRsim_sfun_registry.obj"\
@@ -65,8 +64,6 @@ c10_QRsim.obj :	"c10_QRsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c10_QRsim.c"
 c11_QRsim.obj :	"c11_QRsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c11_QRsim.c"
-c12_QRsim.obj :	"c12_QRsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c12_QRsim.c"
 c13_QRsim.obj :	"c13_QRsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c13_QRsim.c"
 c14_QRsim.obj :	"c14_QRsim.c"
