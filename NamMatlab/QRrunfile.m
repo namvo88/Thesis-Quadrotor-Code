@@ -51,7 +51,15 @@ dtheta0 = 0;
 % R = [];
 % M = timeseries(zeros(3,1));
 
+%% Uncertainty Vectors
+Deltax = [0; 0; 0]; %Goodarzi2013a
+DeltaR = [0; 0; 0]; %Goodarzi2013a
+
 %% Gain Matrices
+
+kx = 1;
+kv = 1;
+
 kR_phi       = 8.81; %Lee2010
 kR_theta     = 0.5;
 kR_psi       = 0.5;
