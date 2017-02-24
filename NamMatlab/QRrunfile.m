@@ -24,8 +24,8 @@ Ixx    = 0.0820; %Lee2010
 Iyy    = 0.0845; %Lee2010
 Izz    = .1377; %Lee2010
 I      = diag([Ixx Iyy Izz]); %Goodarzi2014
-b      = 0.1; %gok
-d      = 0.1; %gok
+b      = 1; %Geen thrust factor
+d      = 8.004e-4; %Lee2010 c_tau_f
 Ir     = 0.5; %gok
 l      = 0.315; %Lee2010 %wingspan bebop 248 mm
 g      = 9.81;
@@ -35,9 +35,9 @@ e3 = [0;0;1];
 %% Initial Conditions
 x0      = 0;
 y0      = 0;
-z0      = -2;
+z0      = 0;
 psi0    = 0;
-phi0    = 0;
+phi0    = degtorad(2);
 theta0  = 0;
 dx0     = 0;
 dy0     = 0;
@@ -57,8 +57,8 @@ DeltaR = [0; 0; 0]; %Goodarzi2013a
 
 %% Gain Matrices
 
-kx = 1;
-kv = 1;
+kx = 16*m; %Lee2010
+kv = 5.6*m; %Lee2010
 
 kR_phi       = 8.81; %Lee2010
 kR_theta     = 0.5;
