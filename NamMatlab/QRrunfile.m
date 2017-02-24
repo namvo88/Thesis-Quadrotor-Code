@@ -26,7 +26,7 @@ Izz    = .1377; %Lee2010
 I      = diag([Ixx Iyy Izz]); %Goodarzi2014
 b      = 1; %Geen thrust factor
 d      = 8.004e-4; %Lee2010 c_tau_f
-Ir     = 0.5; %gok
+Ir     = 0; %gok
 l      = 0.315; %Lee2010 %wingspan bebop 248 mm
 g      = 9.81;
 
@@ -37,7 +37,7 @@ x0      = 0;
 y0      = 0;
 z0      = 0;
 psi0    = 0;
-phi0    = degtorad(2);
+phi0    = pi/8;
 theta0  = 0;
 dx0     = 0;
 dy0     = 0;
