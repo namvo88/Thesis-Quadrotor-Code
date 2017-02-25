@@ -24,6 +24,7 @@ OBJECTS = \
 	"c15_QRsim.obj"\
 	"c16_QRsim.obj"\
 	"c17_QRsim.obj"\
+	"c18_QRsim.obj"\
 	"QRsim_sfun_registry.obj"\
 	"lccstub.obj"\
 	"QRsim_sfun.def"\
@@ -80,6 +81,8 @@ c16_QRsim.obj :	"c16_QRsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c16_QRsim.c"
 c17_QRsim.obj :	"c17_QRsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c17_QRsim.c"
+c18_QRsim.obj :	"c18_QRsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c18_QRsim.c"
 QRsim_sfun_registry.obj :	"QRsim_sfun_registry.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "QRsim_sfun_registry.c"
 lccstub.obj :	"C:\Program Files\MATLAB\R2013b\sys\lcc64\lcc64\mex\lccstub.c"

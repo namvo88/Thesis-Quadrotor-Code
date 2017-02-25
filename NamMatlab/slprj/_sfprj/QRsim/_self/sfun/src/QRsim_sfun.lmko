@@ -16,6 +16,7 @@
 "c15_QRsim.obj"
 "c16_QRsim.obj"
 "c17_QRsim.obj"
+"c18_QRsim.obj"
 "QRsim_sfun_registry.obj"
 "lccstub.obj"
 "QRsim_sfun.def"
