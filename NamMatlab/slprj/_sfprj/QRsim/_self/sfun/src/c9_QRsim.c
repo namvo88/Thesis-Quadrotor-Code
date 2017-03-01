@@ -112,7 +112,7 @@ static const mxArray *get_sim_state_c9_QRsim(SFc9_QRsimInstanceStruct
   }
 
   c9_b_y = NULL;
-  sf_mex_assign(&c9_b_y, sf_mex_create("y", c9_u, 0, 0U, 1U, 0U, 2, 3, 1), FALSE);
+  sf_mex_assign(&c9_b_y, sf_mex_create("y", c9_u, 0, 0U, 1U, 0U, 1, 3), FALSE);
   sf_mex_setcell(c9_y, 0, c9_b_y);
   c9_hoistedGlobal = chartInstance->c9_is_active_c9_QRsim;
   c9_b_u = c9_hoistedGlobal;
@@ -170,7 +170,7 @@ static void sf_c9_QRsim(SFc9_QRsimInstanceStruct *chartInstance)
   c9_b_A = (real_T (*)[9])ssGetInputPortSignal(chartInstance->S, 0);
   _SFD_SYMBOL_SCOPE_PUSH(0U, 0U);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
-  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 7U, chartInstance->c9_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 8U, chartInstance->c9_sfEvent);
   for (c9_i2 = 0; c9_i2 < 9; c9_i2++) {
     _SFD_DATA_RANGE_CHECK((*c9_b_A)[c9_i2], 0U);
   }
@@ -180,7 +180,7 @@ static void sf_c9_QRsim(SFc9_QRsimInstanceStruct *chartInstance)
   }
 
   chartInstance->c9_sfEvent = CALL_EVENT;
-  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 7U, chartInstance->c9_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 8U, chartInstance->c9_sfEvent);
   for (c9_i4 = 0; c9_i4 < 9; c9_i4++) {
     c9_A[c9_i4] = (*c9_b_A)[c9_i4];
   }
@@ -217,7 +217,7 @@ static void sf_c9_QRsim(SFc9_QRsimInstanceStruct *chartInstance)
     (*c9_b_fcnv)[c9_i5] = c9_fcnv[c9_i5];
   }
 
-  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 7U, chartInstance->c9_sfEvent);
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 8U, chartInstance->c9_sfEvent);
   _SFD_SYMBOL_SCOPE_POP();
   _SFD_CHECK_FOR_STATE_INCONSISTENCY(_QRsimMachineNumber_,
     chartInstance->chartNumber, chartInstance->instanceNumber);
@@ -252,7 +252,7 @@ static const mxArray *c9_sf_marshallOut(void *chartInstanceVoid, void *c9_inData
   }
 
   c9_y = NULL;
-  sf_mex_assign(&c9_y, sf_mex_create("y", c9_u, 0, 0U, 1U, 0U, 2, 3, 1), FALSE);
+  sf_mex_assign(&c9_y, sf_mex_create("y", c9_u, 0, 0U, 1U, 0U, 1, 3), FALSE);
   sf_mex_assign(&c9_mxArrayOutData, c9_y, FALSE);
   return c9_mxArrayOutData;
 }
@@ -272,7 +272,7 @@ static void c9_b_emlrt_marshallIn(SFc9_QRsimInstanceStruct *chartInstance, const
 {
   real_T c9_dv1[3];
   int32_T c9_i8;
-  sf_mex_import(c9_parentId, sf_mex_dup(c9_u), c9_dv1, 1, 0, 0U, 1, 0U, 2, 3, 1);
+  sf_mex_import(c9_parentId, sf_mex_dup(c9_u), c9_dv1, 1, 0, 0U, 1, 0U, 1, 3);
   for (c9_i8 = 0; c9_i8 < 3; c9_i8++) {
     c9_y[c9_i8] = c9_dv1[c9_i8];
   }
@@ -496,10 +496,10 @@ extern void utFree(void*);
 
 void sf_c9_QRsim_get_check_sum(mxArray *plhs[])
 {
-  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1422410459U);
-  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1464399406U);
-  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(864272848U);
-  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(2409864556U);
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1691970018U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2281216908U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3957080737U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(3964174320U);
 }
 
 mxArray *sf_c9_QRsim_get_autoinheritance_info(void)
@@ -676,10 +676,9 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
         }
 
         {
-          unsigned int dimVector[2];
+          unsigned int dimVector[1];
           dimVector[0]= 3;
-          dimVector[1]= 1;
-          _SFD_SET_DATA_COMPILED_PROPS(1,SF_DOUBLE,2,&(dimVector[0]),0,0,0,0.0,
+          _SFD_SET_DATA_COMPILED_PROPS(1,SF_DOUBLE,1,&(dimVector[0]),0,0,0,0.0,
             1.0,0,0,(MexFcnForType)c9_sf_marshallOut,(MexInFcnForType)
             c9_sf_marshallIn);
         }
@@ -703,7 +702,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
 static const char* sf_get_instance_specialization(void)
 {
-  return "DPkHPUApqpUnAItu89y4gD";
+  return "Eepk4XO5TUYL950TJLhgBD";
 }
 
 static void sf_opaque_initialize_c9_QRsim(void *chartInstanceVar)
@@ -867,10 +866,10 @@ static void mdlSetWorkWidths_c9_QRsim(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(1255540499U));
-  ssSetChecksum1(S,(3570950044U));
-  ssSetChecksum2(S,(603517206U));
-  ssSetChecksum3(S,(2131329965U));
+  ssSetChecksum0(S,(2255102069U));
+  ssSetChecksum1(S,(1137809757U));
+  ssSetChecksum2(S,(1266076923U));
+  ssSetChecksum3(S,(898103752U));
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
   ssSupportsMultipleExecInstances(S,1);

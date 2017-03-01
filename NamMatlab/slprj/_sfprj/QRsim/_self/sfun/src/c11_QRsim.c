@@ -49,6 +49,8 @@ static const mxArray *c11_b_sf_marshallOut(void *chartInstanceVoid, void
   *c11_inData);
 static const mxArray *c11_c_sf_marshallOut(void *chartInstanceVoid, void
   *c11_inData);
+static const mxArray *c11_d_sf_marshallOut(void *chartInstanceVoid, void
+  *c11_inData);
 static real_T c11_c_emlrt_marshallIn(SFc11_QRsimInstanceStruct *chartInstance,
   const mxArray *c11_u, const emlrtMsgIdentifier *c11_parentId);
 static void c11_b_sf_marshallIn(void *chartInstanceVoid, const mxArray
@@ -58,7 +60,7 @@ static const mxArray *c11_emlrt_marshallOut(char * c11_u);
 static const mxArray *c11_b_emlrt_marshallOut(uint32_T c11_u);
 static void c11_eml_scalar_eg(SFc11_QRsimInstanceStruct *chartInstance);
 static void c11_b_eml_scalar_eg(SFc11_QRsimInstanceStruct *chartInstance);
-static const mxArray *c11_d_sf_marshallOut(void *chartInstanceVoid, void
+static const mxArray *c11_e_sf_marshallOut(void *chartInstanceVoid, void
   *c11_inData);
 static int32_T c11_d_emlrt_marshallIn(SFc11_QRsimInstanceStruct *chartInstance,
   const mxArray *c11_u, const emlrtMsgIdentifier *c11_parentId);
@@ -119,8 +121,7 @@ static const mxArray *get_sim_state_c11_QRsim(SFc11_QRsimInstanceStruct
   }
 
   c11_b_y = NULL;
-  sf_mex_assign(&c11_b_y, sf_mex_create("y", c11_u, 0, 0U, 1U, 0U, 2, 3, 1),
-                FALSE);
+  sf_mex_assign(&c11_b_y, sf_mex_create("y", c11_u, 0, 0U, 1U, 0U, 1, 3), FALSE);
   sf_mex_setcell(c11_y, 0, c11_b_y);
   c11_hoistedGlobal = chartInstance->c11_is_active_c11_QRsim;
   c11_b_u = c11_hoistedGlobal;
@@ -177,7 +178,7 @@ static void sf_c11_QRsim(SFc11_QRsimInstanceStruct *chartInstance)
   c11_R = (real_T (*)[9])ssGetInputPortSignal(chartInstance->S, 0);
   _SFD_SYMBOL_SCOPE_PUSH(0U, 0U);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
-  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 9U, chartInstance->c11_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 10U, chartInstance->c11_sfEvent);
   for (c11_i2 = 0; c11_i2 < 9; c11_i2++) {
     _SFD_DATA_RANGE_CHECK((*c11_R)[c11_i2], 0U);
   }
@@ -250,7 +251,7 @@ static void c11_chartstep_c11_QRsim(SFc11_QRsimInstanceStruct *chartInstance)
   c11_b_eOmega = (real_T (*)[3])ssGetOutputPortSignal(chartInstance->S, 1);
   c11_b_Rdes = (real_T (*)[9])ssGetInputPortSignal(chartInstance->S, 1);
   c11_b_R = (real_T (*)[9])ssGetInputPortSignal(chartInstance->S, 0);
-  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 9U, chartInstance->c11_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 10U, chartInstance->c11_sfEvent);
   for (c11_i7 = 0; c11_i7 < 9; c11_i7++) {
     c11_R[c11_i7] = (*c11_b_R)[c11_i7];
   }
@@ -269,14 +270,14 @@ static void c11_chartstep_c11_QRsim(SFc11_QRsimInstanceStruct *chartInstance)
 
   _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 7U, 7U, c11_debug_family_names,
     c11_debug_family_var_map);
-  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c11_nargin, 0U, c11_c_sf_marshallOut,
+  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c11_nargin, 0U, c11_d_sf_marshallOut,
     c11_b_sf_marshallIn);
-  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c11_nargout, 1U, c11_c_sf_marshallOut,
+  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c11_nargout, 1U, c11_d_sf_marshallOut,
     c11_b_sf_marshallIn);
-  _SFD_SYMBOL_SCOPE_ADD_EML(c11_R, 2U, c11_b_sf_marshallOut);
-  _SFD_SYMBOL_SCOPE_ADD_EML(c11_Rdes, 3U, c11_b_sf_marshallOut);
-  _SFD_SYMBOL_SCOPE_ADD_EML(c11_Omega, 4U, c11_sf_marshallOut);
-  _SFD_SYMBOL_SCOPE_ADD_EML(c11_Omegades, 5U, c11_sf_marshallOut);
+  _SFD_SYMBOL_SCOPE_ADD_EML(c11_R, 2U, c11_c_sf_marshallOut);
+  _SFD_SYMBOL_SCOPE_ADD_EML(c11_Rdes, 3U, c11_c_sf_marshallOut);
+  _SFD_SYMBOL_SCOPE_ADD_EML(c11_Omega, 4U, c11_b_sf_marshallOut);
+  _SFD_SYMBOL_SCOPE_ADD_EML(c11_Omegades, 5U, c11_b_sf_marshallOut);
   _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(c11_eOmega, 6U, c11_sf_marshallOut,
     c11_sf_marshallIn);
   CV_EML_FCN(0, 0);
@@ -338,7 +339,7 @@ static void c11_chartstep_c11_QRsim(SFc11_QRsimInstanceStruct *chartInstance)
     (*c11_b_eOmega)[c11_i26] = c11_eOmega[c11_i26];
   }
 
-  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 9U, chartInstance->c11_sfEvent);
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 10U, chartInstance->c11_sfEvent);
 }
 
 static void initSimStructsc11_QRsim(SFc11_QRsimInstanceStruct *chartInstance)
@@ -371,7 +372,7 @@ static const mxArray *c11_sf_marshallOut(void *chartInstanceVoid, void
   }
 
   c11_y = NULL;
-  sf_mex_assign(&c11_y, sf_mex_create("y", c11_u, 0, 0U, 1U, 0U, 2, 3, 1), FALSE);
+  sf_mex_assign(&c11_y, sf_mex_create("y", c11_u, 0, 0U, 1U, 0U, 1, 3), FALSE);
   sf_mex_assign(&c11_mxArrayOutData, c11_y, FALSE);
   return c11_mxArrayOutData;
 }
@@ -392,8 +393,7 @@ static void c11_b_emlrt_marshallIn(SFc11_QRsimInstanceStruct *chartInstance,
 {
   real_T c11_dv1[3];
   int32_T c11_i29;
-  sf_mex_import(c11_parentId, sf_mex_dup(c11_u), c11_dv1, 1, 0, 0U, 1, 0U, 2, 3,
-                1);
+  sf_mex_import(c11_parentId, sf_mex_dup(c11_u), c11_dv1, 1, 0, 0U, 1, 0U, 1, 3);
   for (c11_i29 = 0; c11_i29 < 3; c11_i29++) {
     c11_y[c11_i29] = c11_dv1[c11_i29];
   }
@@ -430,34 +430,60 @@ static const mxArray *c11_b_sf_marshallOut(void *chartInstanceVoid, void
 {
   const mxArray *c11_mxArrayOutData = NULL;
   int32_T c11_i31;
+  real_T c11_b_inData[3];
   int32_T c11_i32;
+  real_T c11_u[3];
+  const mxArray *c11_y = NULL;
+  SFc11_QRsimInstanceStruct *chartInstance;
+  chartInstance = (SFc11_QRsimInstanceStruct *)chartInstanceVoid;
+  c11_mxArrayOutData = NULL;
+  for (c11_i31 = 0; c11_i31 < 3; c11_i31++) {
+    c11_b_inData[c11_i31] = (*(real_T (*)[3])c11_inData)[c11_i31];
+  }
+
+  for (c11_i32 = 0; c11_i32 < 3; c11_i32++) {
+    c11_u[c11_i32] = c11_b_inData[c11_i32];
+  }
+
+  c11_y = NULL;
+  sf_mex_assign(&c11_y, sf_mex_create("y", c11_u, 0, 0U, 1U, 0U, 2, 3, 1), FALSE);
+  sf_mex_assign(&c11_mxArrayOutData, c11_y, FALSE);
+  return c11_mxArrayOutData;
+}
+
+static const mxArray *c11_c_sf_marshallOut(void *chartInstanceVoid, void
+  *c11_inData)
+{
+  const mxArray *c11_mxArrayOutData = NULL;
   int32_T c11_i33;
-  real_T c11_b_inData[9];
   int32_T c11_i34;
   int32_T c11_i35;
+  real_T c11_b_inData[9];
   int32_T c11_i36;
+  int32_T c11_i37;
+  int32_T c11_i38;
   real_T c11_u[9];
   const mxArray *c11_y = NULL;
   SFc11_QRsimInstanceStruct *chartInstance;
   chartInstance = (SFc11_QRsimInstanceStruct *)chartInstanceVoid;
   c11_mxArrayOutData = NULL;
-  c11_i31 = 0;
-  for (c11_i32 = 0; c11_i32 < 3; c11_i32++) {
-    for (c11_i33 = 0; c11_i33 < 3; c11_i33++) {
-      c11_b_inData[c11_i33 + c11_i31] = (*(real_T (*)[9])c11_inData)[c11_i33 +
-        c11_i31];
+  c11_i33 = 0;
+  for (c11_i34 = 0; c11_i34 < 3; c11_i34++) {
+    for (c11_i35 = 0; c11_i35 < 3; c11_i35++) {
+      c11_b_inData[c11_i35 + c11_i33] = (*(real_T (*)[9])c11_inData)[c11_i35 +
+        c11_i33];
     }
 
-    c11_i31 += 3;
+    c11_i33 += 3;
   }
 
-  c11_i34 = 0;
-  for (c11_i35 = 0; c11_i35 < 3; c11_i35++) {
-    for (c11_i36 = 0; c11_i36 < 3; c11_i36++) {
-      c11_u[c11_i36 + c11_i34] = c11_b_inData[c11_i36 + c11_i34];
+  c11_i36 = 0;
+  for (c11_i37 = 0; c11_i37 < 3; c11_i37++) {
+    for (c11_i38 = 0; c11_i38 < 3; c11_i38++) {
+      c11_u[c11_i38 + c11_i36] = c11_b_inData[c11_i38 + c11_i36];
     }
 
-    c11_i34 += 3;
+    c11_i36 += 3;
   }
 
   c11_y = NULL;
@@ -466,7 +492,7 @@ static const mxArray *c11_b_sf_marshallOut(void *chartInstanceVoid, void
   return c11_mxArrayOutData;
 }
 
-static const mxArray *c11_c_sf_marshallOut(void *chartInstanceVoid, void
+static const mxArray *c11_d_sf_marshallOut(void *chartInstanceVoid, void
   *c11_inData)
 {
   const mxArray *c11_mxArrayOutData = NULL;
@@ -829,7 +855,7 @@ static void c11_b_eml_scalar_eg(SFc11_QRsimInstanceStruct *chartInstance)
 {
 }
 
-static const mxArray *c11_d_sf_marshallOut(void *chartInstanceVoid, void
+static const mxArray *c11_e_sf_marshallOut(void *chartInstanceVoid, void
   *c11_inData)
 {
   const mxArray *c11_mxArrayOutData = NULL;
@@ -849,9 +875,9 @@ static int32_T c11_d_emlrt_marshallIn(SFc11_QRsimInstanceStruct *chartInstance,
   const mxArray *c11_u, const emlrtMsgIdentifier *c11_parentId)
 {
   int32_T c11_y;
-  int32_T c11_i37;
-  sf_mex_import(c11_parentId, sf_mex_dup(c11_u), &c11_i37, 1, 6, 0U, 0, 0U, 0);
-  c11_y = c11_i37;
+  int32_T c11_i39;
+  sf_mex_import(c11_parentId, sf_mex_dup(c11_u), &c11_i39, 1, 6, 0U, 0, 0U, 0);
+  c11_y = c11_i39;
   sf_mex_destroy(&c11_u);
   return c11_y;
 }
@@ -927,10 +953,10 @@ extern void utFree(void*);
 
 void sf_c11_QRsim_get_check_sum(mxArray *plhs[])
 {
-  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1287170807U);
-  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1830096460U);
-  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3730317619U);
-  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(1926386043U);
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(336203474U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(3558199203U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(2146267279U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(2569525186U);
 }
 
 mxArray *sf_c11_QRsim_get_autoinheritance_info(void)
@@ -1163,7 +1189,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           dimVector[0]= 3;
           dimVector[1]= 3;
           _SFD_SET_DATA_COMPILED_PROPS(0,SF_DOUBLE,2,&(dimVector[0]),0,0,0,0.0,
-            1.0,0,0,(MexFcnForType)c11_b_sf_marshallOut,(MexInFcnForType)NULL);
+            1.0,0,0,(MexFcnForType)c11_c_sf_marshallOut,(MexInFcnForType)NULL);
         }
 
         {
@@ -1171,14 +1197,13 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           dimVector[0]= 3;
           dimVector[1]= 3;
           _SFD_SET_DATA_COMPILED_PROPS(1,SF_DOUBLE,2,&(dimVector[0]),0,0,0,0.0,
-            1.0,0,0,(MexFcnForType)c11_b_sf_marshallOut,(MexInFcnForType)NULL);
+            1.0,0,0,(MexFcnForType)c11_c_sf_marshallOut,(MexInFcnForType)NULL);
         }
 
         {
-          unsigned int dimVector[2];
+          unsigned int dimVector[1];
           dimVector[0]= 3;
-          dimVector[1]= 1;
-          _SFD_SET_DATA_COMPILED_PROPS(2,SF_DOUBLE,2,&(dimVector[0]),0,0,0,0.0,
+          _SFD_SET_DATA_COMPILED_PROPS(2,SF_DOUBLE,1,&(dimVector[0]),0,0,0,0.0,
             1.0,0,0,(MexFcnForType)c11_sf_marshallOut,(MexInFcnForType)
             c11_sf_marshallIn);
         }
@@ -1188,7 +1213,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           dimVector[0]= 3;
           dimVector[1]= 1;
           _SFD_SET_DATA_COMPILED_PROPS(3,SF_DOUBLE,2,&(dimVector[0]),0,0,0,0.0,
-            1.0,0,0,(MexFcnForType)c11_sf_marshallOut,(MexInFcnForType)NULL);
+            1.0,0,0,(MexFcnForType)c11_b_sf_marshallOut,(MexInFcnForType)NULL);
         }
 
         {
@@ -1196,7 +1221,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           dimVector[0]= 3;
           dimVector[1]= 1;
           _SFD_SET_DATA_COMPILED_PROPS(4,SF_DOUBLE,2,&(dimVector[0]),0,0,0,0.0,
-            1.0,0,0,(MexFcnForType)c11_sf_marshallOut,(MexInFcnForType)NULL);
+            1.0,0,0,(MexFcnForType)c11_b_sf_marshallOut,(MexInFcnForType)NULL);
         }
 
         {
@@ -1227,7 +1252,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
 static const char* sf_get_instance_specialization(void)
 {
-  return "pWMmjLX4lYAxgwvRqxSX9E";
+  return "YAC4FvAf5FLvHoYw2ExpQC";
 }
 
 static void sf_opaque_initialize_c11_QRsim(void *chartInstanceVar)
@@ -1395,10 +1420,10 @@ static void mdlSetWorkWidths_c11_QRsim(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(310671461U));
-  ssSetChecksum1(S,(1645131890U));
-  ssSetChecksum2(S,(2524032233U));
-  ssSetChecksum3(S,(4225717777U));
+  ssSetChecksum0(S,(3127269874U));
+  ssSetChecksum1(S,(1429634374U));
+  ssSetChecksum2(S,(695757784U));
+  ssSetChecksum3(S,(855591383U));
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
   ssSupportsMultipleExecInstances(S,1);
