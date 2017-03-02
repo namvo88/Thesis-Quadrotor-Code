@@ -14,16 +14,22 @@ clear; clc; close all;
 
 %% Input signals 
 
-% t      = 1:10;
+xdes = [0;0;0];
+b1d = [1;0;0];
 
+%% Uncertainties
 
-%% Variables
+Deltax = [-0.5; 0.2; 1]; %Goodarzi2013a
+DeltaR = [0.2; -0.1; 0.02]; %Goodarzi2013a
 
+%% Constants
 m      = 4.34; %Lee2010 %weight bebop 420 g
 Ixx    = 0.0820; %Lee2010
 Iyy    = 0.0845; %Lee2010
 Izz    = .1377; %Lee2010
 I      = diag([Ixx Iyy Izz]); %Goodarzi2014
+ctauf = 8.004e-4; %Lee2010
+
 b      = 0.1; %gok
 d      = 0.1; %gok
 Ir     = 0.5; %gok
@@ -32,26 +38,28 @@ g      = 9.81;
 
 e3 = [0;0;1];
 
+fsat = 1000;
+
 %% Initial Conditions
-x0      = 0;
-y0      = 0;
-z0      = -2;
-psi0    = 0;
-phi0    = 0;
-theta0  = 0;
 dx0     = 0;
 dy0     = 0;
 dz0     = 0;
-dpsi0   = 0;
-dphi0   = 0;
-dtheta0 = 0;
+p0      = 0;
+q0      = 0;
+r0      = 0;
+x0      = 0;
+y0      = 0;
+z0      = 0;
+psi0    = 0;
+phi0    = degtorad(50);
+theta0  = 0;
 
-% syms phi theta psi
 
-% R = [];
-% M = timeseries(zeros(3,1));
+%% Gains
 
-%% Gain Matrices
+kx = 16*m;
+kv = 5.6*m;
+
 kR_phi       = 8.81; %Lee2010
 kR_theta     = 0.5;
 kR_psi       = 0.5;
@@ -66,3 +74,7 @@ kOmega = kOmega_phi*eye(3);
 
 open('QRsim')
 sim('QRsim')
+
+%% Plots
+
+
