@@ -154,7 +154,7 @@ static void sf_c17_QRsim(SFc17_QRsimInstanceStruct *chartInstance)
   c17_R = (real_T (*)[9])ssGetInputPortSignal(chartInstance->S, 0);
   _SFD_SYMBOL_SCOPE_PUSH(0U, 0U);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
-  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 15U, chartInstance->c17_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 16U, chartInstance->c17_sfEvent);
   for (c17_i0 = 0; c17_i0 < 9; c17_i0++) {
     _SFD_DATA_RANGE_CHECK((*c17_R)[c17_i0], 0U);
   }
@@ -209,7 +209,7 @@ static void c17_chartstep_c17_QRsim(SFc17_QRsimInstanceStruct *chartInstance)
   c17_b_error = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
   c17_b_Rdes = (real_T (*)[9])ssGetInputPortSignal(chartInstance->S, 1);
   c17_b_R = (real_T (*)[9])ssGetInputPortSignal(chartInstance->S, 0);
-  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 15U, chartInstance->c17_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 16U, chartInstance->c17_sfEvent);
   for (c17_i2 = 0; c17_i2 < 9; c17_i2++) {
     c17_R[c17_i2] = (*c17_b_R)[c17_i2];
   }
@@ -292,7 +292,7 @@ static void c17_chartstep_c17_QRsim(SFc17_QRsimInstanceStruct *chartInstance)
   _SFD_EML_CALL(0U, chartInstance->c17_sfEvent, -3);
   _SFD_SYMBOL_SCOPE_POP();
   *c17_b_error = c17_error;
-  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 15U, chartInstance->c17_sfEvent);
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 16U, chartInstance->c17_sfEvent);
 }
 
 static void initSimStructsc17_QRsim(SFc17_QRsimInstanceStruct *chartInstance)
