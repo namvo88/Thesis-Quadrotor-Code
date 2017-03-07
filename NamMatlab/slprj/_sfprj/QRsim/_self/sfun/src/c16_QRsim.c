@@ -265,11 +265,11 @@ static void c16_chartstep_c16_QRsim(SFc16_QRsimInstanceStruct *chartInstance)
   c16_Omegahat[0] = 0.0;
   c16_Omegahat[3] = -c16_r;
   c16_Omegahat[6] = c16_q;
-  c16_Omegahat[1] = c16_p;
+  c16_Omegahat[1] = c16_r;
   c16_Omegahat[4] = 0.0;
   c16_Omegahat[7] = -c16_p;
   c16_Omegahat[2] = -c16_q;
-  c16_Omegahat[5] = c16_r;
+  c16_Omegahat[5] = c16_p;
   c16_Omegahat[8] = 0.0;
   _SFD_EML_CALL(0U, chartInstance->c16_sfEvent, 11);
   for (c16_i7 = 0; c16_i7 < 9; c16_i7++) {
@@ -917,10 +917,10 @@ extern void utFree(void*);
 
 void sf_c16_QRsim_get_check_sum(mxArray *plhs[])
 {
-  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(3172375106U);
-  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(3267194110U);
-  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3321010835U);
-  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(4244557836U);
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1423948415U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1375587083U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3967187243U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(2538390176U);
 }
 
 mxArray *sf_c16_QRsim_get_autoinheritance_info(void)
@@ -932,7 +932,7 @@ mxArray *sf_c16_QRsim_get_autoinheritance_info(void)
     autoinheritanceFields);
 
   {
-    mxArray *mxChecksum = mxCreateString("MNUF2gi6MZtvCmjyjbeunH");
+    mxArray *mxChecksum = mxCreateString("hwuV911QRLnaYzh0oISSH");
     mxSetField(mxAutoinheritanceInfo,0,"checksum",mxChecksum);
   }
 
@@ -1106,7 +1106,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
         /* Initialization of MATLAB Function Model Coverage */
         _SFD_CV_INIT_EML(0,1,1,0,0,0,0,0,0,0,0);
-        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,161);
+        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,162);
 
         {
           unsigned int dimVector[2];
@@ -1154,7 +1154,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
 static const char* sf_get_instance_specialization(void)
 {
-  return "RGEJyhjkKoTUf4ddFQM6ID";
+  return "1oVMqUtTvZjNFmQW2uHhwE";
 }
 
 static void sf_opaque_initialize_c16_QRsim(void *chartInstanceVar)
@@ -1320,10 +1320,10 @@ static void mdlSetWorkWidths_c16_QRsim(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(3042981501U));
-  ssSetChecksum1(S,(3463148167U));
-  ssSetChecksum2(S,(2530198612U));
-  ssSetChecksum3(S,(2776953266U));
+  ssSetChecksum0(S,(3894304129U));
+  ssSetChecksum1(S,(1574841944U));
+  ssSetChecksum2(S,(2799782877U));
+  ssSetChecksum3(S,(50608510U));
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
   ssSupportsMultipleExecInstances(S,1);

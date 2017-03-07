@@ -40,6 +40,8 @@ e3 = [0;0;1];
 
 fsat = 1000;
 
+c_der = inf;
+
 %% Initial Conditions
 dx0     = 0;
 dy0     = 0;
@@ -50,15 +52,15 @@ r0      = 0;
 
 x0      = 0;
 y0      = 0;
-z0      = 0;
-psi0    = 10;
+z0      = -2;
+
 phi0    = 0;
 theta0  = 0;
-
+psi0    = 0;
 
 %% Gains
 
-kx = 16*m;
+kx = 16*m*3;
 kv = 5.6*m;
 
 kR_phi       = 8.81; %Lee2010
@@ -76,6 +78,8 @@ kOmega = kOmega_phi*eye(3);
 open('QRsim')
 sim('QRsim')
 
+R0.signals.values(:,:,1)
+
 %% Plots
 
 t = simout.time;
@@ -88,6 +92,28 @@ f = simout.signals.values(16,:);
 M = simout.signals.values(17:19,:);
 omegarot = simout.signals.values(20:23,:);
 fi = simout.signals.values(24:27,:);
+
+figure
+subplot(8,1,[1,2])
+plot(t,f)
+legend('f')
+subplot(8,1,[3,4])
+plot(t,M)
+legend('\tau_\phi','\tau_\theta','\tau_\psi')
+subplot 815
+plot(t,fi(1,:))
+legend('f_1')
+subplot 816
+plot(t,fi(2,:))
+legend('f_2')
+subplot 817
+plot(t,fi(3,:))
+legend('f_3')
+subplot 818
+plot(t,fi(4,:))
+legend('f_4')
+
+
 figure
 subplot 311
 plot(t,pos)
@@ -105,3 +131,4 @@ legend('p','q','r')
 subplot 212
 plot(t,dOmega)
 suptitle('Omega/dOmega')
+

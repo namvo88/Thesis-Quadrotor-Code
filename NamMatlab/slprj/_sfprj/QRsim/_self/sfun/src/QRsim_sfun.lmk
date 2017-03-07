@@ -20,12 +20,10 @@ OBJECTS = \
 	"c11_QRsim.obj"\
 	"c12_QRsim.obj"\
 	"c13_QRsim.obj"\
-	"c14_QRsim.obj"\
 	"c15_QRsim.obj"\
 	"c16_QRsim.obj"\
 	"c17_QRsim.obj"\
 	"c18_QRsim.obj"\
-	"c19_QRsim.obj"\
 	"c20_QRsim.obj"\
 	"QRsim_sfun_registry.obj"\
 	"lccstub.obj"\
@@ -75,8 +73,6 @@ c12_QRsim.obj :	"c12_QRsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c12_QRsim.c"
 c13_QRsim.obj :	"c13_QRsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c13_QRsim.c"
-c14_QRsim.obj :	"c14_QRsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c14_QRsim.c"
 c15_QRsim.obj :	"c15_QRsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c15_QRsim.c"
 c16_QRsim.obj :	"c16_QRsim.c"
@@ -85,8 +81,6 @@ c17_QRsim.obj :	"c17_QRsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c17_QRsim.c"
 c18_QRsim.obj :	"c18_QRsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c18_QRsim.c"
-c19_QRsim.obj :	"c19_QRsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c19_QRsim.c"
 c20_QRsim.obj :	"c20_QRsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c20_QRsim.c"
 QRsim_sfun_registry.obj :	"QRsim_sfun_registry.c"

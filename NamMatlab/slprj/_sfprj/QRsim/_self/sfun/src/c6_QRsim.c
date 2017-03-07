@@ -151,14 +151,14 @@ static void sf_c6_QRsim(SFc6_QRsimInstanceStruct *chartInstance)
   c6_b_omega = (real_T (*)[4])ssGetInputPortSignal(chartInstance->S, 0);
   _SFD_SYMBOL_SCOPE_PUSH(0U, 0U);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
-  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 5U, chartInstance->c6_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 4U, chartInstance->c6_sfEvent);
   for (c6_i0 = 0; c6_i0 < 4; c6_i0++) {
     _SFD_DATA_RANGE_CHECK((*c6_b_omega)[c6_i0], 0U);
   }
 
   _SFD_DATA_RANGE_CHECK(*c6_b_fcnomega, 1U);
   chartInstance->c6_sfEvent = CALL_EVENT;
-  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 5U, chartInstance->c6_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 4U, chartInstance->c6_sfEvent);
   for (c6_i1 = 0; c6_i1 < 4; c6_i1++) {
     c6_omega[c6_i1] = (*c6_b_omega)[c6_i1];
   }
@@ -178,7 +178,7 @@ static void sf_c6_QRsim(SFc6_QRsimInstanceStruct *chartInstance)
   _SFD_EML_CALL(0U, chartInstance->c6_sfEvent, -3);
   _SFD_SYMBOL_SCOPE_POP();
   *c6_b_fcnomega = c6_fcnomega;
-  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 5U, chartInstance->c6_sfEvent);
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 4U, chartInstance->c6_sfEvent);
   _SFD_SYMBOL_SCOPE_POP();
   _SFD_CHECK_FOR_STATE_INCONSISTENCY(_QRsimMachineNumber_,
     chartInstance->chartNumber, chartInstance->instanceNumber);
