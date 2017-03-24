@@ -8,23 +8,6 @@
 #include "multiword_types.h"
 
 /* Type Definitions */
-#ifndef struct_sMB5GaXc40ozYzvPFeCX3Q
-#define struct_sMB5GaXc40ozYzvPFeCX3Q
-
-struct sMB5GaXc40ozYzvPFeCX3Q
-{
-  int32_T dummy;
-};
-
-#endif                                 /*struct_sMB5GaXc40ozYzvPFeCX3Q*/
-
-#ifndef typedef_c13_coder_internal_cell_2
-#define typedef_c13_coder_internal_cell_2
-
-typedef struct sMB5GaXc40ozYzvPFeCX3Q c13_coder_internal_cell_2;
-
-#endif                                 /*typedef_c13_coder_internal_cell_2*/
-
 #ifndef typedef_SFc13_QRsimInstanceStruct
 #define typedef_SFc13_QRsimInstanceStruct
 

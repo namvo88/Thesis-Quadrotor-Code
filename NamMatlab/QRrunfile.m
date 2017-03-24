@@ -17,6 +17,10 @@ clear; clc; close all;
 xdes = [0;0;0];
 b1d = [1;0;0];
 
+% Attitude mode 0
+% Position mode 1
+mode = 1;
+
 %% Uncertainties
 
 Deltax = [-0.5; 0.2; 1]; %Goodarzi2013a
@@ -43,6 +47,9 @@ fsat = 1000;
 c_der = inf;
 
 %% Initial Conditions
+x0      = 0;
+y0      = 0;
+z0      = 0;
 dx0     = 0;
 dy0     = 0;
 dz0     = 0;
@@ -50,13 +57,14 @@ p0      = 0;
 q0      = 0;
 r0      = 0;
 
-x0      = 0;
-y0      = 0;
-z0      = 0;
-
-phi0    = 178;
+% degrees
+phi0    = 0;
 theta0  = 0;
 psi0    = 0;
+
+Rinit = [1      0       0;
+         0 -.9995 -0.0314;
+         0 0.0314 -0.9995];
 
 %% Gains
 
@@ -132,3 +140,14 @@ subplot 212
 plot(t,dOmega)
 suptitle('Omega/dOmega')
 
+errorfunc = simouterror.signals.values;
+figure
+plot(t,errorfunc)
+
+% figure
+% subplot 311
+% plot(t,R.signals.values(1,1,:))
+% subplot 312
+% plot(t,R.signals.values(2,:,:))
+% subplot 313
+% plot(t,R.signals.values(3,:,:))
