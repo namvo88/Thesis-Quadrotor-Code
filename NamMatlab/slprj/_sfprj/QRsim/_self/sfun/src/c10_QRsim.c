@@ -176,7 +176,11 @@ static void sf_c10_QRsim(SFc10_QRsimInstanceStruct *chartInstance)
   c10_b_anglesdes = (real_T (*)[3])ssGetInputPortSignal(chartInstance->S, 0);
   _SFD_SYMBOL_SCOPE_PUSH(0U, 0U);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
+<<<<<<< HEAD
   _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 9U, chartInstance->c10_sfEvent);
+=======
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 8U, chartInstance->c10_sfEvent);
+>>>>>>> developErrorAngularVelocity
   for (c10_i2 = 0; c10_i2 < 3; c10_i2++) {
     _SFD_DATA_RANGE_CHECK((*c10_b_anglesdes)[c10_i2], 0U);
   }
@@ -190,7 +194,11 @@ static void sf_c10_QRsim(SFc10_QRsimInstanceStruct *chartInstance)
   }
 
   chartInstance->c10_sfEvent = CALL_EVENT;
+<<<<<<< HEAD
   _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 9U, chartInstance->c10_sfEvent);
+=======
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 8U, chartInstance->c10_sfEvent);
+>>>>>>> developErrorAngularVelocity
   for (c10_i5 = 0; c10_i5 < 3; c10_i5++) {
     c10_anglesdes[c10_i5] = (*c10_b_anglesdes)[c10_i5];
   }
@@ -232,7 +240,11 @@ static void sf_c10_QRsim(SFc10_QRsimInstanceStruct *chartInstance)
     (*c10_b_eRlin)[c10_i7] = c10_eRlin[c10_i7];
   }
 
+<<<<<<< HEAD
   _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 9U, chartInstance->c10_sfEvent);
+=======
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 8U, chartInstance->c10_sfEvent);
+>>>>>>> developErrorAngularVelocity
   _SFD_SYMBOL_SCOPE_POP();
   _SFD_CHECK_FOR_STATE_INCONSISTENCY(_QRsimMachineNumber_,
     chartInstance->chartNumber, chartInstance->instanceNumber);

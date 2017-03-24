@@ -178,7 +178,11 @@ static void sf_c11_QRsim(SFc11_QRsimInstanceStruct *chartInstance)
   c11_R = (real_T (*)[9])ssGetInputPortSignal(chartInstance->S, 0);
   _SFD_SYMBOL_SCOPE_PUSH(0U, 0U);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
+<<<<<<< HEAD
   _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 10U, chartInstance->c11_sfEvent);
+=======
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 8U, chartInstance->c11_sfEvent);
+>>>>>>> developErrorAngularVelocity
   for (c11_i2 = 0; c11_i2 < 9; c11_i2++) {
     _SFD_DATA_RANGE_CHECK((*c11_R)[c11_i2], 0U);
   }
@@ -251,7 +255,11 @@ static void c11_chartstep_c11_QRsim(SFc11_QRsimInstanceStruct *chartInstance)
   c11_b_eOmega = (real_T (*)[3])ssGetOutputPortSignal(chartInstance->S, 1);
   c11_b_Rdes = (real_T (*)[9])ssGetInputPortSignal(chartInstance->S, 1);
   c11_b_R = (real_T (*)[9])ssGetInputPortSignal(chartInstance->S, 0);
+<<<<<<< HEAD
   _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 10U, chartInstance->c11_sfEvent);
+=======
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 8U, chartInstance->c11_sfEvent);
+>>>>>>> developErrorAngularVelocity
   for (c11_i7 = 0; c11_i7 < 9; c11_i7++) {
     c11_R[c11_i7] = (*c11_b_R)[c11_i7];
   }
@@ -339,7 +347,11 @@ static void c11_chartstep_c11_QRsim(SFc11_QRsimInstanceStruct *chartInstance)
     (*c11_b_eOmega)[c11_i26] = c11_eOmega[c11_i26];
   }
 
+<<<<<<< HEAD
   _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 10U, chartInstance->c11_sfEvent);
+=======
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 8U, chartInstance->c11_sfEvent);
+>>>>>>> developErrorAngularVelocity
 }
 
 static void initSimStructsc11_QRsim(SFc11_QRsimInstanceStruct *chartInstance)
@@ -953,10 +965,17 @@ extern void utFree(void*);
 
 void sf_c11_QRsim_get_check_sum(mxArray *plhs[])
 {
+<<<<<<< HEAD
   ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(336203474U);
   ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(3558199203U);
   ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(2146267279U);
   ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(2569525186U);
+=======
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2649996054U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(4173859257U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(690629180U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(167779798U);
+>>>>>>> developErrorAngularVelocity
 }
 
 mxArray *sf_c11_QRsim_get_autoinheritance_info(void)
@@ -968,7 +987,11 @@ mxArray *sf_c11_QRsim_get_autoinheritance_info(void)
     autoinheritanceFields);
 
   {
+<<<<<<< HEAD
     mxArray *mxChecksum = mxCreateString("daoeJafIg1hFbfD9yKt2OH");
+=======
+    mxArray *mxChecksum = mxCreateString("GBO8dKuO9MMCmbqBu6JeBE");
+>>>>>>> developErrorAngularVelocity
     mxSetField(mxAutoinheritanceInfo,0,"checksum",mxChecksum);
   }
 
@@ -1182,7 +1205,11 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
         /* Initialization of MATLAB Function Model Coverage */
         _SFD_CV_INIT_EML(0,1,1,0,0,0,0,0,0,0,0);
+<<<<<<< HEAD
         _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,103);
+=======
+        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,104);
+>>>>>>> developErrorAngularVelocity
 
         {
           unsigned int dimVector[2];
@@ -1252,7 +1279,11 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
 static const char* sf_get_instance_specialization(void)
 {
+<<<<<<< HEAD
   return "YAC4FvAf5FLvHoYw2ExpQC";
+=======
+  return "ZdPqCgH04eRlZknJXZ3ITC";
+>>>>>>> developErrorAngularVelocity
 }
 
 static void sf_opaque_initialize_c11_QRsim(void *chartInstanceVar)
@@ -1420,10 +1451,17 @@ static void mdlSetWorkWidths_c11_QRsim(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
+<<<<<<< HEAD
   ssSetChecksum0(S,(3127269874U));
   ssSetChecksum1(S,(1429634374U));
   ssSetChecksum2(S,(695757784U));
   ssSetChecksum3(S,(855591383U));
+=======
+  ssSetChecksum0(S,(1742418714U));
+  ssSetChecksum1(S,(1493738842U));
+  ssSetChecksum2(S,(3910317186U));
+  ssSetChecksum3(S,(1677400234U));
+>>>>>>> developErrorAngularVelocity
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
   ssSupportsMultipleExecInstances(S,1);

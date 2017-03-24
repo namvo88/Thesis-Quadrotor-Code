@@ -1334,10 +1334,17 @@ extern void utFree(void*);
 
 void sf_c17_QRsim_get_check_sum(mxArray *plhs[])
 {
+<<<<<<< HEAD
   ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(3167078039U);
   ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1211551480U);
   ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3821473329U);
   ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(1796177311U);
+=======
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1031158034U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1710809271U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(2241127776U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(201770516U);
+>>>>>>> developErrorAngularVelocity
 }
 
 mxArray *sf_c17_QRsim_get_autoinheritance_info(void)
@@ -1349,7 +1356,11 @@ mxArray *sf_c17_QRsim_get_autoinheritance_info(void)
     autoinheritanceFields);
 
   {
+<<<<<<< HEAD
     mxArray *mxChecksum = mxCreateString("HUEj4L4IBqQ9QNVzDJBLzB");
+=======
+    mxArray *mxChecksum = mxCreateString("koZV9gpTVk2tf9BAfSyrFB");
+>>>>>>> developErrorAngularVelocity
     mxSetField(mxAutoinheritanceInfo,0,"checksum",mxChecksum);
   }
 
@@ -1523,7 +1534,11 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
         /* Initialization of MATLAB Function Model Coverage */
         _SFD_CV_INIT_EML(0,1,1,0,0,0,0,0,0,0,0);
+<<<<<<< HEAD
         _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,64);
+=======
+        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,65);
+>>>>>>> developErrorAngularVelocity
 
         {
           unsigned int dimVector[2];
@@ -1566,7 +1581,11 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
 static const char* sf_get_instance_specialization(void)
 {
+<<<<<<< HEAD
   return "1d5KOMYPWDYeK19lX5AcOC";
+=======
+  return "rND7nIzQLBNfTHSQ2BAZkD";
+>>>>>>> developErrorAngularVelocity
 }
 
 static void sf_opaque_initialize_c17_QRsim(void *chartInstanceVar)
@@ -1732,10 +1751,17 @@ static void mdlSetWorkWidths_c17_QRsim(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
+<<<<<<< HEAD
   ssSetChecksum0(S,(1414020107U));
   ssSetChecksum1(S,(65019798U));
   ssSetChecksum2(S,(1311043841U));
   ssSetChecksum3(S,(4047063884U));
+=======
+  ssSetChecksum0(S,(3437571372U));
+  ssSetChecksum1(S,(2321594492U));
+  ssSetChecksum2(S,(279172333U));
+  ssSetChecksum3(S,(2033182157U));
+>>>>>>> developErrorAngularVelocity
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
   ssSupportsMultipleExecInstances(S,1);

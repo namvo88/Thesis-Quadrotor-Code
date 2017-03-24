@@ -25,7 +25,10 @@ OBJECTS = \
 	"c16_QRsim.obj"\
 	"c17_QRsim.obj"\
 	"c18_QRsim.obj"\
+<<<<<<< HEAD
 	"c19_QRsim.obj"\
+=======
+>>>>>>> developErrorAngularVelocity
 	"c20_QRsim.obj"\
 	"QRsim_sfun_registry.obj"\
 	"lccstub.obj"\
@@ -85,8 +88,11 @@ c17_QRsim.obj :	"c17_QRsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c17_QRsim.c"
 c18_QRsim.obj :	"c18_QRsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c18_QRsim.c"
+<<<<<<< HEAD
 c19_QRsim.obj :	"c19_QRsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c19_QRsim.c"
+=======
+>>>>>>> developErrorAngularVelocity
 c20_QRsim.obj :	"c20_QRsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c20_QRsim.c"
 QRsim_sfun_registry.obj :	"QRsim_sfun_registry.c"

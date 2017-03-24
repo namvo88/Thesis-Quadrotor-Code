@@ -17,7 +17,10 @@
 "c16_QRsim.obj"
 "c17_QRsim.obj"
 "c18_QRsim.obj"
+<<<<<<< HEAD
 "c19_QRsim.obj"
+=======
+>>>>>>> developErrorAngularVelocity
 "c20_QRsim.obj"
 "QRsim_sfun_registry.obj"
 "lccstub.obj"

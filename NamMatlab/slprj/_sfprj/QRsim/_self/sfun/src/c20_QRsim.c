@@ -17,8 +17,14 @@
 /* Variable Declarations */
 
 /* Variable Definitions */
+<<<<<<< HEAD
 static const char * c20_debug_family_names[8] = { "nargin", "nargout", "R",
   "Rdes", "Omegahat", "Omegades", "Omegaddes", "Out" };
+=======
+static const char * c20_debug_family_names[14] = { "p", "q", "r", "Omegahat",
+  "nargin", "nargout", "R", "Rdes", "Omega", "Omegades", "dOmegades", "Out1",
+  "Out2", "Out3" };
+>>>>>>> developErrorAngularVelocity
 
 /* Function Declarations */
 static void initialize_c20_QRsim(SFc20_QRsimInstanceStruct *chartInstance);
@@ -40,18 +46,38 @@ static void init_script_number_translation(uint32_T c20_machineNumber, uint32_T
 static const mxArray *c20_sf_marshallOut(void *chartInstanceVoid, void
   *c20_inData);
 static void c20_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance, const
+<<<<<<< HEAD
   mxArray *c20_Out, const char_T *c20_identifier, real_T c20_y[3]);
 static void c20_b_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
   const mxArray *c20_u, const emlrtMsgIdentifier *c20_parentId, real_T c20_y[3]);
+=======
+  mxArray *c20_Out3, const char_T *c20_identifier, real_T c20_y[9]);
+static void c20_b_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
+  const mxArray *c20_u, const emlrtMsgIdentifier *c20_parentId, real_T c20_y[9]);
+>>>>>>> developErrorAngularVelocity
 static void c20_sf_marshallIn(void *chartInstanceVoid, const mxArray
   *c20_mxArrayInData, const char_T *c20_varName, void *c20_outData);
 static const mxArray *c20_b_sf_marshallOut(void *chartInstanceVoid, void
   *c20_inData);
+<<<<<<< HEAD
 static const mxArray *c20_c_sf_marshallOut(void *chartInstanceVoid, void
   *c20_inData);
 static real_T c20_c_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
   const mxArray *c20_u, const emlrtMsgIdentifier *c20_parentId);
 static void c20_b_sf_marshallIn(void *chartInstanceVoid, const mxArray
+=======
+static void c20_c_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
+  const mxArray *c20_Out2, const char_T *c20_identifier, real_T c20_y[3]);
+static void c20_d_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
+  const mxArray *c20_u, const emlrtMsgIdentifier *c20_parentId, real_T c20_y[3]);
+static void c20_b_sf_marshallIn(void *chartInstanceVoid, const mxArray
+  *c20_mxArrayInData, const char_T *c20_varName, void *c20_outData);
+static const mxArray *c20_c_sf_marshallOut(void *chartInstanceVoid, void
+  *c20_inData);
+static real_T c20_e_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
+  const mxArray *c20_u, const emlrtMsgIdentifier *c20_parentId);
+static void c20_c_sf_marshallIn(void *chartInstanceVoid, const mxArray
+>>>>>>> developErrorAngularVelocity
   *c20_mxArrayInData, const char_T *c20_varName, void *c20_outData);
 static void c20_info_helper(const mxArray **c20_info);
 static const mxArray *c20_emlrt_marshallOut(char * c20_u);
@@ -60,6 +86,7 @@ static void c20_eml_scalar_eg(SFc20_QRsimInstanceStruct *chartInstance);
 static void c20_b_eml_scalar_eg(SFc20_QRsimInstanceStruct *chartInstance);
 static const mxArray *c20_d_sf_marshallOut(void *chartInstanceVoid, void
   *c20_inData);
+<<<<<<< HEAD
 static int32_T c20_d_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
   const mxArray *c20_u, const emlrtMsgIdentifier *c20_parentId);
 static void c20_c_sf_marshallIn(void *chartInstanceVoid, const mxArray
@@ -67,6 +94,15 @@ static void c20_c_sf_marshallIn(void *chartInstanceVoid, const mxArray
 static uint8_T c20_e_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
   const mxArray *c20_b_is_active_c20_QRsim, const char_T *c20_identifier);
 static uint8_T c20_f_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
+=======
+static int32_T c20_f_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
+  const mxArray *c20_u, const emlrtMsgIdentifier *c20_parentId);
+static void c20_d_sf_marshallIn(void *chartInstanceVoid, const mxArray
+  *c20_mxArrayInData, const char_T *c20_varName, void *c20_outData);
+static uint8_T c20_g_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
+  const mxArray *c20_b_is_active_c20_QRsim, const char_T *c20_identifier);
+static uint8_T c20_h_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
+>>>>>>> developErrorAngularVelocity
   const mxArray *c20_u, const emlrtMsgIdentifier *c20_parentId);
 static void init_dsm_address_info(SFc20_QRsimInstanceStruct *chartInstance);
 
@@ -105,6 +141,7 @@ static const mxArray *get_sim_state_c20_QRsim(SFc20_QRsimInstanceStruct
   int32_T c20_i0;
   real_T c20_u[3];
   const mxArray *c20_b_y = NULL;
+<<<<<<< HEAD
   uint8_T c20_hoistedGlobal;
   uint8_T c20_b_u;
   const mxArray *c20_c_y = NULL;
@@ -116,16 +153,63 @@ static const mxArray *get_sim_state_c20_QRsim(SFc20_QRsimInstanceStruct
   sf_mex_assign(&c20_y, sf_mex_createcellarray(2), FALSE);
   for (c20_i0 = 0; c20_i0 < 3; c20_i0++) {
     c20_u[c20_i0] = (*c20_Out)[c20_i0];
+=======
+  int32_T c20_i1;
+  real_T c20_b_u[3];
+  const mxArray *c20_c_y = NULL;
+  int32_T c20_i2;
+  real_T c20_c_u[9];
+  const mxArray *c20_d_y = NULL;
+  uint8_T c20_hoistedGlobal;
+  uint8_T c20_d_u;
+  const mxArray *c20_e_y = NULL;
+  real_T (*c20_Out3)[9];
+  real_T (*c20_Out2)[3];
+  real_T (*c20_Out1)[3];
+  c20_Out3 = (real_T (*)[9])ssGetOutputPortSignal(chartInstance->S, 3);
+  c20_Out2 = (real_T (*)[3])ssGetOutputPortSignal(chartInstance->S, 2);
+  c20_Out1 = (real_T (*)[3])ssGetOutputPortSignal(chartInstance->S, 1);
+  c20_st = NULL;
+  c20_st = NULL;
+  c20_y = NULL;
+  sf_mex_assign(&c20_y, sf_mex_createcellarray(4), FALSE);
+  for (c20_i0 = 0; c20_i0 < 3; c20_i0++) {
+    c20_u[c20_i0] = (*c20_Out1)[c20_i0];
+>>>>>>> developErrorAngularVelocity
   }
 
   c20_b_y = NULL;
   sf_mex_assign(&c20_b_y, sf_mex_create("y", c20_u, 0, 0U, 1U, 0U, 1, 3), FALSE);
   sf_mex_setcell(c20_y, 0, c20_b_y);
+<<<<<<< HEAD
   c20_hoistedGlobal = chartInstance->c20_is_active_c20_QRsim;
   c20_b_u = c20_hoistedGlobal;
   c20_c_y = NULL;
   sf_mex_assign(&c20_c_y, sf_mex_create("y", &c20_b_u, 3, 0U, 0U, 0U, 0), FALSE);
   sf_mex_setcell(c20_y, 1, c20_c_y);
+=======
+  for (c20_i1 = 0; c20_i1 < 3; c20_i1++) {
+    c20_b_u[c20_i1] = (*c20_Out2)[c20_i1];
+  }
+
+  c20_c_y = NULL;
+  sf_mex_assign(&c20_c_y, sf_mex_create("y", c20_b_u, 0, 0U, 1U, 0U, 1, 3),
+                FALSE);
+  sf_mex_setcell(c20_y, 1, c20_c_y);
+  for (c20_i2 = 0; c20_i2 < 9; c20_i2++) {
+    c20_c_u[c20_i2] = (*c20_Out3)[c20_i2];
+  }
+
+  c20_d_y = NULL;
+  sf_mex_assign(&c20_d_y, sf_mex_create("y", c20_c_u, 0, 0U, 1U, 0U, 2, 3, 3),
+                FALSE);
+  sf_mex_setcell(c20_y, 2, c20_d_y);
+  c20_hoistedGlobal = chartInstance->c20_is_active_c20_QRsim;
+  c20_d_u = c20_hoistedGlobal;
+  c20_e_y = NULL;
+  sf_mex_assign(&c20_e_y, sf_mex_create("y", &c20_d_u, 3, 0U, 0U, 0U, 0), FALSE);
+  sf_mex_setcell(c20_y, 3, c20_e_y);
+>>>>>>> developErrorAngularVelocity
   sf_mex_assign(&c20_st, c20_y, FALSE);
   return c20_st;
 }
@@ -135,6 +219,7 @@ static void set_sim_state_c20_QRsim(SFc20_QRsimInstanceStruct *chartInstance,
 {
   const mxArray *c20_u;
   real_T c20_dv0[3];
+<<<<<<< HEAD
   int32_T c20_i1;
   real_T (*c20_Out)[3];
   c20_Out = (real_T (*)[3])ssGetOutputPortSignal(chartInstance->S, 1);
@@ -148,6 +233,41 @@ static void set_sim_state_c20_QRsim(SFc20_QRsimInstanceStruct *chartInstance,
 
   chartInstance->c20_is_active_c20_QRsim = c20_e_emlrt_marshallIn(chartInstance,
     sf_mex_dup(sf_mex_getcell(c20_u, 1)), "is_active_c20_QRsim");
+=======
+  int32_T c20_i3;
+  real_T c20_dv1[3];
+  int32_T c20_i4;
+  real_T c20_dv2[9];
+  int32_T c20_i5;
+  real_T (*c20_Out1)[3];
+  real_T (*c20_Out2)[3];
+  real_T (*c20_Out3)[9];
+  c20_Out3 = (real_T (*)[9])ssGetOutputPortSignal(chartInstance->S, 3);
+  c20_Out2 = (real_T (*)[3])ssGetOutputPortSignal(chartInstance->S, 2);
+  c20_Out1 = (real_T (*)[3])ssGetOutputPortSignal(chartInstance->S, 1);
+  chartInstance->c20_doneDoubleBufferReInit = TRUE;
+  c20_u = sf_mex_dup(c20_st);
+  c20_c_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c20_u, 0)),
+    "Out1", c20_dv0);
+  for (c20_i3 = 0; c20_i3 < 3; c20_i3++) {
+    (*c20_Out1)[c20_i3] = c20_dv0[c20_i3];
+  }
+
+  c20_c_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c20_u, 1)),
+    "Out2", c20_dv1);
+  for (c20_i4 = 0; c20_i4 < 3; c20_i4++) {
+    (*c20_Out2)[c20_i4] = c20_dv1[c20_i4];
+  }
+
+  c20_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c20_u, 2)),
+                       "Out3", c20_dv2);
+  for (c20_i5 = 0; c20_i5 < 9; c20_i5++) {
+    (*c20_Out3)[c20_i5] = c20_dv2[c20_i5];
+  }
+
+  chartInstance->c20_is_active_c20_QRsim = c20_g_emlrt_marshallIn(chartInstance,
+    sf_mex_dup(sf_mex_getcell(c20_u, 3)), "is_active_c20_QRsim");
+>>>>>>> developErrorAngularVelocity
   sf_mex_destroy(&c20_u);
   c20_update_debugger_state_c20_QRsim(chartInstance);
   sf_mex_destroy(&c20_st);
@@ -159,6 +279,7 @@ static void finalize_c20_QRsim(SFc20_QRsimInstanceStruct *chartInstance)
 
 static void sf_c20_QRsim(SFc20_QRsimInstanceStruct *chartInstance)
 {
+<<<<<<< HEAD
   int32_T c20_i2;
   int32_T c20_i3;
   int32_T c20_i4;
@@ -175,10 +296,35 @@ static void sf_c20_QRsim(SFc20_QRsimInstanceStruct *chartInstance)
   c20_Omegades = (real_T (*)[3])ssGetInputPortSignal(chartInstance->S, 3);
   c20_Omegahat = (real_T (*)[9])ssGetInputPortSignal(chartInstance->S, 2);
   c20_Out = (real_T (*)[3])ssGetOutputPortSignal(chartInstance->S, 1);
+=======
+  int32_T c20_i6;
+  int32_T c20_i7;
+  int32_T c20_i8;
+  int32_T c20_i9;
+  int32_T c20_i10;
+  int32_T c20_i11;
+  int32_T c20_i12;
+  int32_T c20_i13;
+  real_T (*c20_Out3)[9];
+  real_T (*c20_Out2)[3];
+  real_T (*c20_dOmegades)[3];
+  real_T (*c20_Omegades)[3];
+  real_T (*c20_Omega)[3];
+  real_T (*c20_Out1)[3];
+  real_T (*c20_Rdes)[9];
+  real_T (*c20_R)[9];
+  c20_Out3 = (real_T (*)[9])ssGetOutputPortSignal(chartInstance->S, 3);
+  c20_Out2 = (real_T (*)[3])ssGetOutputPortSignal(chartInstance->S, 2);
+  c20_dOmegades = (real_T (*)[3])ssGetInputPortSignal(chartInstance->S, 4);
+  c20_Omegades = (real_T (*)[3])ssGetInputPortSignal(chartInstance->S, 3);
+  c20_Omega = (real_T (*)[3])ssGetInputPortSignal(chartInstance->S, 2);
+  c20_Out1 = (real_T (*)[3])ssGetOutputPortSignal(chartInstance->S, 1);
+>>>>>>> developErrorAngularVelocity
   c20_Rdes = (real_T (*)[9])ssGetInputPortSignal(chartInstance->S, 1);
   c20_R = (real_T (*)[9])ssGetInputPortSignal(chartInstance->S, 0);
   _SFD_SYMBOL_SCOPE_PUSH(0U, 0U);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
+<<<<<<< HEAD
   _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 19U, chartInstance->c20_sfEvent);
   for (c20_i2 = 0; c20_i2 < 9; c20_i2++) {
     _SFD_DATA_RANGE_CHECK((*c20_R)[c20_i2], 0U);
@@ -202,6 +348,39 @@ static void sf_c20_QRsim(SFc20_QRsimInstanceStruct *chartInstance)
 
   for (c20_i7 = 0; c20_i7 < 3; c20_i7++) {
     _SFD_DATA_RANGE_CHECK((*c20_Omegaddes)[c20_i7], 5U);
+=======
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 18U, chartInstance->c20_sfEvent);
+  for (c20_i6 = 0; c20_i6 < 9; c20_i6++) {
+    _SFD_DATA_RANGE_CHECK((*c20_R)[c20_i6], 0U);
+  }
+
+  for (c20_i7 = 0; c20_i7 < 9; c20_i7++) {
+    _SFD_DATA_RANGE_CHECK((*c20_Rdes)[c20_i7], 1U);
+  }
+
+  for (c20_i8 = 0; c20_i8 < 3; c20_i8++) {
+    _SFD_DATA_RANGE_CHECK((*c20_Out1)[c20_i8], 2U);
+  }
+
+  for (c20_i9 = 0; c20_i9 < 3; c20_i9++) {
+    _SFD_DATA_RANGE_CHECK((*c20_Omega)[c20_i9], 3U);
+  }
+
+  for (c20_i10 = 0; c20_i10 < 3; c20_i10++) {
+    _SFD_DATA_RANGE_CHECK((*c20_Omegades)[c20_i10], 4U);
+  }
+
+  for (c20_i11 = 0; c20_i11 < 3; c20_i11++) {
+    _SFD_DATA_RANGE_CHECK((*c20_dOmegades)[c20_i11], 5U);
+  }
+
+  for (c20_i12 = 0; c20_i12 < 3; c20_i12++) {
+    _SFD_DATA_RANGE_CHECK((*c20_Out2)[c20_i12], 6U);
+  }
+
+  for (c20_i13 = 0; c20_i13 < 9; c20_i13++) {
+    _SFD_DATA_RANGE_CHECK((*c20_Out3)[c20_i13], 7U);
+>>>>>>> developErrorAngularVelocity
   }
 
   chartInstance->c20_sfEvent = CALL_EVENT;
@@ -213,6 +392,7 @@ static void sf_c20_QRsim(SFc20_QRsimInstanceStruct *chartInstance)
 
 static void c20_chartstep_c20_QRsim(SFc20_QRsimInstanceStruct *chartInstance)
 {
+<<<<<<< HEAD
   int32_T c20_i8;
   real_T c20_R[9];
   int32_T c20_i9;
@@ -258,17 +438,69 @@ static void c20_chartstep_c20_QRsim(SFc20_QRsimInstanceStruct *chartInstance)
   int32_T c20_i36;
   int32_T c20_i37;
   int32_T c20_i38;
+=======
+  int32_T c20_i14;
+  real_T c20_R[9];
+  int32_T c20_i15;
+  real_T c20_Rdes[9];
+  int32_T c20_i16;
+  real_T c20_Omega[3];
+  int32_T c20_i17;
+  real_T c20_Omegades[3];
+  int32_T c20_i18;
+  real_T c20_dOmegades[3];
+  uint32_T c20_debug_family_var_map[14];
+  real_T c20_p;
+  real_T c20_q;
+  real_T c20_r;
+  real_T c20_Omegahat[9];
+  real_T c20_nargin = 5.0;
+  real_T c20_nargout = 3.0;
+  real_T c20_Out1[3];
+  real_T c20_Out2[3];
+  real_T c20_Out3[9];
+  int32_T c20_i19;
+  real_T c20_a[9];
+  int32_T c20_i20;
+  int32_T c20_i21;
+  int32_T c20_i22;
+  int32_T c20_i23;
+  real_T c20_b[9];
+  int32_T c20_i24;
+  int32_T c20_i25;
+  int32_T c20_i26;
+  real_T c20_y[9];
+  int32_T c20_i27;
+  int32_T c20_i28;
+  int32_T c20_i29;
+  int32_T c20_i30;
+  int32_T c20_i31;
+  int32_T c20_i32;
+  real_T c20_b_y[9];
+  int32_T c20_i33;
+  int32_T c20_i34;
+  int32_T c20_i35;
+  real_T c20_b_b[3];
+  int32_T c20_i36;
+  int32_T c20_i37;
+  int32_T c20_i38;
+  real_T c20_C[3];
+>>>>>>> developErrorAngularVelocity
   int32_T c20_i39;
   int32_T c20_i40;
   int32_T c20_i41;
   int32_T c20_i42;
   int32_T c20_i43;
   int32_T c20_i44;
+<<<<<<< HEAD
   real_T c20_c_y[3];
+=======
+>>>>>>> developErrorAngularVelocity
   int32_T c20_i45;
   int32_T c20_i46;
   int32_T c20_i47;
   int32_T c20_i48;
+<<<<<<< HEAD
   real_T (*c20_b_Out)[3];
   real_T (*c20_b_Omegaddes)[3];
   real_T (*c20_b_Omegades)[3];
@@ -351,6 +583,136 @@ static void c20_chartstep_c20_QRsim(SFc20_QRsimInstanceStruct *chartInstance)
 
   for (c20_i23 = 0; c20_i23 < 9; c20_i23++) {
     c20_b[c20_i23] = c20_Rdes[c20_i23];
+=======
+  int32_T c20_i49;
+  int32_T c20_i50;
+  int32_T c20_i51;
+  int32_T c20_i52;
+  int32_T c20_i53;
+  int32_T c20_i54;
+  int32_T c20_i55;
+  int32_T c20_i56;
+  int32_T c20_i57;
+  int32_T c20_i58;
+  int32_T c20_i59;
+  int32_T c20_i60;
+  int32_T c20_i61;
+  int32_T c20_i62;
+  int32_T c20_i63;
+  int32_T c20_i64;
+  int32_T c20_i65;
+  int32_T c20_i66;
+  int32_T c20_i67;
+  int32_T c20_i68;
+  int32_T c20_i69;
+  int32_T c20_i70;
+  int32_T c20_i71;
+  int32_T c20_i72;
+  int32_T c20_i73;
+  int32_T c20_i74;
+  int32_T c20_i75;
+  int32_T c20_i76;
+  int32_T c20_i77;
+  int32_T c20_i78;
+  int32_T c20_i79;
+  int32_T c20_i80;
+  int32_T c20_i81;
+  int32_T c20_i82;
+  int32_T c20_i83;
+  real_T (*c20_b_Out1)[3];
+  real_T (*c20_b_Out2)[3];
+  real_T (*c20_b_Out3)[9];
+  real_T (*c20_b_dOmegades)[3];
+  real_T (*c20_b_Omegades)[3];
+  real_T (*c20_b_Omega)[3];
+  real_T (*c20_b_Rdes)[9];
+  real_T (*c20_b_R)[9];
+  c20_b_Out3 = (real_T (*)[9])ssGetOutputPortSignal(chartInstance->S, 3);
+  c20_b_Out2 = (real_T (*)[3])ssGetOutputPortSignal(chartInstance->S, 2);
+  c20_b_dOmegades = (real_T (*)[3])ssGetInputPortSignal(chartInstance->S, 4);
+  c20_b_Omegades = (real_T (*)[3])ssGetInputPortSignal(chartInstance->S, 3);
+  c20_b_Omega = (real_T (*)[3])ssGetInputPortSignal(chartInstance->S, 2);
+  c20_b_Out1 = (real_T (*)[3])ssGetOutputPortSignal(chartInstance->S, 1);
+  c20_b_Rdes = (real_T (*)[9])ssGetInputPortSignal(chartInstance->S, 1);
+  c20_b_R = (real_T (*)[9])ssGetInputPortSignal(chartInstance->S, 0);
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 18U, chartInstance->c20_sfEvent);
+  for (c20_i14 = 0; c20_i14 < 9; c20_i14++) {
+    c20_R[c20_i14] = (*c20_b_R)[c20_i14];
+  }
+
+  for (c20_i15 = 0; c20_i15 < 9; c20_i15++) {
+    c20_Rdes[c20_i15] = (*c20_b_Rdes)[c20_i15];
+  }
+
+  for (c20_i16 = 0; c20_i16 < 3; c20_i16++) {
+    c20_Omega[c20_i16] = (*c20_b_Omega)[c20_i16];
+  }
+
+  for (c20_i17 = 0; c20_i17 < 3; c20_i17++) {
+    c20_Omegades[c20_i17] = (*c20_b_Omegades)[c20_i17];
+  }
+
+  for (c20_i18 = 0; c20_i18 < 3; c20_i18++) {
+    c20_dOmegades[c20_i18] = (*c20_b_dOmegades)[c20_i18];
+  }
+
+  _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 14U, 14U, c20_debug_family_names,
+    c20_debug_family_var_map);
+  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c20_p, 0U, c20_c_sf_marshallOut,
+    c20_c_sf_marshallIn);
+  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c20_q, 1U, c20_c_sf_marshallOut,
+    c20_c_sf_marshallIn);
+  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c20_r, 2U, c20_c_sf_marshallOut,
+    c20_c_sf_marshallIn);
+  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(c20_Omegahat, 3U, c20_sf_marshallOut,
+    c20_sf_marshallIn);
+  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c20_nargin, 4U, c20_c_sf_marshallOut,
+    c20_c_sf_marshallIn);
+  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c20_nargout, 5U, c20_c_sf_marshallOut,
+    c20_c_sf_marshallIn);
+  _SFD_SYMBOL_SCOPE_ADD_EML(c20_R, 6U, c20_sf_marshallOut);
+  _SFD_SYMBOL_SCOPE_ADD_EML(c20_Rdes, 7U, c20_sf_marshallOut);
+  _SFD_SYMBOL_SCOPE_ADD_EML(c20_Omega, 8U, c20_b_sf_marshallOut);
+  _SFD_SYMBOL_SCOPE_ADD_EML(c20_Omegades, 9U, c20_b_sf_marshallOut);
+  _SFD_SYMBOL_SCOPE_ADD_EML(c20_dOmegades, 10U, c20_b_sf_marshallOut);
+  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(c20_Out1, 11U, c20_b_sf_marshallOut,
+    c20_b_sf_marshallIn);
+  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(c20_Out2, 12U, c20_b_sf_marshallOut,
+    c20_b_sf_marshallIn);
+  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(c20_Out3, 13U, c20_sf_marshallOut,
+    c20_sf_marshallIn);
+  CV_EML_FCN(0, 0);
+  _SFD_EML_CALL(0U, chartInstance->c20_sfEvent, 4);
+  c20_p = c20_Omega[0];
+  _SFD_EML_CALL(0U, chartInstance->c20_sfEvent, 5);
+  c20_q = c20_Omega[1];
+  _SFD_EML_CALL(0U, chartInstance->c20_sfEvent, 6);
+  c20_r = c20_Omega[2];
+  _SFD_EML_CALL(0U, chartInstance->c20_sfEvent, 8);
+  c20_Omegahat[0] = 0.0;
+  c20_Omegahat[3] = -c20_r;
+  c20_Omegahat[6] = c20_q;
+  c20_Omegahat[1] = c20_r;
+  c20_Omegahat[4] = 0.0;
+  c20_Omegahat[7] = -c20_p;
+  c20_Omegahat[2] = -c20_q;
+  c20_Omegahat[5] = c20_p;
+  c20_Omegahat[8] = 0.0;
+  _SFD_EML_CALL(0U, chartInstance->c20_sfEvent, 12);
+  for (c20_i19 = 0; c20_i19 < 9; c20_i19++) {
+    c20_a[c20_i19] = c20_Omegahat[c20_i19];
+  }
+
+  c20_i20 = 0;
+  for (c20_i21 = 0; c20_i21 < 3; c20_i21++) {
+    c20_i22 = 0;
+    for (c20_i23 = 0; c20_i23 < 3; c20_i23++) {
+      c20_b[c20_i23 + c20_i20] = c20_R[c20_i22 + c20_i21];
+      c20_i22 += 3;
+    }
+
+    c20_i20 += 3;
+>>>>>>> developErrorAngularVelocity
   }
 
   c20_eml_scalar_eg(chartInstance);
@@ -358,10 +720,17 @@ static void c20_chartstep_c20_QRsim(SFc20_QRsimInstanceStruct *chartInstance)
   for (c20_i24 = 0; c20_i24 < 3; c20_i24++) {
     c20_i25 = 0;
     for (c20_i26 = 0; c20_i26 < 3; c20_i26++) {
+<<<<<<< HEAD
       c20_a[c20_i25 + c20_i24] = 0.0;
       c20_i27 = 0;
       for (c20_i28 = 0; c20_i28 < 3; c20_i28++) {
         c20_a[c20_i25 + c20_i24] += c20_y[c20_i27 + c20_i24] * c20_b[c20_i28 +
+=======
+      c20_y[c20_i25 + c20_i24] = 0.0;
+      c20_i27 = 0;
+      for (c20_i28 = 0; c20_i28 < 3; c20_i28++) {
+        c20_y[c20_i25 + c20_i24] += c20_a[c20_i27 + c20_i24] * c20_b[c20_i28 +
+>>>>>>> developErrorAngularVelocity
           c20_i25];
         c20_i27 += 3;
       }
@@ -370,6 +739,7 @@ static void c20_chartstep_c20_QRsim(SFc20_QRsimInstanceStruct *chartInstance)
     }
   }
 
+<<<<<<< HEAD
   for (c20_i29 = 0; c20_i29 < 3; c20_i29++) {
     c20_b_b[c20_i29] = c20_Omegades[c20_i29];
   }
@@ -381,10 +751,30 @@ static void c20_chartstep_c20_QRsim(SFc20_QRsimInstanceStruct *chartInstance)
     c20_i31 = 0;
     for (c20_i32 = 0; c20_i32 < 3; c20_i32++) {
       c20_b_y[c20_i30] += c20_a[c20_i31 + c20_i30] * c20_b_b[c20_i32];
+=======
+  for (c20_i29 = 0; c20_i29 < 9; c20_i29++) {
+    c20_b[c20_i29] = c20_Rdes[c20_i29];
+  }
+
+  c20_eml_scalar_eg(chartInstance);
+  c20_eml_scalar_eg(chartInstance);
+  for (c20_i30 = 0; c20_i30 < 3; c20_i30++) {
+    c20_i31 = 0;
+    for (c20_i32 = 0; c20_i32 < 3; c20_i32++) {
+      c20_b_y[c20_i31 + c20_i30] = 0.0;
+      c20_i33 = 0;
+      for (c20_i34 = 0; c20_i34 < 3; c20_i34++) {
+        c20_b_y[c20_i31 + c20_i30] += c20_y[c20_i33 + c20_i30] * c20_b[c20_i34 +
+          c20_i31];
+        c20_i33 += 3;
+      }
+
+>>>>>>> developErrorAngularVelocity
       c20_i31 += 3;
     }
   }
 
+<<<<<<< HEAD
   c20_i33 = 0;
   for (c20_i34 = 0; c20_i34 < 3; c20_i34++) {
     c20_i35 = 0;
@@ -398,10 +788,66 @@ static void c20_chartstep_c20_QRsim(SFc20_QRsimInstanceStruct *chartInstance)
 
   for (c20_i37 = 0; c20_i37 < 9; c20_i37++) {
     c20_b[c20_i37] = c20_Rdes[c20_i37];
+=======
+  for (c20_i35 = 0; c20_i35 < 3; c20_i35++) {
+    c20_b_b[c20_i35] = c20_Omegades[c20_i35];
+  }
+
+  c20_b_eml_scalar_eg(chartInstance);
+  c20_b_eml_scalar_eg(chartInstance);
+  for (c20_i36 = 0; c20_i36 < 3; c20_i36++) {
+    c20_Out1[c20_i36] = 0.0;
+  }
+
+  for (c20_i37 = 0; c20_i37 < 3; c20_i37++) {
+    c20_Out1[c20_i37] = 0.0;
+  }
+
+  for (c20_i38 = 0; c20_i38 < 3; c20_i38++) {
+    c20_C[c20_i38] = c20_Out1[c20_i38];
+  }
+
+  for (c20_i39 = 0; c20_i39 < 3; c20_i39++) {
+    c20_Out1[c20_i39] = c20_C[c20_i39];
+  }
+
+  for (c20_i40 = 0; c20_i40 < 3; c20_i40++) {
+    c20_C[c20_i40] = c20_Out1[c20_i40];
+  }
+
+  for (c20_i41 = 0; c20_i41 < 3; c20_i41++) {
+    c20_Out1[c20_i41] = c20_C[c20_i41];
+  }
+
+  for (c20_i42 = 0; c20_i42 < 3; c20_i42++) {
+    c20_Out1[c20_i42] = 0.0;
+    c20_i43 = 0;
+    for (c20_i44 = 0; c20_i44 < 3; c20_i44++) {
+      c20_Out1[c20_i42] += c20_b_y[c20_i43 + c20_i42] * c20_b_b[c20_i44];
+      c20_i43 += 3;
+    }
+  }
+
+  _SFD_EML_CALL(0U, chartInstance->c20_sfEvent, 13);
+  c20_i45 = 0;
+  for (c20_i46 = 0; c20_i46 < 3; c20_i46++) {
+    c20_i47 = 0;
+    for (c20_i48 = 0; c20_i48 < 3; c20_i48++) {
+      c20_a[c20_i48 + c20_i45] = c20_R[c20_i47 + c20_i46];
+      c20_i47 += 3;
+    }
+
+    c20_i45 += 3;
+  }
+
+  for (c20_i49 = 0; c20_i49 < 9; c20_i49++) {
+    c20_b[c20_i49] = c20_Rdes[c20_i49];
+>>>>>>> developErrorAngularVelocity
   }
 
   c20_eml_scalar_eg(chartInstance);
   c20_eml_scalar_eg(chartInstance);
+<<<<<<< HEAD
   for (c20_i38 = 0; c20_i38 < 3; c20_i38++) {
     c20_i39 = 0;
     for (c20_i40 = 0; c20_i40 < 3; c20_i40++) {
@@ -419,10 +865,30 @@ static void c20_chartstep_c20_QRsim(SFc20_QRsimInstanceStruct *chartInstance)
 
   for (c20_i43 = 0; c20_i43 < 3; c20_i43++) {
     c20_b_b[c20_i43] = c20_Omegaddes[c20_i43];
+=======
+  for (c20_i50 = 0; c20_i50 < 3; c20_i50++) {
+    c20_i51 = 0;
+    for (c20_i52 = 0; c20_i52 < 3; c20_i52++) {
+      c20_y[c20_i51 + c20_i50] = 0.0;
+      c20_i53 = 0;
+      for (c20_i54 = 0; c20_i54 < 3; c20_i54++) {
+        c20_y[c20_i51 + c20_i50] += c20_a[c20_i53 + c20_i50] * c20_b[c20_i54 +
+          c20_i51];
+        c20_i53 += 3;
+      }
+
+      c20_i51 += 3;
+    }
+  }
+
+  for (c20_i55 = 0; c20_i55 < 3; c20_i55++) {
+    c20_b_b[c20_i55] = c20_dOmegades[c20_i55];
+>>>>>>> developErrorAngularVelocity
   }
 
   c20_b_eml_scalar_eg(chartInstance);
   c20_b_eml_scalar_eg(chartInstance);
+<<<<<<< HEAD
   for (c20_i44 = 0; c20_i44 < 3; c20_i44++) {
     c20_c_y[c20_i44] = 0.0;
     c20_i45 = 0;
@@ -443,6 +909,113 @@ static void c20_chartstep_c20_QRsim(SFc20_QRsimInstanceStruct *chartInstance)
   }
 
   _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 19U, chartInstance->c20_sfEvent);
+=======
+  for (c20_i56 = 0; c20_i56 < 3; c20_i56++) {
+    c20_Out2[c20_i56] = 0.0;
+  }
+
+  for (c20_i57 = 0; c20_i57 < 3; c20_i57++) {
+    c20_Out2[c20_i57] = 0.0;
+  }
+
+  for (c20_i58 = 0; c20_i58 < 3; c20_i58++) {
+    c20_C[c20_i58] = c20_Out2[c20_i58];
+  }
+
+  for (c20_i59 = 0; c20_i59 < 3; c20_i59++) {
+    c20_Out2[c20_i59] = c20_C[c20_i59];
+  }
+
+  for (c20_i60 = 0; c20_i60 < 3; c20_i60++) {
+    c20_C[c20_i60] = c20_Out2[c20_i60];
+  }
+
+  for (c20_i61 = 0; c20_i61 < 3; c20_i61++) {
+    c20_Out2[c20_i61] = c20_C[c20_i61];
+  }
+
+  for (c20_i62 = 0; c20_i62 < 3; c20_i62++) {
+    c20_Out2[c20_i62] = 0.0;
+    c20_i63 = 0;
+    for (c20_i64 = 0; c20_i64 < 3; c20_i64++) {
+      c20_Out2[c20_i62] += c20_y[c20_i63 + c20_i62] * c20_b_b[c20_i64];
+      c20_i63 += 3;
+    }
+  }
+
+  _SFD_EML_CALL(0U, chartInstance->c20_sfEvent, 14);
+  c20_i65 = 0;
+  for (c20_i66 = 0; c20_i66 < 3; c20_i66++) {
+    c20_i67 = 0;
+    for (c20_i68 = 0; c20_i68 < 3; c20_i68++) {
+      c20_a[c20_i68 + c20_i65] = c20_R[c20_i67 + c20_i66];
+      c20_i67 += 3;
+    }
+
+    c20_i65 += 3;
+  }
+
+  for (c20_i69 = 0; c20_i69 < 9; c20_i69++) {
+    c20_b[c20_i69] = c20_Rdes[c20_i69];
+  }
+
+  c20_eml_scalar_eg(chartInstance);
+  c20_eml_scalar_eg(chartInstance);
+  for (c20_i70 = 0; c20_i70 < 9; c20_i70++) {
+    c20_Out3[c20_i70] = 0.0;
+  }
+
+  for (c20_i71 = 0; c20_i71 < 9; c20_i71++) {
+    c20_Out3[c20_i71] = 0.0;
+  }
+
+  for (c20_i72 = 0; c20_i72 < 9; c20_i72++) {
+    c20_b_y[c20_i72] = c20_Out3[c20_i72];
+  }
+
+  for (c20_i73 = 0; c20_i73 < 9; c20_i73++) {
+    c20_Out3[c20_i73] = c20_b_y[c20_i73];
+  }
+
+  for (c20_i74 = 0; c20_i74 < 9; c20_i74++) {
+    c20_b_y[c20_i74] = c20_Out3[c20_i74];
+  }
+
+  for (c20_i75 = 0; c20_i75 < 9; c20_i75++) {
+    c20_Out3[c20_i75] = c20_b_y[c20_i75];
+  }
+
+  for (c20_i76 = 0; c20_i76 < 3; c20_i76++) {
+    c20_i77 = 0;
+    for (c20_i78 = 0; c20_i78 < 3; c20_i78++) {
+      c20_Out3[c20_i77 + c20_i76] = 0.0;
+      c20_i79 = 0;
+      for (c20_i80 = 0; c20_i80 < 3; c20_i80++) {
+        c20_Out3[c20_i77 + c20_i76] += c20_a[c20_i79 + c20_i76] * c20_b[c20_i80
+          + c20_i77];
+        c20_i79 += 3;
+      }
+
+      c20_i77 += 3;
+    }
+  }
+
+  _SFD_EML_CALL(0U, chartInstance->c20_sfEvent, -14);
+  _SFD_SYMBOL_SCOPE_POP();
+  for (c20_i81 = 0; c20_i81 < 3; c20_i81++) {
+    (*c20_b_Out1)[c20_i81] = c20_Out1[c20_i81];
+  }
+
+  for (c20_i82 = 0; c20_i82 < 3; c20_i82++) {
+    (*c20_b_Out2)[c20_i82] = c20_Out2[c20_i82];
+  }
+
+  for (c20_i83 = 0; c20_i83 < 9; c20_i83++) {
+    (*c20_b_Out3)[c20_i83] = c20_Out3[c20_i83];
+  }
+
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 18U, chartInstance->c20_sfEvent);
+>>>>>>> developErrorAngularVelocity
 }
 
 static void initSimStructsc20_QRsim(SFc20_QRsimInstanceStruct *chartInstance)
@@ -458,14 +1031,26 @@ static const mxArray *c20_sf_marshallOut(void *chartInstanceVoid, void
   *c20_inData)
 {
   const mxArray *c20_mxArrayOutData = NULL;
+<<<<<<< HEAD
   int32_T c20_i49;
   real_T c20_b_inData[3];
   int32_T c20_i50;
   real_T c20_u[3];
+=======
+  int32_T c20_i84;
+  int32_T c20_i85;
+  int32_T c20_i86;
+  real_T c20_b_inData[9];
+  int32_T c20_i87;
+  int32_T c20_i88;
+  int32_T c20_i89;
+  real_T c20_u[9];
+>>>>>>> developErrorAngularVelocity
   const mxArray *c20_y = NULL;
   SFc20_QRsimInstanceStruct *chartInstance;
   chartInstance = (SFc20_QRsimInstanceStruct *)chartInstanceVoid;
   c20_mxArrayOutData = NULL;
+<<<<<<< HEAD
   for (c20_i49 = 0; c20_i49 < 3; c20_i49++) {
     c20_b_inData[c20_i49] = (*(real_T (*)[3])c20_inData)[c20_i49];
   }
@@ -476,16 +1061,44 @@ static const mxArray *c20_sf_marshallOut(void *chartInstanceVoid, void
 
   c20_y = NULL;
   sf_mex_assign(&c20_y, sf_mex_create("y", c20_u, 0, 0U, 1U, 0U, 1, 3), FALSE);
+=======
+  c20_i84 = 0;
+  for (c20_i85 = 0; c20_i85 < 3; c20_i85++) {
+    for (c20_i86 = 0; c20_i86 < 3; c20_i86++) {
+      c20_b_inData[c20_i86 + c20_i84] = (*(real_T (*)[9])c20_inData)[c20_i86 +
+        c20_i84];
+    }
+
+    c20_i84 += 3;
+  }
+
+  c20_i87 = 0;
+  for (c20_i88 = 0; c20_i88 < 3; c20_i88++) {
+    for (c20_i89 = 0; c20_i89 < 3; c20_i89++) {
+      c20_u[c20_i89 + c20_i87] = c20_b_inData[c20_i89 + c20_i87];
+    }
+
+    c20_i87 += 3;
+  }
+
+  c20_y = NULL;
+  sf_mex_assign(&c20_y, sf_mex_create("y", c20_u, 0, 0U, 1U, 0U, 2, 3, 3), FALSE);
+>>>>>>> developErrorAngularVelocity
   sf_mex_assign(&c20_mxArrayOutData, c20_y, FALSE);
   return c20_mxArrayOutData;
 }
 
 static void c20_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance, const
+<<<<<<< HEAD
   mxArray *c20_Out, const char_T *c20_identifier, real_T c20_y[3])
+=======
+  mxArray *c20_Out3, const char_T *c20_identifier, real_T c20_y[9])
+>>>>>>> developErrorAngularVelocity
 {
   emlrtMsgIdentifier c20_thisId;
   c20_thisId.fIdentifier = c20_identifier;
   c20_thisId.fParent = NULL;
+<<<<<<< HEAD
   c20_b_emlrt_marshallIn(chartInstance, sf_mex_dup(c20_Out), &c20_thisId, c20_y);
   sf_mex_destroy(&c20_Out);
 }
@@ -498,6 +1111,21 @@ static void c20_b_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
   sf_mex_import(c20_parentId, sf_mex_dup(c20_u), c20_dv1, 1, 0, 0U, 1, 0U, 1, 3);
   for (c20_i51 = 0; c20_i51 < 3; c20_i51++) {
     c20_y[c20_i51] = c20_dv1[c20_i51];
+=======
+  c20_b_emlrt_marshallIn(chartInstance, sf_mex_dup(c20_Out3), &c20_thisId, c20_y);
+  sf_mex_destroy(&c20_Out3);
+}
+
+static void c20_b_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
+  const mxArray *c20_u, const emlrtMsgIdentifier *c20_parentId, real_T c20_y[9])
+{
+  real_T c20_dv3[9];
+  int32_T c20_i90;
+  sf_mex_import(c20_parentId, sf_mex_dup(c20_u), c20_dv3, 1, 0, 0U, 1, 0U, 2, 3,
+                3);
+  for (c20_i90 = 0; c20_i90 < 9; c20_i90++) {
+    c20_y[c20_i90] = c20_dv3[c20_i90];
+>>>>>>> developErrorAngularVelocity
   }
 
   sf_mex_destroy(&c20_u);
@@ -506,6 +1134,7 @@ static void c20_b_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
 static void c20_sf_marshallIn(void *chartInstanceVoid, const mxArray
   *c20_mxArrayInData, const char_T *c20_varName, void *c20_outData)
 {
+<<<<<<< HEAD
   const mxArray *c20_Out;
   const char_T *c20_identifier;
   emlrtMsgIdentifier c20_thisId;
@@ -521,6 +1150,30 @@ static void c20_sf_marshallIn(void *chartInstanceVoid, const mxArray
   sf_mex_destroy(&c20_Out);
   for (c20_i52 = 0; c20_i52 < 3; c20_i52++) {
     (*(real_T (*)[3])c20_outData)[c20_i52] = c20_y[c20_i52];
+=======
+  const mxArray *c20_Out3;
+  const char_T *c20_identifier;
+  emlrtMsgIdentifier c20_thisId;
+  real_T c20_y[9];
+  int32_T c20_i91;
+  int32_T c20_i92;
+  int32_T c20_i93;
+  SFc20_QRsimInstanceStruct *chartInstance;
+  chartInstance = (SFc20_QRsimInstanceStruct *)chartInstanceVoid;
+  c20_Out3 = sf_mex_dup(c20_mxArrayInData);
+  c20_identifier = c20_varName;
+  c20_thisId.fIdentifier = c20_identifier;
+  c20_thisId.fParent = NULL;
+  c20_b_emlrt_marshallIn(chartInstance, sf_mex_dup(c20_Out3), &c20_thisId, c20_y);
+  sf_mex_destroy(&c20_Out3);
+  c20_i91 = 0;
+  for (c20_i92 = 0; c20_i92 < 3; c20_i92++) {
+    for (c20_i93 = 0; c20_i93 < 3; c20_i93++) {
+      (*(real_T (*)[9])c20_outData)[c20_i93 + c20_i91] = c20_y[c20_i93 + c20_i91];
+    }
+
+    c20_i91 += 3;
+>>>>>>> developErrorAngularVelocity
   }
 
   sf_mex_destroy(&c20_mxArrayInData);
@@ -530,6 +1183,7 @@ static const mxArray *c20_b_sf_marshallOut(void *chartInstanceVoid, void
   *c20_inData)
 {
   const mxArray *c20_mxArrayOutData = NULL;
+<<<<<<< HEAD
   int32_T c20_i53;
   int32_T c20_i54;
   int32_T c20_i55;
@@ -538,10 +1192,17 @@ static const mxArray *c20_b_sf_marshallOut(void *chartInstanceVoid, void
   int32_T c20_i57;
   int32_T c20_i58;
   real_T c20_u[9];
+=======
+  int32_T c20_i94;
+  real_T c20_b_inData[3];
+  int32_T c20_i95;
+  real_T c20_u[3];
+>>>>>>> developErrorAngularVelocity
   const mxArray *c20_y = NULL;
   SFc20_QRsimInstanceStruct *chartInstance;
   chartInstance = (SFc20_QRsimInstanceStruct *)chartInstanceVoid;
   c20_mxArrayOutData = NULL;
+<<<<<<< HEAD
   c20_i53 = 0;
   for (c20_i54 = 0; c20_i54 < 3; c20_i54++) {
     for (c20_i55 = 0; c20_i55 < 3; c20_i55++) {
@@ -563,10 +1224,71 @@ static const mxArray *c20_b_sf_marshallOut(void *chartInstanceVoid, void
 
   c20_y = NULL;
   sf_mex_assign(&c20_y, sf_mex_create("y", c20_u, 0, 0U, 1U, 0U, 2, 3, 3), FALSE);
+=======
+  for (c20_i94 = 0; c20_i94 < 3; c20_i94++) {
+    c20_b_inData[c20_i94] = (*(real_T (*)[3])c20_inData)[c20_i94];
+  }
+
+  for (c20_i95 = 0; c20_i95 < 3; c20_i95++) {
+    c20_u[c20_i95] = c20_b_inData[c20_i95];
+  }
+
+  c20_y = NULL;
+  sf_mex_assign(&c20_y, sf_mex_create("y", c20_u, 0, 0U, 1U, 0U, 1, 3), FALSE);
+>>>>>>> developErrorAngularVelocity
   sf_mex_assign(&c20_mxArrayOutData, c20_y, FALSE);
   return c20_mxArrayOutData;
 }
 
+<<<<<<< HEAD
+=======
+static void c20_c_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
+  const mxArray *c20_Out2, const char_T *c20_identifier, real_T c20_y[3])
+{
+  emlrtMsgIdentifier c20_thisId;
+  c20_thisId.fIdentifier = c20_identifier;
+  c20_thisId.fParent = NULL;
+  c20_d_emlrt_marshallIn(chartInstance, sf_mex_dup(c20_Out2), &c20_thisId, c20_y);
+  sf_mex_destroy(&c20_Out2);
+}
+
+static void c20_d_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
+  const mxArray *c20_u, const emlrtMsgIdentifier *c20_parentId, real_T c20_y[3])
+{
+  real_T c20_dv4[3];
+  int32_T c20_i96;
+  sf_mex_import(c20_parentId, sf_mex_dup(c20_u), c20_dv4, 1, 0, 0U, 1, 0U, 1, 3);
+  for (c20_i96 = 0; c20_i96 < 3; c20_i96++) {
+    c20_y[c20_i96] = c20_dv4[c20_i96];
+  }
+
+  sf_mex_destroy(&c20_u);
+}
+
+static void c20_b_sf_marshallIn(void *chartInstanceVoid, const mxArray
+  *c20_mxArrayInData, const char_T *c20_varName, void *c20_outData)
+{
+  const mxArray *c20_Out2;
+  const char_T *c20_identifier;
+  emlrtMsgIdentifier c20_thisId;
+  real_T c20_y[3];
+  int32_T c20_i97;
+  SFc20_QRsimInstanceStruct *chartInstance;
+  chartInstance = (SFc20_QRsimInstanceStruct *)chartInstanceVoid;
+  c20_Out2 = sf_mex_dup(c20_mxArrayInData);
+  c20_identifier = c20_varName;
+  c20_thisId.fIdentifier = c20_identifier;
+  c20_thisId.fParent = NULL;
+  c20_d_emlrt_marshallIn(chartInstance, sf_mex_dup(c20_Out2), &c20_thisId, c20_y);
+  sf_mex_destroy(&c20_Out2);
+  for (c20_i97 = 0; c20_i97 < 3; c20_i97++) {
+    (*(real_T (*)[3])c20_outData)[c20_i97] = c20_y[c20_i97];
+  }
+
+  sf_mex_destroy(&c20_mxArrayInData);
+}
+
+>>>>>>> developErrorAngularVelocity
 static const mxArray *c20_c_sf_marshallOut(void *chartInstanceVoid, void
   *c20_inData)
 {
@@ -583,7 +1305,11 @@ static const mxArray *c20_c_sf_marshallOut(void *chartInstanceVoid, void
   return c20_mxArrayOutData;
 }
 
+<<<<<<< HEAD
 static real_T c20_c_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
+=======
+static real_T c20_e_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
+>>>>>>> developErrorAngularVelocity
   const mxArray *c20_u, const emlrtMsgIdentifier *c20_parentId)
 {
   real_T c20_y;
@@ -594,7 +1320,11 @@ static real_T c20_c_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
   return c20_y;
 }
 
+<<<<<<< HEAD
 static void c20_b_sf_marshallIn(void *chartInstanceVoid, const mxArray
+=======
+static void c20_c_sf_marshallIn(void *chartInstanceVoid, const mxArray
+>>>>>>> developErrorAngularVelocity
   *c20_mxArrayInData, const char_T *c20_varName, void *c20_outData)
 {
   const mxArray *c20_nargout;
@@ -607,7 +1337,11 @@ static void c20_b_sf_marshallIn(void *chartInstanceVoid, const mxArray
   c20_identifier = c20_varName;
   c20_thisId.fIdentifier = c20_identifier;
   c20_thisId.fParent = NULL;
+<<<<<<< HEAD
   c20_y = c20_c_emlrt_marshallIn(chartInstance, sf_mex_dup(c20_nargout),
+=======
+  c20_y = c20_e_emlrt_marshallIn(chartInstance, sf_mex_dup(c20_nargout),
+>>>>>>> developErrorAngularVelocity
     &c20_thisId);
   sf_mex_destroy(&c20_nargout);
   *(real_T *)c20_outData = c20_y;
@@ -946,6 +1680,7 @@ static const mxArray *c20_d_sf_marshallOut(void *chartInstanceVoid, void
   return c20_mxArrayOutData;
 }
 
+<<<<<<< HEAD
 static int32_T c20_d_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
   const mxArray *c20_u, const emlrtMsgIdentifier *c20_parentId)
 {
@@ -953,11 +1688,24 @@ static int32_T c20_d_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
   int32_T c20_i59;
   sf_mex_import(c20_parentId, sf_mex_dup(c20_u), &c20_i59, 1, 6, 0U, 0, 0U, 0);
   c20_y = c20_i59;
+=======
+static int32_T c20_f_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
+  const mxArray *c20_u, const emlrtMsgIdentifier *c20_parentId)
+{
+  int32_T c20_y;
+  int32_T c20_i98;
+  sf_mex_import(c20_parentId, sf_mex_dup(c20_u), &c20_i98, 1, 6, 0U, 0, 0U, 0);
+  c20_y = c20_i98;
+>>>>>>> developErrorAngularVelocity
   sf_mex_destroy(&c20_u);
   return c20_y;
 }
 
+<<<<<<< HEAD
 static void c20_c_sf_marshallIn(void *chartInstanceVoid, const mxArray
+=======
+static void c20_d_sf_marshallIn(void *chartInstanceVoid, const mxArray
+>>>>>>> developErrorAngularVelocity
   *c20_mxArrayInData, const char_T *c20_varName, void *c20_outData)
 {
   const mxArray *c20_b_sfEvent;
@@ -970,27 +1718,43 @@ static void c20_c_sf_marshallIn(void *chartInstanceVoid, const mxArray
   c20_identifier = c20_varName;
   c20_thisId.fIdentifier = c20_identifier;
   c20_thisId.fParent = NULL;
+<<<<<<< HEAD
   c20_y = c20_d_emlrt_marshallIn(chartInstance, sf_mex_dup(c20_b_sfEvent),
+=======
+  c20_y = c20_f_emlrt_marshallIn(chartInstance, sf_mex_dup(c20_b_sfEvent),
+>>>>>>> developErrorAngularVelocity
     &c20_thisId);
   sf_mex_destroy(&c20_b_sfEvent);
   *(int32_T *)c20_outData = c20_y;
   sf_mex_destroy(&c20_mxArrayInData);
 }
 
+<<<<<<< HEAD
 static uint8_T c20_e_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
+=======
+static uint8_T c20_g_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
+>>>>>>> developErrorAngularVelocity
   const mxArray *c20_b_is_active_c20_QRsim, const char_T *c20_identifier)
 {
   uint8_T c20_y;
   emlrtMsgIdentifier c20_thisId;
   c20_thisId.fIdentifier = c20_identifier;
   c20_thisId.fParent = NULL;
+<<<<<<< HEAD
   c20_y = c20_f_emlrt_marshallIn(chartInstance, sf_mex_dup
+=======
+  c20_y = c20_h_emlrt_marshallIn(chartInstance, sf_mex_dup
+>>>>>>> developErrorAngularVelocity
     (c20_b_is_active_c20_QRsim), &c20_thisId);
   sf_mex_destroy(&c20_b_is_active_c20_QRsim);
   return c20_y;
 }
 
+<<<<<<< HEAD
 static uint8_T c20_f_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
+=======
+static uint8_T c20_h_emlrt_marshallIn(SFc20_QRsimInstanceStruct *chartInstance,
+>>>>>>> developErrorAngularVelocity
   const mxArray *c20_u, const emlrtMsgIdentifier *c20_parentId)
 {
   uint8_T c20_y;
@@ -1028,10 +1792,17 @@ extern void utFree(void*);
 
 void sf_c20_QRsim_get_check_sum(mxArray *plhs[])
 {
+<<<<<<< HEAD
   ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(378428756U);
   ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(3363977661U);
   ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(2522303667U);
   ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(1001558852U);
+=======
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(504882718U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2729306829U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(1821734205U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(3253499934U);
+>>>>>>> developErrorAngularVelocity
 }
 
 mxArray *sf_c20_QRsim_get_autoinheritance_info(void)
@@ -1043,7 +1814,11 @@ mxArray *sf_c20_QRsim_get_autoinheritance_info(void)
     autoinheritanceFields);
 
   {
+<<<<<<< HEAD
     mxArray *mxChecksum = mxCreateString("ULzsTicfXEgDNGqubyEAb");
+=======
+    mxArray *mxChecksum = mxCreateString("xaNOrYffsWwIZTSFjQvxcH");
+>>>>>>> developErrorAngularVelocity
     mxSetField(mxAutoinheritanceInfo,0,"checksum",mxChecksum);
   }
 
@@ -1094,7 +1869,11 @@ mxArray *sf_c20_QRsim_get_autoinheritance_info(void)
       mxArray *mxSize = mxCreateDoubleMatrix(1,2,mxREAL);
       double *pr = mxGetPr(mxSize);
       pr[0] = (double)(3);
+<<<<<<< HEAD
       pr[1] = (double)(3);
+=======
+      pr[1] = (double)(1);
+>>>>>>> developErrorAngularVelocity
       mxSetField(mxData,2,"size",mxSize);
     }
 
@@ -1157,7 +1936,11 @@ mxArray *sf_c20_QRsim_get_autoinheritance_info(void)
   {
     const char *dataFields[] = { "size", "type", "complexity" };
 
+<<<<<<< HEAD
     mxArray *mxData = mxCreateStructMatrix(1,1,3,dataFields);
+=======
+    mxArray *mxData = mxCreateStructMatrix(1,3,3,dataFields);
+>>>>>>> developErrorAngularVelocity
 
     {
       mxArray *mxSize = mxCreateDoubleMatrix(1,2,mxREAL);
@@ -1177,6 +1960,47 @@ mxArray *sf_c20_QRsim_get_autoinheritance_info(void)
     }
 
     mxSetField(mxData,0,"complexity",mxCreateDoubleScalar(0));
+<<<<<<< HEAD
+=======
+
+    {
+      mxArray *mxSize = mxCreateDoubleMatrix(1,2,mxREAL);
+      double *pr = mxGetPr(mxSize);
+      pr[0] = (double)(3);
+      pr[1] = (double)(1);
+      mxSetField(mxData,1,"size",mxSize);
+    }
+
+    {
+      const char *typeFields[] = { "base", "fixpt" };
+
+      mxArray *mxType = mxCreateStructMatrix(1,1,2,typeFields);
+      mxSetField(mxType,0,"base",mxCreateDoubleScalar(10));
+      mxSetField(mxType,0,"fixpt",mxCreateDoubleMatrix(0,0,mxREAL));
+      mxSetField(mxData,1,"type",mxType);
+    }
+
+    mxSetField(mxData,1,"complexity",mxCreateDoubleScalar(0));
+
+    {
+      mxArray *mxSize = mxCreateDoubleMatrix(1,2,mxREAL);
+      double *pr = mxGetPr(mxSize);
+      pr[0] = (double)(3);
+      pr[1] = (double)(3);
+      mxSetField(mxData,2,"size",mxSize);
+    }
+
+    {
+      const char *typeFields[] = { "base", "fixpt" };
+
+      mxArray *mxType = mxCreateStructMatrix(1,1,2,typeFields);
+      mxSetField(mxType,0,"base",mxCreateDoubleScalar(10));
+      mxSetField(mxType,0,"fixpt",mxCreateDoubleMatrix(0,0,mxREAL));
+      mxSetField(mxData,2,"type",mxType);
+    }
+
+    mxSetField(mxData,2,"complexity",mxCreateDoubleScalar(0));
+>>>>>>> developErrorAngularVelocity
     mxSetField(mxAutoinheritanceInfo,0,"outputs",mxData);
   }
 
@@ -1205,10 +2029,17 @@ static const mxArray *sf_get_sim_state_info_c20_QRsim(void)
 
   mxArray *mxInfo = mxCreateStructMatrix(1, 1, 2, infoFields);
   const char *infoEncStr[] = {
+<<<<<<< HEAD
     "100 S1x2'type','srcId','name','auxInfo'{{M[1],M[9],T\"Out\",},{M[8],M[0],T\"is_active_c20_QRsim\",}}"
   };
 
   mxArray *mxVarInfo = sf_mex_decode_encoded_mx_struct_array(infoEncStr, 2, 10);
+=======
+    "100 S1x4'type','srcId','name','auxInfo'{{M[1],M[9],T\"Out1\",},{M[1],M[13],T\"Out2\",},{M[1],M[14],T\"Out3\",},{M[8],M[0],T\"is_active_c20_QRsim\",}}"
+  };
+
+  mxArray *mxVarInfo = sf_mex_decode_encoded_mx_struct_array(infoEncStr, 4, 10);
+>>>>>>> developErrorAngularVelocity
   mxArray *mxChecksum = mxCreateDoubleMatrix(1, 4, mxREAL);
   sf_c20_QRsim_get_check_sum(&mxChecksum);
   mxSetField(mxInfo, 0, infoFields[0], mxChecksum);
@@ -1233,7 +2064,11 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
            20,
            1,
            1,
+<<<<<<< HEAD
            6,
+=======
+           8,
+>>>>>>> developErrorAngularVelocity
            0,
            0,
            0,
@@ -1258,10 +2093,19 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
             0);
           _SFD_SET_DATA_PROPS(0,1,1,0,"R");
           _SFD_SET_DATA_PROPS(1,1,1,0,"Rdes");
+<<<<<<< HEAD
           _SFD_SET_DATA_PROPS(2,2,0,1,"Out");
           _SFD_SET_DATA_PROPS(3,1,1,0,"Omegahat");
           _SFD_SET_DATA_PROPS(4,1,1,0,"Omegades");
           _SFD_SET_DATA_PROPS(5,1,1,0,"Omegaddes");
+=======
+          _SFD_SET_DATA_PROPS(2,2,0,1,"Out1");
+          _SFD_SET_DATA_PROPS(3,1,1,0,"Omega");
+          _SFD_SET_DATA_PROPS(4,1,1,0,"Omegades");
+          _SFD_SET_DATA_PROPS(5,1,1,0,"dOmegades");
+          _SFD_SET_DATA_PROPS(6,2,0,1,"Out2");
+          _SFD_SET_DATA_PROPS(7,2,0,1,"Out3");
+>>>>>>> developErrorAngularVelocity
           _SFD_STATE_INFO(0,0,2);
           _SFD_CH_SUBSTATE_COUNT(0);
           _SFD_CH_SUBSTATE_DECOMP(0);
@@ -1277,14 +2121,22 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
         /* Initialization of MATLAB Function Model Coverage */
         _SFD_CV_INIT_EML(0,1,1,0,0,0,0,0,0,0,0);
+<<<<<<< HEAD
         _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,129);
+=======
+        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,275);
+>>>>>>> developErrorAngularVelocity
 
         {
           unsigned int dimVector[2];
           dimVector[0]= 3;
           dimVector[1]= 3;
           _SFD_SET_DATA_COMPILED_PROPS(0,SF_DOUBLE,2,&(dimVector[0]),0,0,0,0.0,
+<<<<<<< HEAD
             1.0,0,0,(MexFcnForType)c20_b_sf_marshallOut,(MexInFcnForType)NULL);
+=======
+            1.0,0,0,(MexFcnForType)c20_sf_marshallOut,(MexInFcnForType)NULL);
+>>>>>>> developErrorAngularVelocity
         }
 
         {
@@ -1292,13 +2144,18 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           dimVector[0]= 3;
           dimVector[1]= 3;
           _SFD_SET_DATA_COMPILED_PROPS(1,SF_DOUBLE,2,&(dimVector[0]),0,0,0,0.0,
+<<<<<<< HEAD
             1.0,0,0,(MexFcnForType)c20_b_sf_marshallOut,(MexInFcnForType)NULL);
+=======
+            1.0,0,0,(MexFcnForType)c20_sf_marshallOut,(MexInFcnForType)NULL);
+>>>>>>> developErrorAngularVelocity
         }
 
         {
           unsigned int dimVector[1];
           dimVector[0]= 3;
           _SFD_SET_DATA_COMPILED_PROPS(2,SF_DOUBLE,1,&(dimVector[0]),0,0,0,0.0,
+<<<<<<< HEAD
             1.0,0,0,(MexFcnForType)c20_sf_marshallOut,(MexInFcnForType)
             c20_sf_marshallIn);
         }
@@ -1308,6 +2165,16 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           dimVector[0]= 3;
           dimVector[1]= 3;
           _SFD_SET_DATA_COMPILED_PROPS(3,SF_DOUBLE,2,&(dimVector[0]),0,0,0,0.0,
+=======
+            1.0,0,0,(MexFcnForType)c20_b_sf_marshallOut,(MexInFcnForType)
+            c20_b_sf_marshallIn);
+        }
+
+        {
+          unsigned int dimVector[1];
+          dimVector[0]= 3;
+          _SFD_SET_DATA_COMPILED_PROPS(3,SF_DOUBLE,1,&(dimVector[0]),0,0,0,0.0,
+>>>>>>> developErrorAngularVelocity
             1.0,0,0,(MexFcnForType)c20_b_sf_marshallOut,(MexInFcnForType)NULL);
         }
 
@@ -1315,19 +2182,45 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           unsigned int dimVector[1];
           dimVector[0]= 3;
           _SFD_SET_DATA_COMPILED_PROPS(4,SF_DOUBLE,1,&(dimVector[0]),0,0,0,0.0,
+<<<<<<< HEAD
             1.0,0,0,(MexFcnForType)c20_sf_marshallOut,(MexInFcnForType)NULL);
+=======
+            1.0,0,0,(MexFcnForType)c20_b_sf_marshallOut,(MexInFcnForType)NULL);
+>>>>>>> developErrorAngularVelocity
         }
 
         {
           unsigned int dimVector[1];
           dimVector[0]= 3;
           _SFD_SET_DATA_COMPILED_PROPS(5,SF_DOUBLE,1,&(dimVector[0]),0,0,0,0.0,
+<<<<<<< HEAD
             1.0,0,0,(MexFcnForType)c20_sf_marshallOut,(MexInFcnForType)NULL);
+=======
+            1.0,0,0,(MexFcnForType)c20_b_sf_marshallOut,(MexInFcnForType)NULL);
+        }
+
+        {
+          unsigned int dimVector[1];
+          dimVector[0]= 3;
+          _SFD_SET_DATA_COMPILED_PROPS(6,SF_DOUBLE,1,&(dimVector[0]),0,0,0,0.0,
+            1.0,0,0,(MexFcnForType)c20_b_sf_marshallOut,(MexInFcnForType)
+            c20_b_sf_marshallIn);
+        }
+
+        {
+          unsigned int dimVector[2];
+          dimVector[0]= 3;
+          dimVector[1]= 3;
+          _SFD_SET_DATA_COMPILED_PROPS(7,SF_DOUBLE,2,&(dimVector[0]),0,0,0,0.0,
+            1.0,0,0,(MexFcnForType)c20_sf_marshallOut,(MexInFcnForType)
+            c20_sf_marshallIn);
+>>>>>>> developErrorAngularVelocity
         }
 
         {
           real_T (*c20_R)[9];
           real_T (*c20_Rdes)[9];
+<<<<<<< HEAD
           real_T (*c20_Out)[3];
           real_T (*c20_Omegahat)[9];
           real_T (*c20_Omegades)[3];
@@ -1337,14 +2230,38 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           c20_Omegades = (real_T (*)[3])ssGetInputPortSignal(chartInstance->S, 3);
           c20_Omegahat = (real_T (*)[9])ssGetInputPortSignal(chartInstance->S, 2);
           c20_Out = (real_T (*)[3])ssGetOutputPortSignal(chartInstance->S, 1);
+=======
+          real_T (*c20_Out1)[3];
+          real_T (*c20_Omega)[3];
+          real_T (*c20_Omegades)[3];
+          real_T (*c20_dOmegades)[3];
+          real_T (*c20_Out2)[3];
+          real_T (*c20_Out3)[9];
+          c20_Out3 = (real_T (*)[9])ssGetOutputPortSignal(chartInstance->S, 3);
+          c20_Out2 = (real_T (*)[3])ssGetOutputPortSignal(chartInstance->S, 2);
+          c20_dOmegades = (real_T (*)[3])ssGetInputPortSignal(chartInstance->S,
+            4);
+          c20_Omegades = (real_T (*)[3])ssGetInputPortSignal(chartInstance->S, 3);
+          c20_Omega = (real_T (*)[3])ssGetInputPortSignal(chartInstance->S, 2);
+          c20_Out1 = (real_T (*)[3])ssGetOutputPortSignal(chartInstance->S, 1);
+>>>>>>> developErrorAngularVelocity
           c20_Rdes = (real_T (*)[9])ssGetInputPortSignal(chartInstance->S, 1);
           c20_R = (real_T (*)[9])ssGetInputPortSignal(chartInstance->S, 0);
           _SFD_SET_DATA_VALUE_PTR(0U, *c20_R);
           _SFD_SET_DATA_VALUE_PTR(1U, *c20_Rdes);
+<<<<<<< HEAD
           _SFD_SET_DATA_VALUE_PTR(2U, *c20_Out);
           _SFD_SET_DATA_VALUE_PTR(3U, *c20_Omegahat);
           _SFD_SET_DATA_VALUE_PTR(4U, *c20_Omegades);
           _SFD_SET_DATA_VALUE_PTR(5U, *c20_Omegaddes);
+=======
+          _SFD_SET_DATA_VALUE_PTR(2U, *c20_Out1);
+          _SFD_SET_DATA_VALUE_PTR(3U, *c20_Omega);
+          _SFD_SET_DATA_VALUE_PTR(4U, *c20_Omegades);
+          _SFD_SET_DATA_VALUE_PTR(5U, *c20_dOmegades);
+          _SFD_SET_DATA_VALUE_PTR(6U, *c20_Out2);
+          _SFD_SET_DATA_VALUE_PTR(7U, *c20_Out3);
+>>>>>>> developErrorAngularVelocity
         }
       }
     } else {
@@ -1357,7 +2274,11 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
 static const char* sf_get_instance_specialization(void)
 {
+<<<<<<< HEAD
   return "QHO9Vjm8ylvnGXlbWUf1UC";
+=======
+  return "BICTXeL6icsdBQ1PtnhyoB";
+>>>>>>> developErrorAngularVelocity
 }
 
 static void sf_opaque_initialize_c20_QRsim(void *chartInstanceVar)
@@ -1503,12 +2424,20 @@ static void mdlSetWorkWidths_c20_QRsim(SimStruct *S)
       sf_mark_chart_expressionable_inputs(S,sf_get_instance_specialization(),
         infoStruct,20,5);
       sf_mark_chart_reusable_outputs(S,sf_get_instance_specialization(),
+<<<<<<< HEAD
         infoStruct,20,1);
+=======
+        infoStruct,20,3);
+>>>>>>> developErrorAngularVelocity
     }
 
     {
       unsigned int outPortIdx;
+<<<<<<< HEAD
       for (outPortIdx=1; outPortIdx<=1; ++outPortIdx) {
+=======
+      for (outPortIdx=1; outPortIdx<=3; ++outPortIdx) {
+>>>>>>> developErrorAngularVelocity
         ssSetOutputPortOptimizeInIR(S, outPortIdx, 1U);
       }
     }
@@ -1526,10 +2455,17 @@ static void mdlSetWorkWidths_c20_QRsim(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
+<<<<<<< HEAD
   ssSetChecksum0(S,(1308252629U));
   ssSetChecksum1(S,(1621629751U));
   ssSetChecksum2(S,(2211440869U));
   ssSetChecksum3(S,(353012170U));
+=======
+  ssSetChecksum0(S,(3351371838U));
+  ssSetChecksum1(S,(2911500952U));
+  ssSetChecksum2(S,(2250221553U));
+  ssSetChecksum3(S,(1380288581U));
+>>>>>>> developErrorAngularVelocity
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
   ssSupportsMultipleExecInstances(S,1);
