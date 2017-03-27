@@ -32,7 +32,7 @@ Ixx    = 0.0820; %Lee2010
 Iyy    = 0.0845; %Lee2010
 Izz    = .1377; %Lee2010
 I      = diag([Ixx Iyy Izz]); %Goodarzi2014
-ctauf = 8.004e-4; %Lee2010
+ctauf = 8.004e-3; %Lee2010c
 
 b      = 0.1; %gok
 d      = 0.1; %gok
@@ -65,6 +65,24 @@ psi0    = 0;
 Rinit = [1      0       0;
          0 -.9995 -0.0314;
          0 0.0314 -0.9995];
+    
+
+% phi = 10;
+% theta = 0;
+% psi = 0;
+% 
+% Rz = [cosd(psi) sind(psi) 0; 
+%      -sind(psi) cosd(psi) 0; 
+%       0 0 1];
+% Ry = [cosd(theta) 0 -sind(theta);
+%       0 1 0;
+%       sin(theta) 0 cosd(theta)];
+% Rx = [1 0 0; 
+%       0 cosd(phi) sind(phi); 
+%       0 -sind(phi) cosd(phi)];  
+% Rzyx = (Rx*Ry*Rz);
+% Rinit = Rzyx;
+
 
 %% Gains
 
@@ -76,12 +94,14 @@ kR_theta     = 0.5;
 kR_psi       = 0.5;
 % kR           = diag([kR_phi;kR_theta;kR_psi]);
 kR = kR_phi*eye(3);
+% kR = 8.81;
 
 kOmega_phi   = 2.54; %Lee2010
 kOmega_theta = 0.5;
 kOmega_psi   = 0.5;
 % kOmega       = diag([kOmega_phi;kOmega_theta;kOmega_psi]);
 kOmega = kOmega_phi*eye(3);
+% kOmega = 2.54;
 
 open('QRsim')
 sim('QRsim')
@@ -133,6 +153,13 @@ plot(t,acc)
 suptitle('Position/Velocity/Acceleration')
 
 figure
+plot(t,pos,'linewidth',2)
+h_suptitle = suptitle('QR Position');
+set(h_suptitle,'FontSize',30);
+h_legend = legend('x','y','z','Location','Northwest');
+set(h_legend,'FontSize',25);
+
+figure
 subplot 211
 plot(t,Omega)
 legend('p','q','r')
@@ -140,9 +167,33 @@ subplot 212
 plot(t,dOmega)
 suptitle('Omega/dOmega')
 
-errorfunc = simouterror.signals.values;
+
 figure
-plot(t,errorfunc)
+errorfunc = simouterror.signals.values;
+plot(t,errorfunc,'linewidth',2)
+h_suptitle = suptitle('Error function');
+set(h_suptitle,'FontSize',30);
+h_legend = legend('\Psi(R,R_d)');
+set(h_legend,'FontSize',25);
+% ,'Position',[.8,.7,.1,.1]
+
+figure
+for j=1:3
+    for n=1:3
+        p=(j-1)*3+n;
+        subplot(3,3,p)
+        Rplot = reshape(R.signals.values(j,n,:),[length(R.signals.values),1]);
+        Rdesplot = reshape(Rdes.signals.values(j,n,:),[length(Rdes.signals.values),1]);        
+        hold on
+        axis([0 t(end) -1.2 1.2])
+        plot(t,Rplot,'linewidth',2)
+        plot(t,Rdesplot,'r--','linewidth',2)
+    end
+end
+h_suptitle = suptitle('R and R_d \in\Re^{3\times3}');
+set(h_suptitle,'FontSize',30);
+h_legend = legend('R','R_d');
+set(h_legend,'FontSize',25,'Position',[.8,.8,.1,.1]);
 
 % figure
 % subplot 311
