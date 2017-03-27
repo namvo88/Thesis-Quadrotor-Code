@@ -191,3 +191,16 @@ tests/results/*
 
 # K-develop
 *.kate-swp
+NamMatlab/QRsim.slx.autosave
+NamMatlab/QRsim_sfun.mexw64
+NamMatlab/developsim.slx.autosave
+NamMatlab/slprj/_sfprj/QRsim/_self/sfun/src/QRsim_sfun.c
+NamMatlab/slprj/_sfprj/QRsim/_self/sfun/src/QRsim_sfun.lmk
+NamMatlab/slprj/_sfprj/QRsim/_self/sfun/src/c10_QRsim.c
+NamMatlab/slprj/_sfprj/QRsim/_self/sfun/src/c13_QRsim.c
+NamMatlab/slprj/_sfprj/QRsim/_self/sfun/src/c14_QRsim.c
+NamMatlab/slprj/_sfprj/QRsim/_self/sfun/src/c17_QRsim.c
+NamMatlab/slprj/_sfprj/QRsim/_self/sfun/src/c1_QRsim.c
+NamMatlab/slprj/_sfprj/QRsim/_self/sfun/src/c20_QRsim.c
+NamMatlab/slprj/_sfprj/QRsim/_self/sfun/src/rtwtypeschksum.mat
+NamMatlab/slprj/_sfprj/QRsim/_self/sfun/src/sfun.map
