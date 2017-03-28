@@ -4,22 +4,28 @@ clear; clc; close all;
 % Warning: Using a default value of 0.2 for maximum step size.  The simulation step size will be
 % equal to or less than this value.  You can disable this diagnostic by setting 'Automatic solver
 % parameter selection' diagnostic to 'none' in the Diagnostics page of the configuration
-% parameters dialog 
+% parameters dialog
 % >> Changed to 'none'
 
-% The 'Array' format for saving outputs to the workspace requires all signals connected to the 
-% root outports to be scalar or 1-D arrays. For model 'QRsim' set the Format option in the 
+% The 'Array' format for saving outputs to the workspace requires all signals connected to the
+% root outports to be scalar or 1-D arrays. For model 'QRsim' set the Format option in the
 % 'Data Import/Export' page of the Configuration Parameters dialog to either 'Structure' or 'Structure with time'.
 % >> Changed to 'Structure with time'
 
-%% Input signals 
-
-xdes = [0;0;-2];
-b1d = [1;0;0];
+%% Input signals
 
 % Attitude mode 1
 % Position mode 0
 mode = 1;
+switch mode
+    case 1
+        disp('Attitude Controlled Mode')
+    case 0
+        disp('Position Controlled Mode')
+end
+
+xdes = [0;0;0]
+b1d = [1;0;0]
 
 %% Uncertainties
 
@@ -57,30 +63,30 @@ p0      = 0;
 q0      = 0;
 r0      = 0;
 
-% degrees
-phi0    = 0;
-theta0  = 0;
-psi0    = 0;
-
-Rinit = [1      0       0;
-         0 -.9995 -0.0314;
-         0 0.0314 -0.9995];
-
-phi = 20;
-theta = 0;
-psi = 0;
-
-Rz = [cosd(psi) sind(psi) 0; 
-     -sind(psi) cosd(psi) 0; 
-      0 0 1];
-Ry = [cosd(theta) 0 -sind(theta);
-      0 1 0;
-      sin(theta) 0 cosd(theta)];
-Rx = [1 0 0; 
-      0 cosd(phi) sind(phi); 
-      0 -sind(phi) cosd(phi)];  
-Rzyx = (Rx*Ry*Rz);
-Rinit = Rzyx;
+switch mode
+    case 1
+        phi = 20;
+        theta = 0;
+        psi = 0;
+        Rz = [cosd(psi) sind(psi) 0;
+            -sind(psi) cosd(psi) 0;
+            0 0 1];
+        Ry = [cosd(theta) 0 -sind(theta);
+            0 1 0;
+            sin(theta) 0 cosd(theta)];
+        Rx = [1 0 0;
+            0 cosd(phi) sind(phi);
+            0 -sind(phi) cosd(phi)];
+        Rzyx = (Rx*Ry*Rz);
+        Rinit = Rzyx
+    case 0
+        Rinit = [1      0       0;
+            0 -.9995 -0.0314;
+            0 0.0314 -0.9995]
+    otherwise
+        disp('No Control Mode selected, Rinit = eye(3)');
+        Rinit = eye(3)
+end
 
 
 %% Gains
@@ -105,7 +111,7 @@ kOmega = kOmega_phi*eye(3);
 open('QRsim')
 sim('QRsim')
 
-R0.signals.values(:,:,1)
+% R0.signals.values(:,:,1)
 
 %% Plots
 
@@ -115,6 +121,12 @@ vel = simout.signals.values(4:6,:);
 acc = simout.signals.values(7:9,:);
 Omega = simout.signals.values(10:12,:);
 dOmega = simout.signals.values(13:15,:);
+Omegad = simOmegad.signals.values(:,:).';
+Omegac = simOmegac.signals.values(:,:).';
+eOmegac = simrotationcerror.signals.values(1:3,:);
+eRc = simrotationcerror.signals.values(3:6,:);
+eOmegad = simrotationerror.signals.values(1:3,:);
+eRd = simrotationerror.signals.values(3:6,:);
 f = simout.signals.values(16,:);
 M = simout.signals.values(17:19,:);
 omegarot = simout.signals.values(20:23,:);
@@ -152,79 +164,153 @@ plot(t,acc)
 suptitle('Position/Velocity/Acceleration')
 
 figure
-plot(t,pos,'linewidth',2)
+plot(t,pos,'Linewidth',2)
 h_suptitle = suptitle('QR Position');
 set(h_suptitle,'FontSize',30);
 h_legend = legend('x','y','z');
 set(h_legend,'FontSize',25);
 
-figure
-subplot 211
-plot(t,Omega)
-legend('p','q','r')
-subplot 212
-plot(t,dOmega)
-suptitle('Omega/dOmega')
 
-
-figure
-errorfunc = simouterrorA.signals.values;
-plot(t,errorfunc,'linewidth',2)
-h_suptitle = suptitle('Attitude Error function');
+figure('Name','QR Position')
+subplot 311
+hold on
+plot(t,pos(1,:),'Linewidth',2)
+plot(t,xdes(1)*ones(size(pos(1,:))),'r--','Linewidth',2)
+% legend('p','p_d')
+h_t=ylabel('x');
+set(h_t, 'FontSize', 20);
+subplot 312
+hold on
+plot(t,pos(2,:),'Linewidth',2)
+plot(t,xdes(2)*ones(size(pos(2,:))),'r--','Linewidth',2)
+% legend('q','q_d')
+h_t=ylabel('y');
+set(h_t, 'FontSize', 20);
+subplot 313
+hold on
+plot(t,pos(3,:),'Linewidth',2)
+plot(t,xdes(3)*ones(size(pos(3,:))),'r--','Linewidth',2)
+% legend('r','r_d')
+h_t=ylabel('z');
+set(h_t, 'FontSize', 20);
+h_suptitle = suptitle('QR Position');
 set(h_suptitle,'FontSize',30);
-h_legend = legend('\Psi(R,R_c)');
+h_legend = legend('x','x_d');
 set(h_legend,'FontSize',25);
-% ,'Position',[.8,.7,.1,.1]
 
-figure
-errorfunc = simouterror.signals.values;
-plot(t,errorfunc,'linewidth',2)
-h_suptitle = suptitle('Attitude Error function');
-set(h_suptitle,'FontSize',30);
-h_legend = legend('\Psi(R,R_d)');
-set(h_legend,'FontSize',25);
-% ,'Position',[.8,.7,.1,.1]
-
-figure
-for j=1:3
-    for n=1:3
-        p=(j-1)*3+n;
-        subplot(3,3,p)
-        Rplot = reshape(R.signals.values(j,n,:),[length(R.signals.values),1]);
-        Rdesplot = reshape(Rdes.signals.values(j,n,:),[length(Rdes.signals.values),1]);        
+switch mode
+    case 1
+        figure
+        for j=1:3
+            for n=1:3
+                p=(j-1)*3+n;
+                subplot(3,3,p)
+                Rplot = reshape(R.signals.values(j,n,:),[length(R.signals.values),1]);
+                Rdesplot = reshape(Rdes.signals.values(j,n,:),[length(Rdes.signals.values),1]);
+                hold on
+                axis([0 t(end) -1.2 1.2])
+                plot(t,Rplot,'Linewidth',2)
+                plot(t,Rdesplot,'r--','Linewidth',2)
+            end
+        end
+        h_suptitle = suptitle('R and R_d \in\Re^{3\times3}');
+        set(h_suptitle,'FontSize',30);
+        h_legend = legend('R','R_d');
+        set(h_legend,'FontSize',25,'Position',[.8,.8,.1,.1]);
+        
+        figure('Name','Attitude Error Function')
+        errorfunc = simouterror.signals.values;
+        plot(t,errorfunc,'Linewidth',2)
+        h_suptitle = suptitle('Attitude Error function');
+        set(h_suptitle,'FontSize',30);
+%         h_legend = legend('\Psi(R,R_d)');
+%         set(h_legend,'FontSize',25);
+        % ,'Position',[.8,.7,.1,.1]
+        h_t=ylabel('\Psi(R,R_d)');
+        set(h_t, 'FontSize', 20);
+        
+        figure('Name','Angular Velocity')
+        subplot 311
         hold on
-        axis([0 t(end) -1.2 1.2])
-        plot(t,Rplot,'linewidth',2)
-        plot(t,Rdesplot,'r--','linewidth',2)
-    end
-end
-h_suptitle = suptitle('R and R_d \in\Re^{3\times3}');
-set(h_suptitle,'FontSize',30);
-h_legend = legend('R','R_d');
-set(h_legend,'FontSize',25,'Position',[.8,.8,.1,.1]);
-
-figure
-for j=1:3
-    for n=1:3
-        p=(j-1)*3+n;
-        subplot(3,3,p)
-        Rplot = reshape(R.signals.values(j,n,:),[length(R.signals.values),1]);
-        Rcplot = reshape(Rc.signals.values(j,n,:),[length(Rc.signals.values),1]);        
+        plot(t,Omega(1,:),'Linewidth',2)
+        plot(t,Omegad(1,:),'r--','Linewidth',2)
+        % legend('p','p_d')
+        h_t=ylabel('p');
+        set(h_t, 'FontSize', 20);
+        subplot 312
         hold on
-        axis([0 t(end) -1.2 1.2])
-        plot(t,Rplot,'linewidth',2)
-        plot(t,Rcplot,'r--','linewidth',2)
-    end
+        plot(t,Omega(2,:),'Linewidth',2)
+        plot(t,Omegad(2,:),'r--','Linewidth',2)
+        % legend('q','q_d')
+        h_t=ylabel('q');
+        set(h_t, 'FontSize', 20);
+        subplot 313
+        hold on
+        plot(t,Omega(3,:),'Linewidth',2)
+        plot(t,Omegad(3,:),'r--','Linewidth',2)
+        % legend('r','r_d')
+        h_t=ylabel('r');
+        set(h_t, 'FontSize', 20);
+        h_suptitle = suptitle('Angular Velocity');
+        set(h_suptitle,'FontSize',30);
+        h_legend = legend('\Omega','\Omega_d');
+        set(h_legend,'FontSize',25);
+        
+    case 0
+        figure
+        for j=1:3
+            for n=1:3
+                p=(j-1)*3+n;
+                subplot(3,3,p)
+                Rplot = reshape(R.signals.values(j,n,:),[length(R.signals.values),1]);
+                Rcplot = reshape(Rc.signals.values(j,n,:),[length(Rc.signals.values),1]);
+                hold on
+                axis([0 t(end) -1.2 1.2])
+                plot(t,Rplot,'Linewidth',2)
+                plot(t,Rcplot,'r--','Linewidth',2)
+            end
+        end
+        h_suptitle = suptitle('R and R_c \in\Re^{3\times3}');
+        set(h_suptitle,'FontSize',30);
+        h_legend = legend('R','R_c');
+        set(h_legend,'FontSize',25,'Position',[.8,.8,.1,.1]);
+        
+        figure
+        errorfunc = simouterrorA.signals.values;
+        plot(t,errorfunc,'Linewidth',2)
+        h_suptitle = suptitle('Attitude Error function');
+        set(h_suptitle,'FontSize',30);
+%         h_legend = legend('\Psi(R,R_c)');
+%         set(h_legend,'FontSize',25);
+        % ,'Position',[.8,.7,.1,.1]
+        h_t=ylabel('\Psi(R,R_c)');
+        set(h_t, 'FontSize', 20);
+        
+        figure('Name','Angular Velocity')
+        subplot 311
+        hold on
+        plot(t,Omega(1,:),'Linewidth',2)
+        plot(t,Omegac(1,:),'r--','Linewidth',2)
+        % legend('p','p_d')
+        h_t=title('p');
+        set(h_t, 'FontSize', 20);
+        subplot 312
+        hold on
+        plot(t,Omega(2,:),'Linewidth',2)
+        plot(t,Omegac(2,:),'r--','Linewidth',2)
+        % legend('q','q_d')
+        h_t=title('q');
+        set(h_t, 'FontSize', 20);
+        subplot 313
+        hold on
+        plot(t,Omega(3,:),'Linewidth',2)
+        plot(t,Omegac(3,:),'r--','Linewidth',2)
+        % legend('r','r_d')
+        h_t=title('r');
+        set(h_t, 'FontSize', 20);
+        h_suptitle = suptitle('Angular Velocity');
+        set(h_suptitle,'FontSize',30);
+        h_legend = legend('\Omega','\Omega_c');
+        set(h_legend,'FontSize',25);
+        
 end
-h_suptitle = suptitle('R and R_c \in\Re^{3\times3}');
-set(h_suptitle,'FontSize',30);
-h_legend = legend('R','R_c');
-set(h_legend,'FontSize',25,'Position',[.8,.8,.1,.1]);
-
-% figure
-% subplot 311
-% plot(t,R.signals.values(1,1,:))
-% subplot 312
-% plot(t,R.signals.values(2,:,:))
-% subplot 313
-% plot(t,R.signals.values(3,:,:))
