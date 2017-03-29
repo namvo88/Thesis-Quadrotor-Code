@@ -16,7 +16,7 @@ clear; clc; close all;
 
 % Attitude mode 1
 % Position mode 0
-mode = 1;
+mode = 0;
 switch mode
     case 1
         disp('Attitude Controlled Mode')
@@ -78,16 +78,16 @@ switch mode
             0 cosd(phi) sind(phi);
             0 -sind(phi) cosd(phi)];
         Rzyx = (Rx*Ry*Rz);
-        Rinit = Rzyx
+        Rinit = Rzyx;
     case 0
         Rinit = [1      0       0;
             0 -.9995 -0.0314;
-            0 0.0314 -0.9995]
+            0 0.0314 -0.9995];
     otherwise
         disp('No Control Mode selected, Rinit = eye(3)');
-        Rinit = eye(3)
+        Rinit = eye(3);
 end
-
+Rinit
 
 %% Gains
 
@@ -116,23 +116,31 @@ sim('QRsim')
 %% Plots
 
 t = simout.time;
+
 pos = simout.signals.values(1:3,:);
 vel = simout.signals.values(4:6,:);
 acc = simout.signals.values(7:9,:);
+posd = simposd.signals.values(1:3,:);
+veld = simposd.signals.values(3:6,:);
+accd = simposd.signals.values(7:9,:);
+
 Omega = simout.signals.values(10:12,:);
-dOmega = simout.signals.values(13:15,:);
 Omegad = simOmegad.signals.values(:,:).';
 Omegac = simOmegac.signals.values(:,:).';
-eOmegac = simrotationcerror.signals.values(1:3,:);
-eRc = simrotationcerror.signals.values(3:6,:);
-eOmegad = simrotationerror.signals.values(1:3,:);
-eRd = simrotationerror.signals.values(3:6,:);
+dOmega = simout.signals.values(13:15,:);
+
+eOmegac = simrotationcerror.signals.values(:,1:3);
+eRc = simrotationcerror.signals.values(:,4:6);
+eOmegad = simrotationerror.signals.values(:,1:3);
+eRd = simrotationerror.signals.values(:,4:6);
+errorfunc = simouterror.signals.values;
+
 f = simout.signals.values(16,:);
 M = simout.signals.values(17:19,:);
 omegarot = simout.signals.values(20:23,:);
 fi = simout.signals.values(24:27,:);
 
-figure
+figure('Name','Input overview')
 subplot(8,1,[1,2])
 plot(t,f)
 legend('f')
@@ -153,7 +161,7 @@ plot(t,fi(4,:))
 legend('f_4')
 
 
-figure
+figure('Name','QR Pos/Vel/Acc overview')
 subplot 311
 plot(t,pos)
 legend('x','y','z')
@@ -163,44 +171,46 @@ subplot 313
 plot(t,acc)
 suptitle('Position/Velocity/Acceleration')
 
-figure
-plot(t,pos,'Linewidth',2)
-h_suptitle = suptitle('QR Position');
-set(h_suptitle,'FontSize',30);
-h_legend = legend('x','y','z');
-set(h_legend,'FontSize',25);
-
+% figure
+% plot(t,pos,'Linewidth',2)
+% h_suptitle = suptitle('QR Position');
+% set(h_suptitle,'FontSize',30);
+% h_legend = legend('x','y','z');
+% set(h_legend,'FontSize',25);
 
 figure('Name','QR Position')
+h_suptitle = suptitle('QR Position');
+set(h_suptitle,'FontSize',30);
 subplot 311
 hold on
 plot(t,pos(1,:),'Linewidth',2)
 plot(t,xdes(1)*ones(size(pos(1,:))),'r--','Linewidth',2)
-% legend('p','p_d')
-h_t=ylabel('x');
-set(h_t, 'FontSize', 20);
+% h_t=ylabel('x');
+% set(h_t, 'FontSize', 20);
+h_legend = legend('x','x_d');
+set(h_legend,'FontSize',25);
 subplot 312
 hold on
 plot(t,pos(2,:),'Linewidth',2)
 plot(t,xdes(2)*ones(size(pos(2,:))),'r--','Linewidth',2)
-% legend('q','q_d')
-h_t=ylabel('y');
-set(h_t, 'FontSize', 20);
+% h_t=ylabel('y');
+% set(h_t, 'FontSize', 20);
+h_legend = legend('y','y_d');
+set(h_legend,'FontSize',25);
 subplot 313
 hold on
 plot(t,pos(3,:),'Linewidth',2)
 plot(t,xdes(3)*ones(size(pos(3,:))),'r--','Linewidth',2)
-% legend('r','r_d')
-h_t=ylabel('z');
-set(h_t, 'FontSize', 20);
-h_suptitle = suptitle('QR Position');
-set(h_suptitle,'FontSize',30);
-h_legend = legend('x','x_d');
+% h_t=ylabel('z');
+% set(h_t, 'FontSize', 20);
+h_legend = legend('z','z_d');
 set(h_legend,'FontSize',25);
 
+
+
 switch mode
-    case 1
-        figure
+    case 1 %Attitude
+        figure('Name','Rotation Matrices')
         for j=1:3
             for n=1:3
                 p=(j-1)*3+n;
@@ -217,15 +227,23 @@ switch mode
         set(h_suptitle,'FontSize',30);
         h_legend = legend('R','R_d');
         set(h_legend,'FontSize',25,'Position',[.8,.8,.1,.1]);
+
+        figure('Name','Attitude Errors')
+        h_suptitle = suptitle('Attitude Errors');
+        set(h_suptitle,'FontSize',30);
+        subplot 211
+        plot(t,eOmegad,'Linewidth',2)
+        h_legend = legend('e_{\Omega}');
+        set(h_legend,'FontSize',25);
+        subplot 212
+        plot(t,eRd,'Linewidth',2)
+        h_legend = legend('e_{R}');
+        set(h_legend,'FontSize',25);
         
         figure('Name','Attitude Error Function')
-        errorfunc = simouterror.signals.values;
         plot(t,errorfunc,'Linewidth',2)
         h_suptitle = suptitle('Attitude Error function');
         set(h_suptitle,'FontSize',30);
-%         h_legend = legend('\Psi(R,R_d)');
-%         set(h_legend,'FontSize',25);
-        % ,'Position',[.8,.7,.1,.1]
         h_t=ylabel('\Psi(R,R_d)');
         set(h_t, 'FontSize', 20);
         
@@ -234,21 +252,18 @@ switch mode
         hold on
         plot(t,Omega(1,:),'Linewidth',2)
         plot(t,Omegad(1,:),'r--','Linewidth',2)
-        % legend('p','p_d')
         h_t=ylabel('p');
         set(h_t, 'FontSize', 20);
         subplot 312
         hold on
         plot(t,Omega(2,:),'Linewidth',2)
         plot(t,Omegad(2,:),'r--','Linewidth',2)
-        % legend('q','q_d')
         h_t=ylabel('q');
         set(h_t, 'FontSize', 20);
         subplot 313
         hold on
         plot(t,Omega(3,:),'Linewidth',2)
         plot(t,Omegad(3,:),'r--','Linewidth',2)
-        % legend('r','r_d')
         h_t=ylabel('r');
         set(h_t, 'FontSize', 20);
         h_suptitle = suptitle('Angular Velocity');
@@ -256,8 +271,8 @@ switch mode
         h_legend = legend('\Omega','\Omega_d');
         set(h_legend,'FontSize',25);
         
-    case 0
-        figure
+    case 0 %Position
+        figure('Name','Rotation Matrices')
         for j=1:3
             for n=1:3
                 p=(j-1)*3+n;
@@ -275,37 +290,42 @@ switch mode
         h_legend = legend('R','R_c');
         set(h_legend,'FontSize',25,'Position',[.8,.8,.1,.1]);
         
-        figure
-        errorfunc = simouterrorA.signals.values;
+        figure('Name','Attitude Errors')
+        h_suptitle = suptitle('Attitude Errors');
+        set(h_suptitle,'FontSize',30);
+        subplot 211
+        plot(t,eOmegac,'Linewidth',2)
+        h_legend = legend('e_{\Omega}');
+        set(h_legend,'FontSize',25);
+        subplot 212
+        plot(t,eRc,'Linewidth',2)
+        h_legend = legend('e_{R}');
+        set(h_legend,'FontSize',25);
+                    
+        figure('Name','Attitude Error Function')
         plot(t,errorfunc,'Linewidth',2)
         h_suptitle = suptitle('Attitude Error function');
         set(h_suptitle,'FontSize',30);
-%         h_legend = legend('\Psi(R,R_c)');
-%         set(h_legend,'FontSize',25);
-        % ,'Position',[.8,.7,.1,.1]
-        h_t=ylabel('\Psi(R,R_c)');
-        set(h_t, 'FontSize', 20);
+        h_t=ylabel('\Psi(R,R_d)');
+        set(h_t, 'FontSize', 20);        
         
         figure('Name','Angular Velocity')
         subplot 311
         hold on
         plot(t,Omega(1,:),'Linewidth',2)
         plot(t,Omegac(1,:),'r--','Linewidth',2)
-        % legend('p','p_d')
         h_t=title('p');
         set(h_t, 'FontSize', 20);
         subplot 312
         hold on
         plot(t,Omega(2,:),'Linewidth',2)
         plot(t,Omegac(2,:),'r--','Linewidth',2)
-        % legend('q','q_d')
         h_t=title('q');
         set(h_t, 'FontSize', 20);
         subplot 313
         hold on
         plot(t,Omega(3,:),'Linewidth',2)
         plot(t,Omegac(3,:),'r--','Linewidth',2)
-        % legend('r','r_d')
         h_t=title('r');
         set(h_t, 'FontSize', 20);
         h_suptitle = suptitle('Angular Velocity');
