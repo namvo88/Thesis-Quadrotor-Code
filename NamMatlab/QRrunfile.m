@@ -27,6 +27,8 @@ end
 xdes = [0;0;0]
 b1d = [1;0;0]
 
+% Develop test
+
 %% Uncertainties
 
 Deltax = [-0.5; 0.2; 1]; %Goodarzi2013a
