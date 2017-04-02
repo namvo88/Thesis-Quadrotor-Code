@@ -24,7 +24,7 @@ switch mode
         disp('Position Controlled Mode')
 end
 
-xdes = [0;0;0]
+xdes = [1;1;1]
 b1d = [1;0;0]
 
 % Develop test
@@ -50,7 +50,7 @@ g      = 9.81;
 
 e3 = [0;0;1];
 
-fsat = 1000;
+fsat = [-1000 1000];
 
 c_der = inf;
 
@@ -110,10 +110,11 @@ kOmega_psi   = 0.5;
 kOmega = kOmega_phi*eye(3);
 % kOmega = 2.54;
 
+%% Simulation
+
 open('QRsim')
 sim('QRsim')
 
-% R0.signals.values(:,:,1)
 
 %% Plots
 

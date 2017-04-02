@@ -110,10 +110,11 @@ kOmega_psi   = 0.5;
 kOmega = kOmega_phi*eye(3);
 % kOmega = 2.54;
 
+%% Simulation
+
 open('QRsim')
 sim('QRsim')
 
-% R0.signals.values(:,:,1)
 
 %% Plots
 

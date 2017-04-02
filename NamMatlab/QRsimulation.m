@@ -1,20 +1,7 @@
-POS(:,:) = pos(:,:);
-X = pos(1,:);
-Y = pos(2,:);
-Z = -pos(3,:);
-
-% figure
-% hold on
-% plot3(POS(1,:),POS(2,:),POS(3,:))
-% plot3(POS(1,1),POS(2,1),POS(3,1),'gx')
-% plot3(POS(1,150),POS(2,150),POS(3,150),'bd')
-% plot3(POS(1,end),POS(2,end),POS(3,end),'ro')
-% xlabel('x')
-% ylabel('y')
-% zlabel('z')
-% view(90,0)
-% grid on
-% hold off
+POS = simout.signals.values(1:3,:);
+X = POS(1,:);
+Y = POS(2,:);
+Z = POS(3,:);
 
 %%
 tend = t(end);
@@ -26,57 +13,76 @@ xmax = max(X)+1;
 ymax = max(Y)+1;
 zmax = max(Z)+1;
 
-
+% I Frame 
 Ix = [1;0;0];
 Iy = [0;1;0];
 Iz = [0;0;-1];
 Iframe = [Ix Iy Iz];
-p0 = [0;0;0];
 
-% k = 50;
 
+% Bframe initial
 Bframe = R.signals.values(:,:,1);
+Bx = Bframe(:,1)+[X(1); Y(1); Z(1)];
 By = Bframe(:,2)+[X(1); Y(1); Z(1)];
 Bz = Bframe(:,3)+[X(1); Y(1); Z(1)];
 
 figure
-h = plot3(X(1),Y(1),Z(1),'rd'); %QR position
-hy = line([X(1) Bz(1)],[Y(1) Bz(2)],[Z(1) Bz(3)],'Color','green');
-hz = line([X(1) Bz(1)],[Y(1) Bz(2)],[Z(1) Bz(3)],'Color','blue');
-
-% h2 = plot3()
-% pause(0.5);
-
-% plot(Y(1),Z(1),'gx')
-% hold on
-% plot3(X(1),Y(1),Z(1),'gx')
-% axis([ymin ymax zmin zmax],'square')
-axis([xmin xmax ymin ymax zmin zmax],'square')
-% view(120,30)
-view(90,0)
-grid on
-% xlabel('x')
-% ylabel('y') 
-% zlabel('z')
-
+hold on
+% draw Iframe
 line([0 Ix(1)],[0 Ix(2)],[0 Ix(3)],'Color','red')
 line([0 Iy(1)],[0 Iy(2)],[0 Iy(3)],'Color','green')
 line([0 Iz(1)],[0 Iz(2)],[0 Iz(3)],'Color','blue')
-% hold off
 
+% draw init and xdes
+plot3(0,0,0,'g+','LineWidth',2)
+plot3(xdes(1),xdes(2),xdes(3),'r+','LineWidth',2)
 
+% draw initial Bframe
+hplot = plot3(X(1),Y(1),Z(1),'ro'); %QR initial position
+hx = line([X(1) Bx(1)],[Y(1) Bx(2)],[Z(1) Bx(3)],'Color','red');
+hy = line([X(1) By(1)],[Y(1) By(2)],[Z(1) By(3)],'Color','green');
+hz = line([X(1) Bz(1)],[Y(1) Bz(2)],[Z(1) Bz(3)],'Color','blue');
 
-for m=1:length(t)
-set(h,'xdata',X(m),'ydata',Y(m),'zdata',Z(m));
-By = (R.signals.values(:,2,m))+[X(m); Y(m); Z(m)];
-Bz = (R.signals.values(:,3,m))+[X(m); Y(m); Z(m)];
+axis([xmin xmax ymin ymax zmin zmax],'vis3d')
+view(120,30)
+% view(90,0)
 
-set(hy,'xdata',[X(m) By(1)],'ydata',[Y(m) By(2)],'zdata',[Z(m) By(3)]);
-set(hz,'xdata',[X(m) Bz(1)],'ydata',[Y(m) Bz(2)],'zdata',[Z(m) Bz(3)]);
+grid on
+xlabel('x')
+ylabel('y') 
+zlabel('z')
+% 
+% for k=1:length(t)
+%     hold on
+%     plot3(X(k),Y(k),Z(k),'c+')
+% end
+Bcog = ones(3,length(t));
+
+for k=1:length(t)
+set(hplot,'xdata',X(k),'ydata',Y(k),'zdata',Z(k));
+Bcog(:,k) = [X(k); Y(k); Z(k)];
+Bx(:,k) = Bcog(:,k)+(R.signals.values(:,1,k));
+By(:,k) = Bcog(:,k)+(R.signals.values(:,2,k));
+Bz(:,k) = Bcog(:,k)-(R.signals.values(:,3,k));
+end
+
+while waitforbuttonpress ~= 0 ; 
+  pause(0.01) ; % allow for ctrl-c
+end
+
+for k=1:length(t)
+set(hplot,'xdata',X(k),'ydata',Y(k),'zdata',Z(k));
+% Bcog = [X(k); Y(k); Z(k)];
+% Bx = Bcog+(R.signals.values(:,1,k));
+% By = Bcog+(R.signals.values(:,2,k));
+% Bz = Bcog-(R.signals.values(:,3,k));
+
+set(hx,'xdata',[X(k) Bx(1,k)],'ydata',[Y(k) Bx(2,k)],'zdata',[Z(k) Bx(3,k)]);
+set(hy,'xdata',[X(k) By(1,k)],'ydata',[Y(k) By(2,k)],'zdata',[Z(k) By(3,k)]);
+set(hz,'xdata',[X(k) Bz(1,k)],'ydata',[Y(k) Bz(2,k)],'zdata',[Z(k) Bz(3,k)]);
 
 pause(ts);
 
-drawnow
+% drawnow
 end
-% plot3(POS(1,end),POS(2,end),POS(3,end),'ro')
-% hold off
+
