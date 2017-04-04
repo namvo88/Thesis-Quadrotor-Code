@@ -24,8 +24,8 @@ switch mode
         disp('Position Controlled Mode')
 end
 
-xdes = [1;1;1]
-b1d = [1;0;0]
+xdes = [0 0 0]';
+b1d = [1 0 0]';
 
 % Develop test
 
