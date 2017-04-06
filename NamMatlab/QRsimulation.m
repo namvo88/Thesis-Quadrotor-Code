@@ -22,9 +22,9 @@ Iframe = [Ix Iy Iz];
 
 % Bframe initial
 Bframe = R.signals.values(:,:,1);
-Bx = Bframe(:,1)+[X(1); Y(1); Z(1)];
-By = Bframe(:,2)+[X(1); Y(1); Z(1)];
-Bz = Bframe(:,3)+[X(1); Y(1); Z(1)];
+Bx = [X(1); Y(1); Z(1)]+Bframe(:,1);
+By = [X(1); Y(1); Z(1)]+Bframe(:,2);
+Bz = [X(1); Y(1); Z(1)]-Bframe(:,3);
 
 figure
 hold on
@@ -44,8 +44,8 @@ hy = line([X(1) By(1)],[Y(1) By(2)],[Z(1) By(3)],'Color','green');
 hz = line([X(1) Bz(1)],[Y(1) Bz(2)],[Z(1) Bz(3)],'Color','blue');
 
 axis([xmin xmax ymin ymax zmin zmax],'vis3d')
-view(120,30)
-% view(90,0)
+% view(120,30)
+view(90,0)
 
 grid on
 xlabel('x')

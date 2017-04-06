@@ -16,7 +16,7 @@ clear; clc; close all;
 
 % Attitude mode 1
 % Position mode 0
-mode = 0;
+mode = 1;
 switch mode
     case 1
         disp('Attitude Controlled Mode')
@@ -24,8 +24,14 @@ switch mode
         disp('Position Controlled Mode')
 end
 
-xdes = [0 0 0]';
-b1d = [1 0 0]';
+Tend_sim = 10;
+Ts_sim = 0.01;
+t = 0:Ts_sim:Tend_sim;
+
+xdes  = [0; 0; 0];
+xLdes = [0; 0; 0];
+
+b1d = [1; 0; 0];
 
 % Develop test
 
@@ -35,17 +41,21 @@ Deltax = [-0.5; 0.2; 1]; %Goodarzi2013a
 DeltaR = [0.2; -0.1; 0.02]; %Goodarzi2013a
 
 %% Constants
-m      = 4.34; %Lee2010 %weight bebop 420 g
+mQ      = 4.34; %Lee2010 %weight bebop 420 g
 Ixx    = 0.0820; %Lee2010
 Iyy    = 0.0845; %Lee2010
 Izz    = .1377; %Lee2010
 I      = diag([Ixx Iyy Izz]); %Goodarzi2014
 ctauf = 8.004e-3; %Lee2010c
 
+mL = 0.5;
+lL = 0.5;
+
 b      = 0.1; %gok
 d      = 0.1; %gok
 Ir     = 0.5; %gok
 l      = 0.315; %Lee2010 %wingspan bebop 248 mm
+
 g      = 9.81;
 
 e3 = [0;0;1];
@@ -65,23 +75,27 @@ p0      = 0;
 q0      = 0;
 r0      = 0;
 
+qvec0 = [0;0;1];
+omega0 = [0;0;0];
+
 switch mode
-    case 1
-        phi = 20;
-        theta = 0;
-        psi = 0;
-        Rz = [cosd(psi) sind(psi) 0;
-            -sind(psi) cosd(psi) 0;
-            0 0 1];
-        Ry = [cosd(theta) 0 -sind(theta);
-            0 1 0;
-            sin(theta) 0 cosd(theta)];
-        Rx = [1 0 0;
-            0 cosd(phi) sind(phi);
-            0 -sind(phi) cosd(phi)];
-        Rzyx = (Rx*Ry*Rz);
-        Rinit = Rzyx;
-    case 0
+    case 1 %Attitude control
+%         phi = 90;
+%         theta = 0;
+%         psi = 0;
+%         Rz = [cosd(psi) sind(psi) 0;
+%             -sind(psi) cosd(psi) 0;
+%             0 0 1];
+%         Ry = [cosd(theta) 0 -sind(theta);
+%             0 1 0;
+%             sin(theta) 0 cosd(theta)];
+%         Rx = [1 0 0;
+%             0 cosd(phi) sind(phi);
+%             0 -sind(phi) cosd(phi)];
+%         Rzyx = (Rx*Ry*Rz);
+%         Rinit = Rzyx;
+        Rinit = eye(3);
+    case 0 %Position control
         Rinit = [1      0       0;
             0 -.9995 -0.0314;
             0 0.0314 -0.9995];
@@ -93,8 +107,8 @@ Rinit
 
 %% Gains
 
-kx = 16*m;
-kv = 5.6*m;
+kx = 16*mQ;
+kv = 5.6*mQ;
 
 kR_phi       = 8.81; %Lee2010
 kR_theta     = 0.5;
@@ -118,8 +132,9 @@ sim('QRsim')
 
 %% Plots
 
-QRplots
+% QRplots
+QRLplots
 
 %% Animation
 
-QRsimulation
+% QRsimulation

@@ -122,6 +122,7 @@ saveas(gcf,strcat(foldername,'QRPosition.png'));
 
 switch mode
     case 1 %Attitude
+        modename = 'Attitude Mode';        
         figure('Name','Rotation Matrices')
         for j=1:3
             for n=1:3
@@ -133,65 +134,69 @@ switch mode
                 axis([0 t(end) -1.2 1.2])
                 plot(t,Rplot,'Linewidth',2)
                 plot(t,Rdesplot,'r--','Linewidth',2)
+                set(gca,'FontSize',16);
+                if k==8
+                    xlabel('Time [s]','FontSize', 20)
+                end                
             end
         end
         h_suptitle = suptitle('R and R_d \in\Re^{3\times3}');
         set(h_suptitle,'FontSize',30);
         h_legend = legend('R','R_d');
         set(h_legend,'FontSize',25,'Position',[.8,.8,.1,.1]);
-        set(gca,'FontSize',16);
-        saveas(gcf,strcat(foldername,'RotationMatrices1.png'));
+        saveas(gcf,strcat(foldername,'RotationMatrix1.png'));
 
         figure('Name','Attitude Errors')
-        h_suptitle = suptitle('Attitude Errors');
+        h_suptitle = suptitle(strcat('Attitude Errors: ',modename));
         set(h_suptitle,'FontSize',30);
         subplot 211
-        plot(t,eOmegad,'Linewidth',2)
-        h_legend = legend('e_{\Omega}');
-        set(h_legend,'FontSize',25);
+        plot(t,eOmegad,'Linewidth',2);
+        ylabel('e_{\Omega}','FontSize',20);
+        set(gca,'FontSize',16);
+        legend('e_p','e_q','e_r','FontSize',25);
         subplot 212
         plot(t,eRd,'Linewidth',2)
-        h_legend = legend('e_{R}');
-        set(h_legend,'FontSize',25);
+        ylabel('e_{R_d}','FontSize',20);
+        xlabel('Time [s]','FontSize', 20)
         set(gca,'FontSize',16);
-        saveas(gcf,strcat(foldername,'AttitudeErrors1.png'));
-        
+        legend('e_{R,1}','e_{R,2}','e_{R,3}','FontSize',25);        
+        saveas(gcf,strcat(foldername,'AttitudeErrors1.png'));        
+
         figure('Name','Attitude Error Function')
         plot(t,errorfunc,'Linewidth',2)
+        xlabel('Time [s]','FontSize', 20)
+        ylabel('\Psi(R,R_d)','FontSize', 20);
         h_suptitle = suptitle('Attitude Error function');
-        set(h_suptitle,'FontSize',30);
-        h_t=ylabel('\Psi(R,R_d)');
-        set(h_t, 'FontSize', 20);
-        set(gca,'FontSize',16);
-        saveas(gcf,strcat(foldername,'AttitudeErrorFunction1.png'));
-        
+        set(h_suptitle,'FontSize',30);      
+        set(gca,'FontSize',16);        
+        saveas(gcf,strcat(foldername,'AttitudeErrorFunction1.png'));        
+
         figure('Name','Angular Velocity')
         subplot 311
         hold on
         plot(t,Omega(1,:),'Linewidth',2)
         plot(t,Omegad(1,:),'r--','Linewidth',2)
-        h_t=ylabel('p');
-        set(h_t, 'FontSize', 20);
+        ylabel('p [rad/s]', 'FontSize', 20);
+        set(gca,'FontSize',16);
         subplot 312
         hold on
         plot(t,Omega(2,:),'Linewidth',2)
         plot(t,Omegad(2,:),'r--','Linewidth',2)
-        xlabel('Time','FontSize',20)
-        ylabel('q','FontSize',20);
+        ylabel('q [rad/s]', 'FontSize', 20);
+        set(gca,'FontSize',16);
         subplot 313
         hold on
         plot(t,Omega(3,:),'Linewidth',2)
         plot(t,Omegad(3,:),'r--','Linewidth',2)
-        h_t=ylabel('r');
-        set(h_t, 'FontSize', 20);
-        h_suptitle = suptitle('Angular Velocity');
+        ylabel('r [rad/s]', 'FontSize', 20);
+        xlabel('Time [s]','FontSize', 20)
+        h_suptitle = suptitle('Angular Velocity \Omega');
         set(h_suptitle,'FontSize',30);
-        h_legend = legend('\Omega','\Omega_d');
-        set(h_legend,'FontSize',25);
+        legend('\Omega','\Omega_c','FontSize',25);
         set(gca,'FontSize',16);
-        saveas(gcf,strcat(foldername,'AngularVelocity1.png'));
+        saveas(gcf,strcat(foldername,'AngularVelocity1.png'));           
         
-        saveas(hQRPosOverview,strcat(foldername,'PosVelAccOverview.png'),1);
+        saveas(hQRPosOverview,strcat(foldername,'PosVelAccOverview1.png'));
 
         
     case 0 %Position
@@ -269,6 +274,6 @@ switch mode
         set(gca,'FontSize',16);
         saveas(gcf,strcat(foldername,'AngularVelocity0.png'));      
         
-        saveas(hQRPosOverview,strcat(foldername,'PosVelAccOverview.png'),0);
+        saveas(hQRPosOverview,strcat(foldername,'PosVelAccOverview0.png'));
         
 end
