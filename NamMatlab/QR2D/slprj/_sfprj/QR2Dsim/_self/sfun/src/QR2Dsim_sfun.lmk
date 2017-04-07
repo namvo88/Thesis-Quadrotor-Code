@@ -1,0 +1,98 @@
+CC     = "C:\Program Files\MATLAB\R2013b\sys\lcc64\lcc64\bin\lcc64.exe"
+LD     = "C:\Program Files\MATLAB\R2013b\sys\lcc64\lcc64\bin\lcclnk64.exe"
+LIBCMD = "C:\Program Files\MATLAB\R2013b\sys\lcc64\lcc64\bin\lcclib64.exe"
+CFLAGS = -dll -noregistrylookup  -c -Zp8 -DLCC_WIN64 -DMATLAB_MEX_FILE -DMX_COMPAT_32 -nodeclspec 
+LDFLAGS = -s -dll -L"C:\Program Files\MATLAB\R2013b\sys\lcc64\lcc64\lib64" -entry LibMain -map sfun.map 
+LIBFLAGS = 
+
+OBJECTS = \
+	"QR2Dsim_sfun.obj"\
+	"c7_QR2Dsim.obj"\
+	"c8_QR2Dsim.obj"\
+	"c9_QR2Dsim.obj"\
+	"c11_QR2Dsim.obj"\
+	"c12_QR2Dsim.obj"\
+	"c13_QR2Dsim.obj"\
+	"c14_QR2Dsim.obj"\
+	"c15_QR2Dsim.obj"\
+	"c17_QR2Dsim.obj"\
+	"c20_QR2Dsim.obj"\
+	"c22_QR2Dsim.obj"\
+	"c23_QR2Dsim.obj"\
+	"c24_QR2Dsim.obj"\
+	"c25_QR2Dsim.obj"\
+	"c26_QR2Dsim.obj"\
+	"c27_QR2Dsim.obj"\
+	"c28_QR2Dsim.obj"\
+	"c29_QR2Dsim.obj"\
+	"c30_QR2Dsim.obj"\
+	"c31_QR2Dsim.obj"\
+	"c32_QR2Dsim.obj"\
+	"QR2Dsim_sfun_registry.obj"\
+	"lccstub.obj"\
+	"QR2Dsim_sfun.def"\
+	"C:\Program Files\MATLAB\R2013b\stateflow\c\mex\lib\win64\sfc_mexlcc64.lib"\
+	"C:\Program Files\MATLAB\R2013b\stateflow\c\debugger\lib\win64\sfc_debuglcc64.lib"\
+	"C:\Program Files\MATLAB\R2013b\extern\lib\win64\microsoft\libmwblas.lib"\
+	"C:\Program Files\MATLAB\R2013b\extern\lib\win64\microsoft\libmx.lib"\
+	"C:\Program Files\MATLAB\R2013b\extern\lib\win64\microsoft\libmex.lib"\
+	"C:\Program Files\MATLAB\R2013b\extern\lib\win64\microsoft\libmat.lib"\
+	"C:\Program Files\MATLAB\R2013b\extern\lib\win64\microsoft\libfixedpoint.lib"\
+	"C:\Program Files\MATLAB\R2013b\extern\lib\win64\microsoft\libut.lib"\
+	"C:\Program Files\MATLAB\R2013b\extern\lib\win64\microsoft\libmwmathutil.lib"\
+	"C:\Program Files\MATLAB\R2013b\extern\lib\win64\microsoft\libemlrt.lib"\
+	"C:\Program Files\MATLAB\R2013b\lib\win64\libippmwipt.lib"\
+
+INCLUDE_PATH= -I"C:\Program Files\MATLAB\R2013b\sys\lcc64\lcc64\include64"  -I"C:\Program Files\MATLAB\R2013b\extern\include"  -I"C:\Program Files\MATLAB\R2013b\simulink\include"  -I"C:\Program Files\MATLAB\R2013b\rtw\c\src"  -I"C:\Program Files\MATLAB\R2013b\stateflow\c\mex\include"  -I"C:\Program Files\MATLAB\R2013b\stateflow\c\debugger\include"  -I"C:\Program Files\MATLAB\R2013b\toolbox\stateflow\src\sf_runtime\export\include\sf_runtime" 
+ 
+
+QR2Dsim_sfun.mexw64 : $(MAKEFILE) $(OBJECTS)
+	$(LD) $(LDFLAGS) -o QR2Dsim_sfun.mexw64 @QR2Dsim_sfun.lmko
+QR2Dsim_sfun.obj :	"QR2Dsim_sfun.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "QR2Dsim_sfun.c"
+c7_QR2Dsim.obj :	"c7_QR2Dsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c7_QR2Dsim.c"
+c8_QR2Dsim.obj :	"c8_QR2Dsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c8_QR2Dsim.c"
+c9_QR2Dsim.obj :	"c9_QR2Dsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c9_QR2Dsim.c"
+c11_QR2Dsim.obj :	"c11_QR2Dsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c11_QR2Dsim.c"
+c12_QR2Dsim.obj :	"c12_QR2Dsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c12_QR2Dsim.c"
+c13_QR2Dsim.obj :	"c13_QR2Dsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c13_QR2Dsim.c"
+c14_QR2Dsim.obj :	"c14_QR2Dsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c14_QR2Dsim.c"
+c15_QR2Dsim.obj :	"c15_QR2Dsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c15_QR2Dsim.c"
+c17_QR2Dsim.obj :	"c17_QR2Dsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c17_QR2Dsim.c"
+c20_QR2Dsim.obj :	"c20_QR2Dsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c20_QR2Dsim.c"
+c22_QR2Dsim.obj :	"c22_QR2Dsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c22_QR2Dsim.c"
+c23_QR2Dsim.obj :	"c23_QR2Dsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c23_QR2Dsim.c"
+c24_QR2Dsim.obj :	"c24_QR2Dsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c24_QR2Dsim.c"
+c25_QR2Dsim.obj :	"c25_QR2Dsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c25_QR2Dsim.c"
+c26_QR2Dsim.obj :	"c26_QR2Dsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c26_QR2Dsim.c"
+c27_QR2Dsim.obj :	"c27_QR2Dsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c27_QR2Dsim.c"
+c28_QR2Dsim.obj :	"c28_QR2Dsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c28_QR2Dsim.c"
+c29_QR2Dsim.obj :	"c29_QR2Dsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c29_QR2Dsim.c"
+c30_QR2Dsim.obj :	"c30_QR2Dsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c30_QR2Dsim.c"
+c31_QR2Dsim.obj :	"c31_QR2Dsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c31_QR2Dsim.c"
+c32_QR2Dsim.obj :	"c32_QR2Dsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c32_QR2Dsim.c"
+QR2Dsim_sfun_registry.obj :	"QR2Dsim_sfun_registry.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "QR2Dsim_sfun_registry.c"
+lccstub.obj :	"C:\Program Files\MATLAB\R2013b\sys\lcc64\lcc64\mex\lccstub.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "C:\Program Files\MATLAB\R2013b\sys\lcc64\lcc64\mex\lccstub.c"
