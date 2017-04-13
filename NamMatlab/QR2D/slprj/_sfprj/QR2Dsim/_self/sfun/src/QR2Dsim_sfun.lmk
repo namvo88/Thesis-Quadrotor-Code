@@ -8,23 +8,9 @@ LIBFLAGS =
 OBJECTS = \
 	"QR2Dsim_sfun.obj"\
 	"c7_QR2Dsim.obj"\
-	"c8_QR2Dsim.obj"\
 	"c9_QR2Dsim.obj"\
-	"c11_QR2Dsim.obj"\
-	"c12_QR2Dsim.obj"\
 	"c13_QR2Dsim.obj"\
-	"c14_QR2Dsim.obj"\
 	"c15_QR2Dsim.obj"\
-	"c17_QR2Dsim.obj"\
-	"c20_QR2Dsim.obj"\
-	"c22_QR2Dsim.obj"\
-	"c23_QR2Dsim.obj"\
-	"c24_QR2Dsim.obj"\
-	"c25_QR2Dsim.obj"\
-	"c26_QR2Dsim.obj"\
-	"c27_QR2Dsim.obj"\
-	"c28_QR2Dsim.obj"\
-	"c29_QR2Dsim.obj"\
 	"c30_QR2Dsim.obj"\
 	"c31_QR2Dsim.obj"\
 	"c32_QR2Dsim.obj"\
@@ -52,40 +38,12 @@ QR2Dsim_sfun.obj :	"QR2Dsim_sfun.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "QR2Dsim_sfun.c"
 c7_QR2Dsim.obj :	"c7_QR2Dsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c7_QR2Dsim.c"
-c8_QR2Dsim.obj :	"c8_QR2Dsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c8_QR2Dsim.c"
 c9_QR2Dsim.obj :	"c9_QR2Dsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c9_QR2Dsim.c"
-c11_QR2Dsim.obj :	"c11_QR2Dsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c11_QR2Dsim.c"
-c12_QR2Dsim.obj :	"c12_QR2Dsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c12_QR2Dsim.c"
 c13_QR2Dsim.obj :	"c13_QR2Dsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c13_QR2Dsim.c"
-c14_QR2Dsim.obj :	"c14_QR2Dsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c14_QR2Dsim.c"
 c15_QR2Dsim.obj :	"c15_QR2Dsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c15_QR2Dsim.c"
-c17_QR2Dsim.obj :	"c17_QR2Dsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c17_QR2Dsim.c"
-c20_QR2Dsim.obj :	"c20_QR2Dsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c20_QR2Dsim.c"
-c22_QR2Dsim.obj :	"c22_QR2Dsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c22_QR2Dsim.c"
-c23_QR2Dsim.obj :	"c23_QR2Dsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c23_QR2Dsim.c"
-c24_QR2Dsim.obj :	"c24_QR2Dsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c24_QR2Dsim.c"
-c25_QR2Dsim.obj :	"c25_QR2Dsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c25_QR2Dsim.c"
-c26_QR2Dsim.obj :	"c26_QR2Dsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c26_QR2Dsim.c"
-c27_QR2Dsim.obj :	"c27_QR2Dsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c27_QR2Dsim.c"
-c28_QR2Dsim.obj :	"c28_QR2Dsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c28_QR2Dsim.c"
-c29_QR2Dsim.obj :	"c29_QR2Dsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c29_QR2Dsim.c"
 c30_QR2Dsim.obj :	"c30_QR2Dsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c30_QR2Dsim.c"
 c31_QR2Dsim.obj :	"c31_QR2Dsim.c"
