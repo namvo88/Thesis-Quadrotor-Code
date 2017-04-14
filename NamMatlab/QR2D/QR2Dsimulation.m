@@ -1,39 +1,41 @@
 POSL = posL;
 XL = POSL(1,:);
 YL = POSL(2,:);
-ZL = -POSL(3,:);
+ZL = POSL(3,:);
 
-POSQR = posQ;
-XQR = POSQR(1,:);
-YQR = POSQR(2,:);
-ZQR = -POSQR(3,:);
+% POSQR = posQ;
+% XQR = POSQR(1,:);
+% YQR = POSQR(2,:);
+% ZQR = POSQR(3,:);
 
 %%
 tend = t(end);
 ts = tend/length(t);
-xmin = min(min(XL,XQR))-0.5;
-ymin = min(min(YL,YQR))-0.5;
-zmin = min(min(ZL,ZQR))-1;
-xmax = max(max(XL,XQR))+0.5;
-ymax = max(max(YL,YQR))+0.5;
-zmax = max(max(ZL,ZQR))+1;
-zmin = -50;
+% xmin = min(min(XL,XQR))-0.5;
+% ymin = min(min(YL,YQR))-0.5;
+% zmin = min(min(ZL,ZQR))-1;
+% xmax = max(max(XL,XQR))+0.5;
+% ymax = max(max(YL,YQR))+0.5;
+% zmax = max(max(ZL,ZQR))+1;
+zmin = -5;
 zmax = 5;
-ymin = -15;
-ymax = 15;
+ymin = -5;
+ymax = 5;
+xmin = -2;
+xmax = 2;
 
 % I Frame 
 Ix = [0.1;0;0];
 Iy = [0;0.1;0];
-Iz = [0;0;-0.1];
+Iz = [0;0;0.1];
 Iframe = [Ix Iy Iz];
 
-% Bframe initial
-Rsim = rotx(angleQ(1,:))'; 
-Bframe = R.signals.values(:,:,1);
-Bx = [XQR(1); YQR(1); ZQR(1)]+5*Bframe(:,1);
-By = [XQR(1); YQR(1); ZQR(1)]+5*Bframe(:,2);
-Bz = [XQR(1); YQR(1); ZQR(1)]-5*Bframe(:,3);
+% % Bframe initial
+% Rsim = rotx(angleQ(1,:))'; 
+% Bframe = R.signals.values(:,:,1);
+% Bx = [XQR(1); YQR(1); ZQR(1)]+5*Bframe(:,1);
+% By = [XQR(1); YQR(1); ZQR(1)]+5*Bframe(:,2);
+% Bz = [XQR(1); YQR(1); ZQR(1)]+5*Bframe(:,3);
 
 figure
 hold on
@@ -48,18 +50,20 @@ plot3(0,0,0,'g+','LineWidth',2)
 
 % draw initial Bframe
 % hB = plot3(XQR(1),YQR(1),ZQR(1),'go'); %QR initial position
-hBx = line([XQR(1) Bx(1)],[YQR(1) Bx(2)],[ZQR(1) Bx(3)],'Color','red');
-hBy = line([XQR(1) By(1)],[YQR(1) By(2)],[ZQR(1) By(3)],'Color','green');
-hBz = line([XQR(1) Bz(1)],[YQR(1) Bz(2)],[ZQR(1) Bz(3)],'Color','blue');
+% hBx = line([XQR(1) Bx(1)],[YQR(1) Bx(2)],[ZQR(1) Bx(3)],'Color','red');
+% hBy = line([XQR(1) By(1)],[YQR(1) By(2)],[ZQR(1) By(3)],'Color','green');
+% hBz = line([XQR(1) Bz(1)],[YQR(1) Bz(2)],[ZQR(1) Bz(3)],'Color','blue');
+
 % draw initial Load
 hL = plot3(XL(1),YL(1),ZL(1),'ko','LineWidth',4);
+
 % draw initial QR
-hB = plot3(XQR(1),YQR(1),ZQR(1),'r+','LineWidth',7); %QR initial position
+% hB = plot3(XQR(1),YQR(1),ZQR(1),'r+','LineWidth',7); %QR initial position
 % hQRx = line([-Bx(1) Bx(1)],[-Bx(2) Bx(2)],[-Bx(3) Bx(3)],'Color','black','LineWidth',2);
 % hQRy = line([-By(1) By(1)],[-By(2) By(2)],[-By(3) By(3)],'Color','black','LineWidth',2);
 % hQRz = line([-Bz(1) Bz(1)],[-Bz(2) Bz(2)],[-Bz(3) Bz(3)],'Color','black','LineWidth',2);
 % draw initial cable
-hC = line([XQR(1) XL(1)],[YQR(1) YL(1)],[ZQR(1) ZL(1)],'Color','black');
+% hC = line([XQR(1) XL(1)],[YQR(1) YL(1)],[ZQR(1) ZL(1)],'Color','black');
 
 axis([xmin xmax ymin ymax zmin zmax],'vis3d')
 % view(120,30)
@@ -76,26 +80,26 @@ zlabel('z')
 % end
 Bcog = ones(3,length(t));
 
-for k=1:length(t)
-Bcog(:,k) = [XQR(k); YQR(k); ZQR(k)];
-Bx(:,k) = Bcog(:,k)+5*(R.signals.values(:,1,k));
-By(:,k) = Bcog(:,k)+5*(R.signals.values(:,2,k));
-Bz(:,k) = Bcog(:,k)-5*(R.signals.values(:,3,k));
-end
+% for k=1:length(t)
+% Bcog(:,k) = [XQR(k); YQR(k); ZQR(k)];
+% Bx(:,k) = Bcog(:,k)+5*(R.signals.values(:,1,k));
+% By(:,k) = Bcog(:,k)+5*(R.signals.values(:,2,k));
+% Bz(:,k) = Bcog(:,k)+5*(R.signals.values(:,3,k));
+% end
 
 while waitforbuttonpress ~= 0 ; 
   pause(0.01) ; % allow for ctrl-c
 end
 
 for k=1:length(t)
-set(hB,'xdata',XQR(k),'ydata',YQR(k),'zdata',ZQR(k));
-set(hBx,'xdata',[XQR(k) Bx(1,k)],'ydata',[YQR(k) Bx(2,k)],'zdata',[ZQR(k) Bx(3,k)]);
-set(hBy,'xdata',[XQR(k) By(1,k)],'ydata',[YQR(k) By(2,k)],'zdata',[ZQR(k) By(3,k)]);
-set(hBz,'xdata',[XQR(k) Bz(1,k)],'ydata',[YQR(k) Bz(2,k)],'zdata',[ZQR(k) Bz(3,k)]);
+% set(hB,'xdata',XQR(k),'ydata',YQR(k),'zdata',ZQR(k));
+% set(hBx,'xdata',[XQR(k) Bx(1,k)],'ydata',[YQR(k) Bx(2,k)],'zdata',[ZQR(k) Bx(3,k)]);
+% set(hBy,'xdata',[XQR(k) By(1,k)],'ydata',[YQR(k) By(2,k)],'zdata',[ZQR(k) By(3,k)]);
+% set(hBz,'xdata',[XQR(k) Bz(1,k)],'ydata',[YQR(k) Bz(2,k)],'zdata',[ZQR(k) Bz(3,k)]);
 
 set(hL,'xdata',XL(k),'ydata',YL(k),'zdata',ZL(k));
 
-set(hC,'xdata',[XQR(k) XL(k)],'ydata',[YQR(k) YL(k)],'zdata',[ZQR(k) ZL(k)]);
+% set(hC,'xdata',[XQR(k) XL(k)],'ydata',[YQR(k) YL(k)],'zdata',[ZQR(k) ZL(k)]);
 
 pause(ts);
 

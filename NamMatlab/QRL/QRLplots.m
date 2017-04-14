@@ -13,13 +13,13 @@ posL     = simoutL.signals.values(:,1:3)';
 velL     = simoutL.signals.values(:,4:6)';
 accL     = simoutL.signals.values(:,7:9)';
 
-angleL   = simoutL1.signals.values(:,1:3)';
-OmegaL   = simoutL1.signals.values(:,4:6)';
-dOmegaL  = simoutL1.signals.values(:,7:9)';
+angleL   = reshape(simoutL1.signals.values(1:3,:,:),3,length(t));
+OmegaL   = reshape(simoutL1.signals.values(4:6,:,:),3,length(t));
+dOmegaL  = reshape(simoutL1.signals.values(7:9,:,:),3,length(t));
 
-angleQ   = simoutL2.signals.values(:,1:3)';
-OmegaQ   = simoutL2.signals.values(:,4:6)';
-dOmegaQ  = simoutL2.signals.values(:,7:9)';
+angleQ   = reshape(simoutL2.signals.values(1:3,:,:),3,length(t));
+OmegaQ   = reshape(simoutL2.signals.values(4:6,:,:),3,length(t));
+dOmegaQ  = reshape(simoutL2.signals.values(7:9,:,:),3,length(t));
 
 f        = simoutL3.signals.values(:,1);
 M        = simoutL3.signals.values(:,2:4)';
@@ -228,27 +228,27 @@ set(hl,'Interpreter','latex','FontSize',lfont);
 filename = 'qvec';
 saveas(gcf,strcat(foldername,filename,modename,date),'png');
 
-% figure('Name','Rotation Matrices')
-% for j=1:3
-%     for n=1:3
-%         k=(j-1)*3+n;
-%         subplot(3,3,k)
-%         Rplot = reshape(R.signals.values(j,n,:),[length(R.signals.values),1]);
-% %         Rcplot = reshape(Rc.signals.values(j,n,:),[length(Rc.signals.values),1]);
-%         hold on
-%         axis([0 t(end) -1.2 1.2])
-%         plot(t,Rplot,'Linewidth',2)
-% %         plot(t,Rcplot,'r--','Linewidth',2)
-%         set(gca,'FontSize',afont);
-%         if k==8
-%             xlabel('Time [s]','FontSize',labfont)
-%         end
-%     end
-% end
-% h_suptitle = suptitle('$R \in\Re^{3\times3}$');
-% set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
-% hl = legend('$R$');
-% set(hl,'Interpreter','latex','FontSize',lfont,'Position',[.8,.8,.1,.1]);
+figure('Name','Rotation Matrices')
+for j=1:3
+    for n=1:3
+        k=(j-1)*3+n;
+        subplot(3,3,k)
+        Rplot = reshape(R.signals.values(j,n,:),[length(R.signals.values),1]);
+%         Rcplot = reshape(Rc.signals.values(j,n,:),[length(Rc.signals.values),1]);
+        hold on
+        axis([0 t(end) -1.2 1.2])
+        plot(t,Rplot,'Linewidth',2)
+%         plot(t,Rcplot,'r--','Linewidth',2)
+        set(gca,'FontSize',afont);
+        if k==8
+            xlabel('Time [s]','FontSize',labfont)
+        end
+    end
+end
+h_suptitle = suptitle('$R \in\Re^{3\times3}$');
+set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
+hl = legend('$R$');
+set(hl,'Interpreter','latex','FontSize',lfont,'Position',[.8,.8,.1,.1]);
 
 
 % switch mode

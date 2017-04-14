@@ -21,7 +21,7 @@ clear; clc; close all;
 % QRL Load Attitude Controlled mode 3
 % QRL Load Position Controlled mode 4
 
-mode = 3;
+mode = 2;
 
 Tend_sim = 20;
 Ts_sim   = 0.01;
@@ -33,6 +33,8 @@ b1d   = [1; 0; 0];
 
 phiLd   = 0;
 phiQd   = 0;
+
+
 
 %% Uncertainties
 
@@ -47,19 +49,20 @@ Izz   = 0; %Tang2014
 I     = diag([Ixx Iyy Izz]); %Tang2014
 ctauf = 8.004e-3; %Lee2010c
 
-mL = 0.2;
-lL = 0.4;
+mL    = 0.2;
+lL    = 0.4;
 
-b      = 0.1; %gok thrust factor
-d      = 0.1; %gok drag factor
-Ir     = 0.5; %gok
-l      = 0.315; %Lee2010 %wingspan bebop 248 mm
+b     = 0.1; %gok thrust factor
+d     = 0.1; %gok drag factor
+Ir    = 0.5; %gok
+l     = 0.315; %Lee2010 %wingspan bebop 248 mm
 
-g      = 9.81;
+g     = 9.81;
+fc    = (mQ+mL)*g;
 
-e3 = [0;0;1];
+e3    = [0;0;1];
 
-fsat = [-1000 1000];
+fsat  = [-1000 1000];
 
 c_der = inf;
 
@@ -71,7 +74,7 @@ dxL0    = 0;
 dyL0    = 0;
 dzL0    = 0;
 
-phiL0   = deg2rad(20);
+phiL0   = deg2rad(190);
 thetaL0 = 0;
 psiL0   = 0;
 pL0     = 0;
@@ -155,4 +158,4 @@ QRL2Dplots
 
 %% Animation
 
-% QR2Dsimulation
+QR2Dsimulation

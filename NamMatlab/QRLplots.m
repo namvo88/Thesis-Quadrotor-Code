@@ -1,6 +1,6 @@
 %% Plots
 
-foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\MatlabImages\';
+foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\MatlabImages\';
 
 t = simoutL.time;
 

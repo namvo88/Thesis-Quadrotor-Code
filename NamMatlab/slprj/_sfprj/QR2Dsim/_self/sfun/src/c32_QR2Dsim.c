@@ -384,7 +384,7 @@ static void c32_chartstep_c32_QR2Dsim(SFc32_QR2DsimInstanceStruct *chartInstance
     c32_d_y[c32_i20] = c32_y[c32_i20];
   }
 
-  c32_d_a = c32_dot(chartInstance, c32_b_q, c32_d_y) + c32_c_y;
+  c32_d_a = c32_dot(chartInstance, c32_b_q, c32_d_y) - c32_c_y;
   for (c32_i21 = 0; c32_i21 < 3; c32_i21++) {
     c32_e_b[c32_i21] = c32_q[c32_i21];
   }
@@ -406,7 +406,7 @@ static void c32_chartstep_c32_QR2Dsim(SFc32_QR2DsimInstanceStruct *chartInstance
   }
 
   for (c32_i25 = 0; c32_i25 < 3; c32_i25++) {
-    c32_ddxL[c32_i25] = c32_e_b[c32_i25] + c32_y[c32_i25];
+    c32_ddxL[c32_i25] = c32_e_b[c32_i25] - c32_y[c32_i25];
   }
 
   _SFD_EML_CALL(0U, chartInstance->c32_sfEvent, -12);
@@ -1904,10 +1904,10 @@ extern void utFree(void*);
 
 void sf_c32_QR2Dsim_get_check_sum(mxArray *plhs[])
 {
-  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(3011643627U);
-  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(614636853U);
-  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(885100682U);
-  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(121412609U);
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(131896297U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(771608736U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(185467520U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(735547247U);
 }
 
 mxArray *sf_c32_QR2Dsim_get_autoinheritance_info(void)
@@ -1919,7 +1919,7 @@ mxArray *sf_c32_QR2Dsim_get_autoinheritance_info(void)
     autoinheritanceFields);
 
   {
-    mxArray *mxChecksum = mxCreateString("iHA0w3wZavwHNmq9Br8MG");
+    mxArray *mxChecksum = mxCreateString("4mN4JDiwnDyhKdf9EYpfUB");
     mxSetField(mxAutoinheritanceInfo,0,"checksum",mxChecksum);
   }
 
@@ -2153,7 +2153,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
         /* Initialization of MATLAB Function Model Coverage */
         _SFD_CV_INIT_EML(0,1,1,0,0,0,0,0,0,0,0);
-        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,190);
+        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,198);
 
         {
           unsigned int dimVector[1];
@@ -2227,7 +2227,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
 static const char* sf_get_instance_specialization(void)
 {
-  return "4HuDBy2TI8qk2UD9E6JKCH";
+  return "k919jNGyBLReA7SsXduTlD";
 }
 
 static void sf_opaque_initialize_c32_QR2Dsim(void *chartInstanceVar)
@@ -2397,10 +2397,10 @@ static void mdlSetWorkWidths_c32_QR2Dsim(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(4259406960U));
-  ssSetChecksum1(S,(3225824124U));
-  ssSetChecksum2(S,(4217714057U));
-  ssSetChecksum3(S,(3065693545U));
+  ssSetChecksum0(S,(3892861549U));
+  ssSetChecksum1(S,(3068556158U));
+  ssSetChecksum2(S,(772986855U));
+  ssSetChecksum3(S,(1591997454U));
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
   ssSupportsMultipleExecInstances(S,1);
