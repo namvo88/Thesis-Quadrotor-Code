@@ -25,12 +25,15 @@ mode = 3;
 switch mode
     case 2
         modename = 'QRL QR Attitude Controlled Mode';
+        modecode = 'QRLQRATT';
         disp(modename)
     case 3
         modename = 'QRL Load Attitude Controlled Mode';
+        modecode = 'QRLLATT';
         disp(modename)
     case 4
         modename = 'QRL Load Position Controlled Mode';
+        modecode = 'QRLLPOS';
         disp(modename)
     otherwise
         disp('No Control Mode selected');
@@ -85,21 +88,22 @@ dxL0    = 0;
 dyL0    = 0;
 dzL0    = 0;
 
-phiL0   = deg2rad(60); % -e3 = 0 deg
+phiL0   = deg2rad(30); % -e3 = 0 deg
 thetaL0 = 0;
 psiL0   = 0;
 pL0     = 0;
 qL0     = 0;
 rL0     = 0;
 
-phiQ0   = deg2rad(-50); %deg
+phiQ0   = deg2rad(-60); %deg
 thetaQ0 = 0;
 psiQ0   = 0;
 pQ0     = 0;
 qQ0     = 0;
 rQ0     = 0;
 
-qvec0   = [0; sin(phiL0); -cos(phiL0)];
+q0      = [0; sin(phiL0); -cos(phiL0)];
+dq0     = [0;0;0];
 omega0  = [0;0;0];
 
 % Rx = [1 0 0;
@@ -123,9 +127,12 @@ omega0  = [0;0;0];
 
 %% Gains
 
-% kpQ = 16*mQ;
-% kdQ = 5.6*mQ*.75;
-% 
+kR = 8.81; %Lee2010
+kOmegaQ = 2.54; %Lee2010
+
+kq = 4;
+komega = .5;
+
 kpL = 1.2;
 kdL = 1.4;
 
@@ -135,11 +142,7 @@ kdxL = 1;
 kx = 16*mQ;
 kv = 5.6*mQ;
 
-kR = 8.81; %Lee2010
-kOmegaQ = 2.54; %Lee2010
 
-kq = 4;
-komega = .1;
 
 % kR_phi       = 8.81; %Lee2010
 % kR_theta     = 0.5;
@@ -156,7 +159,7 @@ komega = .1;
 % % kOmega = 2.54;
 
 %% Simulation
-fattgain = 35;
+fattgain = 50;
 
 open('QRLsim')
 sim('QRLsim')
@@ -185,13 +188,13 @@ M        = simoutL3.signals.values(:,2:4)';
 omegarot = simoutL3.signals.values(:,5:8)';
 fi       = simoutL3.signals.values(:,9:12)';
 
-q = simoutq.signals.values(:,:)';
-eq = simouteq.signals.values(:,1:3);
-edq = simouteq.signals.values(:,4:6);
-eR = simouteAttitude.signals.values(:,1:3);
-eOmega = simouteAttitude.signals.values(:,4:6);
-Psiq = simoutPsiq.signals.values(:,1);
-PsiR = simoutPsiR.signals.values(:,1);
+q        = simoutq.signals.values(:,:)';
+eq       = simouteq.signals.values(:,1:3);
+edq      = simouteq.signals.values(:,4:6);
+eR       = simouteAttitude.signals.values(:,1:3);
+eOmega   = simouteAttitude.signals.values(:,4:6);
+Psiq     = simoutPsiq.signals.values(:,1);
+PsiR     = simoutPsiR.signals.values(:,1);
 
 F = reshape(simoutF.signals.values,3,length(t));
 
@@ -199,6 +202,10 @@ posQ = posL - q*lL;
 
 if Psiq(1) >= 2
     error('Psiq(0) <2')
+end
+
+if norm(edq(1),2) >= 2/(mQ*lL)*kq*(2-Psiq(1))
+    error('edq(0) too big')
 end
 
 %% Plots
@@ -210,10 +217,8 @@ supfont = 25; %Suptitle Fontsize
 
 foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\MatlabImages\';
 
-% QRplots
-
 % QRLplots
 
 %% Animation
 
-% QRLanimation
+QRLanimation

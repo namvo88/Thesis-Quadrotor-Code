@@ -92,7 +92,7 @@ pL0     = 0;
 qL0     = 0;
 rL0     = 0;
 
-phiQ0   = deg2rad(0); %deg
+phiQ0   = deg2rad(-50); %deg
 thetaQ0 = 0;
 psiQ0   = 0;
 pQ0     = 0;
@@ -200,6 +200,9 @@ posQ = posL - q*lL;
 if Psiq(1) >= 2
     error('Psiq(0) <2')
 end
+
+if norm(edq(1),2) >= 2/(mQ*lL)*kq*(2-Psiq(1))
+    error('')
 
 %% Plots
 

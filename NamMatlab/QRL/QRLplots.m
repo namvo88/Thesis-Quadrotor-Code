@@ -1,4 +1,4 @@
-%% Plots
+%% Inputs
 
 filename = 'Input f';
 figure('Name',filename)
@@ -25,7 +25,7 @@ plot(t,fi(4,:),'Linewidth',2)
 ylabel('\boldmath$f_4$','FontSize',labfont,'Interpreter','latex')
 xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
-saveas(gcf,strcat(foldername,filename,modename,date),'png');
+saveas(gcf,strcat(foldername,modecode,'-',filename,date),'png');
 
 filename = 'Input M';
 figure('Name',filename)
@@ -37,7 +37,7 @@ set(hl,'Interpreter','latex','FontSize',lfont)
 ylabel('\boldmath$M [Nm]$','FontSize',labfont,'Interpreter','latex')
 xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
-saveas(gcf,strcat(foldername,filename,modename,date),'png');
+saveas(gcf,strcat(foldername,modecode,'-',filename,date),'png');
 
 %%
 filename = 'LPosOverview';
@@ -61,7 +61,7 @@ set(hl,'Interpreter','latex','FontSize',lfont);
 ylabel('\boldmath$acc [m/s^2]$','FontSize',labfont,'Interpreter','latex')
 xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 hLPosOverview = gcf;
-saveas(gcf,strcat(foldername,filename,modename,date),'png');
+saveas(gcf,strcat(foldername,modecode,'-',filename,date),'png');
 
 filename = 'QRPosOverview';
 figure('Name',filename)
@@ -84,7 +84,7 @@ set(hl,'Interpreter','latex','FontSize',lfont);
 % set(hl,'Interpreter','latex','FontSize',lfont);
 % ylabel('acc [m/s^2]','FontSize',labfont)
 hQRPosOverview = gcf;
-saveas(gcf,strcat(foldername,filename,modename,date),'png');
+saveas(gcf,strcat(foldername,modecode,'-',filename,date),'png');
 
 filename = 'QR-Load Position';
 figure('Name',filename)
@@ -121,7 +121,7 @@ set(gca,'FontSize',afont);
 % set(h_t, 'FontSize',labfont);
 hl = legend('$z_L$','$z_Q$');
 set(hl,'Interpreter','latex','FontSize',lfont);
-saveas(gcf,strcat(foldername,filename,modename,date),'png');
+saveas(gcf,strcat(foldername,modecode,'-',filename,date),'png');
 
 %%
 filename = 'QRAngOverview';
@@ -146,7 +146,7 @@ set(hl,'Interpreter','latex','FontSize',lfont);
 ylabel('\boldmath$acc [rad/s^2]$','FontSize',labfont,'Interpreter','latex')
 xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 hQRAngOverview = gcf;
-saveas(gcf,strcat(foldername,filename,modename,date),'png');
+saveas(gcf,strcat(foldername,modecode,'-',filename,date),'png');
 
 filename = 'LAngOverview';
 figure('Name',filename)
@@ -170,7 +170,7 @@ set(hl,'Interpreter','latex','FontSize',lfont);
 ylabel('\boldmath$acc [rad/s^2]$','FontSize',labfont,'Interpreter','latex')
 xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 hLAngOverview = gcf;
-saveas(gcf,strcat(foldername,filename,modename,date),'png');
+saveas(gcf,strcat(foldername,modecode,'-',filename,date),'png');
 
 % figure
 % plot(t,pos,'Linewidth',2)
@@ -179,43 +179,8 @@ saveas(gcf,strcat(foldername,filename,modename,date),'png');
 % hl = legend('$x$','$y$','$z$');
 % set(hl,'Interpreter','latex','FontSize',lfont)
 
+%% Rotation Matrix
 
-
-%%
-figure('Name','q')
-h_suptitle = suptitle('Unit vector $q$ from QR to Load');
-set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
-plot(t,q,'LineWidth',2)
-xlabel('Time [s]','FontSize',labfont);
-set(gca,'FontSize',afont);
-hl = legend('$\vec{q}\cdot\vec{b}_1$','$\vec{q}\cdot\vec{b}_2$','$\vec{q}\cdot\vec{b}_3$');
-set(hl,'Interpreter','latex','FontSize',lfont);
-filename = 'qvec';
-saveas(gcf,strcat(foldername,filename,modename,date),'png');
-
-% figure('Name','Rotation Matrices')
-% for j=1:3
-%     for n=1:3
-%         k=(j-1)*3+n;
-%         subplot(3,3,k)
-%         Rplot = reshape(R.signals.values(j,n,:),[length(R.signals.values),1]);
-% %         Rcplot = reshape(Rc.signals.values(j,n,:),[length(Rc.signals.values),1]);
-%         hold on
-%         axis([0 t(end) -1.2 1.2])
-%         plot(t,Rplot,'Linewidth',2)
-% %         plot(t,Rcplot,'r--','Linewidth',2)
-%         set(gca,'FontSize',afont);
-%         if k==8
-%             xlabel('Time [s]','FontSize',labfont)
-%         end
-%     end
-% end
-% h_suptitle = suptitle('$R \in\Re^{3\times3}$');
-% set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
-% hl = legend('$R$');
-% set(hl,'Interpreter','latex','FontSize',lfont,'Position',[.8,.8,.1,.1]);
-
-%%
 filename = 'Rotation Matrix';
 figure('Name',filename)
 h_sup = suptitle(filename);
@@ -243,7 +208,53 @@ switch mode
         hl = legend('$R$','$R_c$');
 end
 set(hl,'Interpreter','latex','FontSize',lfont,'Position',[.8,.8,.1,.1]);
-saveas(gcf,strcat(foldername,filename,modename,date),'png');
+saveas(gcf,strcat(foldername,modecode,'-',filename,date),'png');
+
+%% q
+
+filename = 'q';
+figure('Name',filename)
+h_suptitle = suptitle('Unit vector $q$ from QR to Load');
+set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
+plot(t,q,'LineWidth',2)
+
+hl = legend('$\vec{q}\cdot\vec{b}_1$','$\vec{q}\cdot\vec{b}_2$','$\vec{q}\cdot\vec{b}_3$');
+qcplot = reshape(simoutqc.signals.values,[3,length(simoutqc.signals.values)]);
+switch mode
+    case 3 % QRL Load Attitude Controlled Mode
+        subplot 311
+        plot(t,q(1,:),t,qcplot(1,:),'r--','Linewidth',2)
+        ylabel('\boldmath$\vec{q}\cdot\vec{b}_1$','FontSize',labfont,'Interpreter','latex')
+        set(gca,'FontSize',afont);
+        subplot 312
+        plot(t,q(2,:),t,qcplot(2,:),'r--','Linewidth',2)
+        ylabel('\boldmath$\vec{q}\cdot\vec{b}_2$','FontSize',labfont,'Interpreter','latex')
+        set(gca,'FontSize',afont);
+        subplot 313
+        plot(t,q(3,:),t,qcplot(3,:),'r--','Linewidth',2)
+        ylabel('\boldmath$\vec{q}\cdot\vec{b}_3$','FontSize',labfont,'Interpreter','latex')
+        set(gca,'FontSize',afont);
+        hl = legend('\boldmath$\vec{q}$','\boldmath$\vec{q}_d$');        
+    case 4 % QRL Load Position Controlled Mode
+        subplot 311
+        plot(t,q(1,:),t,qcplot(1,:),'r--','Linewidth',2)
+        ylabel('\boldmath$\vec{q}\cdot\vec{b}_1$','FontSize',labfont,'Interpreter','latex')
+        set(gca,'FontSize',afont);
+        subplot 312
+        plot(t,q(2,:),t,qcplot(2,:),'r--','Linewidth',2)
+        ylabel('\boldmath$\vec{q}\cdot\vec{b}_2$','FontSize',labfont,'Interpreter','latex')
+        set(gca,'FontSize',afont);
+        subplot 313
+        plot(t,q(3,:),t,qcplot(3,:),'r--','Linewidth',2)
+        ylabel('\boldmath$\vec{q}\cdot\vec{b}_3$','FontSize',labfont,'Interpreter','latex')
+        set(gca,'FontSize',afont);
+        hl = legend('\boldmath$\vec{q}$','\boldmath$\vec{q}_c$');  
+end
+set(hl,'Interpreter','latex','FontSize',lfont,'Position',[.8,.8,.1,.1]);
+xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex');
+saveas(gcf,strcat(foldername,modecode,'-',filename,date),'png');
+
+%% Errors
 
 filename = 'QR Attitude Error';
 figure('Name',filename)
@@ -253,7 +264,7 @@ subplot 211
 plot(t,eOmega,'Linewidth',2);
 ylabel('\boldmath$e_{\Omega}$','FontSize',labfont,'Interpreter','latex');
 set(gca,'FontSize',afont);
-hl = legend('$e_p$','$e_q$','$e_r$','FontSize',lfont);
+hl = legend('$e_{\Omega,1}$','$e_{\Omega,2}$','$e_{\Omega,3}$','FontSize',lfont);
 set(hl,'Interpreter','latex','FontSize',lfont);
 subplot 212
 plot(t,eR,'Linewidth',2)
@@ -262,7 +273,7 @@ xlabel('Time [s]','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 hl = legend('$e_{R,1}$','$e_{R,2}$','$e_{R,3}$','FontSize',lfont);
 set(hl,'Interpreter','latex','FontSize',lfont);
-saveas(gcf,strcat(foldername,filename,modename,date),'png');
+saveas(gcf,strcat(foldername,modecode,'-',filename,date),'png');
 
 filename = 'Load Attitude Error';
 figure('Name',filename)
@@ -272,7 +283,7 @@ subplot 211
 plot(t,eq,'Linewidth',2);
 ylabel('\boldmath$e_{q}$','FontSize',labfont,'Interpreter','latex');
 set(gca,'FontSize',afont);
-hl = legend('$e_{q,1}$','$e_{q,2}$','$e_{q,3}$','FontSize',lfont);
+hl = legend('\boldmath$e_{q,1}$','\boldmath$e_{q,2}$','\boldmath$e_{q,3}$','FontSize',lfont);
 set(hl,'Interpreter','latex','FontSize',lfont);
 subplot 212
 plot(t,edq,'Linewidth',2)
@@ -281,7 +292,11 @@ xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 hl = legend('\boldmath$e_{\dot{q},1}$','\boldmath$e_{\dot{q},2}$','\boldmath$e_{\dot{q},3}$','FontSize',lfont);
 set(hl,'Interpreter','latex','FontSize',lfont);
-saveas(gcf,strcat(foldername,filename,modename,date),'png');
+saveas(gcf,strcat(foldername,modecode,'-',filename,date),'png');
+
+%%
+savename = strcat(foldername,modecode,'-',date,'.mat');
+save(savename)
 
 %%
 
@@ -325,7 +340,7 @@ saveas(gcf,strcat(foldername,filename,modename,date),'png');
 % 
 %         
 %     case 0 %Position
-%         modename = 'Position Mode';
+%         modecode = 'Position Mode';
 %         figure('Name','Rotation Matrices')
 %         for j=1:3
 %             for n=1:3
@@ -350,7 +365,7 @@ saveas(gcf,strcat(foldername,filename,modename,date),'png');
 %         saveas(gcf,strcat(foldername,date,'RotationMatrix0'),'png');
 %         
 %         figure('Name','Attitude Errors')
-%         h_suptitle = suptitle(strcat('Attitude Errors: ',modename));
+%         h_suptitle = suptitle(strcat('Attitude Errors: ',modecode));
 %         set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
 %         subplot 211
 %         plot(t,eOmegac,'Linewidth',2);
