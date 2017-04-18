@@ -21,19 +21,31 @@ clear; clc; close all;
 % QRL Load Attitude Controlled mode 3
 % QRL Load Position Controlled mode 4
 
-mode = 2;
+mode = 3;
+switch mode
+    case 2
+        modename = 'QRL QR Attitude Controlled Mode';
+        disp(modename)
+    case 3
+        modename = 'QRL Load Attitude Controlled Mode';
+        disp(modename)
+    case 4
+        modename = 'QRL Load Position Controlled Mode';
+        disp(modename)
+    otherwise
+        disp('No Control Mode selected');
+end
 
-Tend_sim = 20;
+Tend_sim = 5;
 Ts_sim   = 0.01;
-t        = 0:Ts_sim:Tend_sim;
 
 xLd = [0; 0; 0];
 b1d   = [1; 0; 0];
+Rd = eye(3);
+qd = [0; 0; -1];
 
-phiLd   = 0;
-phiQd   = 0;
-
-
+% phiLd   = 0;
+% phiQd   = 0;
 
 %% Uncertainties
 
@@ -43,8 +55,8 @@ DeltaR = [0.2; -0.1; 0.02]; %Goodarzi2013a
 %% Constants
 mQ    = 4.34; %Lee2010 %weight bebop 420 g
 Ixx   = 0.0820; %Lee2010
-Iyy   = 0; %Tang2014
-Izz   = 0; %Tang2014
+Iyy   = 0.1; %not Tang2014
+Izz   = 0.1; %not Tang2014
 I     = diag([Ixx Iyy Izz]); %Tang2014
 ctauf = 8.004e-3; %Lee2010c
 
@@ -73,38 +85,22 @@ dxL0    = 0;
 dyL0    = 0;
 dzL0    = 0;
 
-phiL0   = deg2rad(135);
+phiL0   = deg2rad(60); % -e3 = 0 deg
 thetaL0 = 0;
 psiL0   = 0;
 pL0     = 0;
 qL0     = 0;
 rL0     = 0;
 
-phiQ0   = deg2rad(0); %deg
+phiQ0   = deg2rad(-50); %deg
 thetaQ0 = 0;
 psiQ0   = 0;
 pQ0     = 0;
 qQ0     = 0;
 rQ0     = 0;
 
-qvec0   = [0; sin(phiL0); cos(phiL0)];
+qvec0   = [0; sin(phiL0); -cos(phiL0)];
 omega0  = [0;0;0];
-
-switch mode
-    case 2
-        modename = 'QRL QR Attitude Controlled Mode';
-        Rd = eye(3);
-        disp(modename)
-    case 3
-        modename = 'QRL Load Attitude Controlled Mode';
-        disp(modename)
-    case 4
-        modename = 'QRL Load Position Controlled Mode';
-        disp(modename)
-    otherwise
-        disp('No Control Mode selected, Rinit = eye(3)');
-        Rinit = eye(3);
-end
 
 % Rx = [1 0 0;
 %       0 cos(phiQ0) sin(phiQ0);
@@ -122,7 +118,7 @@ end
             0 cos(phiQ0) sin(phiQ0);
             0 -sin(phiQ0) cos(phiQ0)];
         Rzyx = (Rx*Ry*Rz);
-        Rinit = Rzyx;
+        R0 = Rzyx;
 
 
 %% Gains
@@ -132,7 +128,7 @@ end
 % 
 kpL = 1.2;
 kdL = 1.4;
-% 
+
 kpxL = 5;
 kdxL = 1;
 
@@ -141,6 +137,9 @@ kv = 5.6*mQ;
 
 kR = 8.81; %Lee2010
 kOmegaQ = 2.54; %Lee2010
+
+kq = 4;
+komega = .1;
 
 % kR_phi       = 8.81; %Lee2010
 % kR_theta     = 0.5;
@@ -157,6 +156,7 @@ kOmegaQ = 2.54; %Lee2010
 % % kOmega = 2.54;
 
 %% Simulation
+fattgain = 35;
 
 open('QRLsim')
 sim('QRLsim')
@@ -166,11 +166,54 @@ sim('QRLsim')
 %     error('norm( - kpL*eL - kdL*deL + ddphiLd*mQ*lL/f ) >= 1 !!')
 % end
 
+t        = simoutL.time;
+
+posL     = simoutL.signals.values(:,1:3)';
+velL     = simoutL.signals.values(:,4:6)';
+accL     = simoutL.signals.values(:,7:9)';
+
+angleL   = reshape(simoutL1.signals.values(1:3,:,:),3,length(t));
+OmegaL   = reshape(simoutL1.signals.values(4:6,:,:),3,length(t));
+dOmegaL  = reshape(simoutL1.signals.values(7:9,:,:),3,length(t));
+
+angleQ   = reshape(simoutL2.signals.values(1:3,:,:),3,length(t));
+OmegaQ   = reshape(simoutL2.signals.values(4:6,:,:),3,length(t));
+dOmegaQ  = reshape(simoutL2.signals.values(7:9,:,:),3,length(t));
+
+f        = simoutL3.signals.values(:,1);
+M        = simoutL3.signals.values(:,2:4)';
+omegarot = simoutL3.signals.values(:,5:8)';
+fi       = simoutL3.signals.values(:,9:12)';
+
+q = simoutq.signals.values(:,:)';
+eq = simouteq.signals.values(:,1:3);
+edq = simouteq.signals.values(:,4:6);
+eR = simouteAttitude.signals.values(:,1:3);
+eOmega = simouteAttitude.signals.values(:,4:6);
+Psiq = simoutPsiq.signals.values(:,1);
+PsiR = simoutPsiR.signals.values(:,1);
+
+F = reshape(simoutF.signals.values,3,length(t));
+
+posQ = posL - q*lL;
+
+if Psiq(1) >= 2
+    error('Psiq(0) <2')
+end
+
 %% Plots
 
+lfont = 18; %Legend Fontsize
+afont = 16; %Axis Fontsize
+labfont = 20; %Label Fontsize
+supfont = 25; %Suptitle Fontsize
+
+foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\MatlabImages\';
+
 % QRplots
-QRLplots
+
+% QRLplots
 
 %% Animation
 
-QRLanimation
+% QRLanimation

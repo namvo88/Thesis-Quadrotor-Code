@@ -15,9 +15,13 @@ OBJECTS = \
 	"c31_QRLsim.obj"\
 	"c32_QRLsim.obj"\
 	"c40_QRLsim.obj"\
+	"c41_QRLsim.obj"\
 	"c42_QRLsim.obj"\
 	"c43_QRLsim.obj"\
 	"c44_QRLsim.obj"\
+	"c46_QRLsim.obj"\
+	"c47_QRLsim.obj"\
+	"c48_QRLsim.obj"\
 	"QRLsim_sfun_registry.obj"\
 	"lccstub.obj"\
 	"QRLsim_sfun.def"\
@@ -56,12 +60,20 @@ c32_QRLsim.obj :	"c32_QRLsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c32_QRLsim.c"
 c40_QRLsim.obj :	"c40_QRLsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c40_QRLsim.c"
+c41_QRLsim.obj :	"c41_QRLsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c41_QRLsim.c"
 c42_QRLsim.obj :	"c42_QRLsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c42_QRLsim.c"
 c43_QRLsim.obj :	"c43_QRLsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c43_QRLsim.c"
 c44_QRLsim.obj :	"c44_QRLsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c44_QRLsim.c"
+c46_QRLsim.obj :	"c46_QRLsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c46_QRLsim.c"
+c47_QRLsim.obj :	"c47_QRLsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c47_QRLsim.c"
+c48_QRLsim.obj :	"c48_QRLsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c48_QRLsim.c"
 QRLsim_sfun_registry.obj :	"QRLsim_sfun_registry.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "QRLsim_sfun_registry.c"
 lccstub.obj :	"C:\Program Files\MATLAB\R2013b\sys\lcc64\lcc64\mex\lccstub.c"
