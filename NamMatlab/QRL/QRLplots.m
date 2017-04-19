@@ -1,8 +1,8 @@
 %% Inputs
 
-filename = 'Input f';
+filename = 'f';
 figure('Name',filename)
-h_suptitle = suptitle(strcat(filename,'[N]'));
+h_suptitle = suptitle(strcat(filename,' $[N]$'));
 set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
 subplot(6,1,[1,2])
 plot(t,f,'Linewidth',2)
@@ -25,22 +25,29 @@ plot(t,fi(4,:),'Linewidth',2)
 ylabel('\boldmath$f_4$','FontSize',labfont,'Interpreter','latex')
 xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
-saveas(gcf,strcat(foldername,modecode,'-',filename,date),'png');
+savename = strcat(foldername,modecode,'-',filename);
+for nfile = 1:100
+   existname = strcat(savename,num2str(nfile),'.png');
+   if exist(existname,'file') == 0
+       saveas(gcf,strcat(savename,num2str(nfile)),'png')
+       break
+   end
+end
 
-filename = 'Input M';
+filename = 'M';
 figure('Name',filename)
-h_suptitle = suptitle(filename);
+h_suptitle = suptitle(strcat(filename,' $[Nm]$'));
 set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
 plot(t,M,'Linewidth',2)
 hl = legend('$\tau_\phi$','$\tau_\theta$','$\tau_\psi$');
 set(hl,'Interpreter','latex','FontSize',lfont)
-ylabel('\boldmath$M [Nm]$','FontSize',labfont,'Interpreter','latex')
+ylabel('\boldmath$M$','FontSize',labfont,'Interpreter','latex')
 xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
-saveas(gcf,strcat(foldername,modecode,'-',filename,date),'png');
+saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
 %%
-filename = 'LPosOverview';
+filename = 'Lpos';
 figure('Name',filename)
 h_sup = suptitle('Load Pos./Vel./Acc.');
 set(h_sup,'FontSize',supfont,'Interpreter','latex');
@@ -61,9 +68,9 @@ set(hl,'Interpreter','latex','FontSize',lfont);
 ylabel('\boldmath$acc [m/s^2]$','FontSize',labfont,'Interpreter','latex')
 xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 hLPosOverview = gcf;
-saveas(gcf,strcat(foldername,modecode,'-',filename,date),'png');
+saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
-filename = 'QRPosOverview';
+filename = 'QRpos';
 figure('Name',filename)
 h_sup = suptitle('QR Pos./Vel./Acc.');
 set(h_sup,'FontSize',supfont,'Interpreter','latex');
@@ -84,11 +91,11 @@ set(hl,'Interpreter','latex','FontSize',lfont);
 % set(hl,'Interpreter','latex','FontSize',lfont);
 % ylabel('acc [m/s^2]','FontSize',labfont)
 hQRPosOverview = gcf;
-saveas(gcf,strcat(foldername,modecode,'-',filename,date),'png');
+saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
-filename = 'QR-Load Position';
+filename = 'QRLpos';
 figure('Name',filename)
-h_suptitle = suptitle(filename);
+h_suptitle = suptitle('QR-Load Position');
 set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
 subplot 311
 hold on
@@ -121,10 +128,10 @@ set(gca,'FontSize',afont);
 % set(h_t, 'FontSize',labfont);
 hl = legend('$z_L$','$z_Q$');
 set(hl,'Interpreter','latex','FontSize',lfont);
-saveas(gcf,strcat(foldername,modecode,'-',filename,date),'png');
+saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
 %%
-filename = 'QRAngOverview';
+filename = 'QRang';
 figure('Name',filename)
 h_sup = suptitle('QR Angle/$\Omega$/$\dot{\Omega}$');
 set(h_sup,'FontSize',supfont,'Interpreter','latex');
@@ -146,9 +153,9 @@ set(hl,'Interpreter','latex','FontSize',lfont);
 ylabel('\boldmath$acc [rad/s^2]$','FontSize',labfont,'Interpreter','latex')
 xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 hQRAngOverview = gcf;
-saveas(gcf,strcat(foldername,modecode,'-',filename,date),'png');
+saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
-filename = 'LAngOverview';
+filename = 'Lang';
 figure('Name',filename)
 h_sup = suptitle('Load Angle/$\Omega$/$\dot{\Omega}$');
 set(h_sup,'FontSize',supfont,'Interpreter','latex');
@@ -170,7 +177,7 @@ set(hl,'Interpreter','latex','FontSize',lfont);
 ylabel('\boldmath$acc [rad/s^2]$','FontSize',labfont,'Interpreter','latex')
 xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 hLAngOverview = gcf;
-saveas(gcf,strcat(foldername,modecode,'-',filename,date),'png');
+saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
 % figure
 % plot(t,pos,'Linewidth',2)
@@ -181,7 +188,7 @@ saveas(gcf,strcat(foldername,modecode,'-',filename,date),'png');
 
 %% Rotation Matrix
 
-filename = 'Rotation Matrix';
+filename = 'Rotations';
 figure('Name',filename)
 h_sup = suptitle(filename);
 set(h_sup,'FontSize',supfont,'Interpreter','latex');
@@ -208,7 +215,7 @@ switch mode
         hl = legend('$R$','$R_c$');
 end
 set(hl,'Interpreter','latex','FontSize',lfont,'Position',[.8,.8,.1,.1]);
-saveas(gcf,strcat(foldername,modecode,'-',filename,date),'png');
+saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
 %% q
 
@@ -252,13 +259,13 @@ switch mode
 end
 set(hl,'Interpreter','latex','FontSize',lfont,'Position',[.8,.8,.1,.1]);
 xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex');
-saveas(gcf,strcat(foldername,modecode,'-',filename,date),'png');
+saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
 %% Errors
 
-filename = 'QR Attitude Error';
+filename = 'QReAtt';
 figure('Name',filename)
-h_suptitle = suptitle(strcat(filename,' $\in TSO(3)$'));
+h_suptitle = suptitle('QR Attitude Error $\in TSO(3)$');
 set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
 subplot 211
 plot(t,eOmega,'Linewidth',2);
@@ -273,11 +280,11 @@ xlabel('Time [s]','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 hl = legend('$e_{R,1}$','$e_{R,2}$','$e_{R,3}$','FontSize',lfont);
 set(hl,'Interpreter','latex','FontSize',lfont);
-saveas(gcf,strcat(foldername,modecode,'-',filename,date),'png');
+saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
-filename = 'Load Attitude Error';
+filename = 'LoadeAtt';
 figure('Name',filename)
-h_suptitle = suptitle(strcat(filename,' $\in TS^2$'));
+h_suptitle = suptitle('Load Attitude Error $\in TS^2$');
 set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
 subplot 211
 plot(t,eq,'Linewidth',2);
@@ -292,7 +299,7 @@ xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 hl = legend('\boldmath$e_{\dot{q},1}$','\boldmath$e_{\dot{q},2}$','\boldmath$e_{\dot{q},3}$','FontSize',lfont);
 set(hl,'Interpreter','latex','FontSize',lfont);
-saveas(gcf,strcat(foldername,modecode,'-',filename,date),'png');
+saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
 %%
 savename = strcat(foldername,modecode,'-',date,'.mat');
@@ -308,7 +315,7 @@ save(savename)
 %         h_suptitle = suptitle('Attitude Error function');
 %         set(h_suptitle,'FontSize',supfont,'Interpreter','latex');      
 %         set(gca,'FontSize',afont);        
-%         saveas(gcf,strcat(foldername,date,'AttitudeErrorFunction1'),'png');        
+%        saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')   
 % 
 %         figure('Name','Angular Velocity')
 %         h_suptitle = suptitle('QR Angular Velocity \Omega');
@@ -334,9 +341,9 @@ save(savename)
 %         hl = legend('$\Omega$','$\Omega_c$');
 %         set(hl,'Interpreter','latex','FontSize',lfont);
 %         set(gca,'FontSize',afont);
-%         saveas(gcf,strcat(foldername,date,'AngularVelocity1'),'png');           
+%      saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')         
 %         
-%         saveas(hQRPosOverview,strcat(foldername,date,'PosVelAccOverview1'),'png');
+%      saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 % 
 %         
 %     case 0 %Position
@@ -362,7 +369,7 @@ save(savename)
 %         set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
 %         hl = legend('$R$','$R_c$');
 %         set(hl,'Interpreter','latex','FontSize',lfont,'Position',[.8,.8,.1,.1]);
-%         saveas(gcf,strcat(foldername,date,'RotationMatrix0'),'png');
+%     saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 %         
 %         figure('Name','Attitude Errors')
 %         h_suptitle = suptitle(strcat('Attitude Errors: ',modecode));
@@ -380,7 +387,7 @@ save(savename)
 %         set(gca,'FontSize',afont);
 %         hl = legend('$e_{R,1}$','$e_{R,2}$','$e_{R,3}$');   
 %         set(hl,'Interpreter','latex','FontSize',lfont)
-%         saveas(gcf,strcat(foldername,date,'AttitudeErrors0'),'png');
+%   saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 %                             
 %         figure('Name','Attitude Error Function')
 %         plot(t,errorfunc,'Linewidth',2)
@@ -389,7 +396,7 @@ save(savename)
 %         h_suptitle = suptitle('Attitude Error function');
 %         set(h_suptitle,'FontSize',supfont,'Interpreter','latex');      
 %         set(gca,'FontSize',afont);        
-%         saveas(gcf,strcat(foldername,date,'AttitudeErrorFunction0'),'png');
+%      saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 %         
 %         figure('Name','Angular Velocity')%         
 %         h_suptitle = suptitle('QR Angular Velocity \Omega');
@@ -415,8 +422,8 @@ save(savename)
 %         hl = legend('$\Omega$','$\Omega_c$');
 %         set(hl,'Interpreter','latex','FontSize',lfont)
 %         set(gca,'FontSize',afont);
-%         saveas(gcf,strcat(foldername,date,'AngularVelocity0'),'png');      
+%     saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')    
 %         
-%         saveas(hQRPosOverview,strcat(foldername,date,'PosVelAccOverview0'),'png');
+%      saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 %         
 % end

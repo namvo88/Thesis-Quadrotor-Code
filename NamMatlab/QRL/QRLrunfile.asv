@@ -21,16 +21,19 @@ clear; clc; close all;
 % QRL Load Attitude Controlled mode 3
 % QRL Load Position Controlled mode 4
 
-mode = 3;
+mode = 4;
 switch mode
     case 2
         modename = 'QRL QR Attitude Controlled Mode';
+        modecode = 'QRLQRATT';
         disp(modename)
     case 3
         modename = 'QRL Load Attitude Controlled Mode';
+        modecode = 'QRLLATT';
         disp(modename)
     case 4
         modename = 'QRL Load Position Controlled Mode';
+        modecode = 'QRLLPOS';
         disp(modename)
     otherwise
         disp('No Control Mode selected');
@@ -39,10 +42,10 @@ end
 Tend_sim = 5;
 Ts_sim   = 0.01;
 
-xLd = [0; 0; 0];
-b1d   = [1; 0; 0];
-Rd = eye(3);
-qd = [0; 0; -1];
+xLd = [0; -1; 0];
+b1d = [1; 0; 0];
+Rd  = eye(3);
+qd  = [0; 0; -1];
 
 % phiLd   = 0;
 % phiQd   = 0;
@@ -69,10 +72,9 @@ Ir    = 0.5; %gok
 l     = 0.315; %Lee2010 %wingspan bebop 248 mm
 
 g     = 9.81;
-fc    = (mQ+mL)*g;
-
 e3    = [0;0;1];
 
+fc    = (mQ+mL)*g;
 fsat  = [-1000 1000];
 
 c_der = inf;
@@ -85,21 +87,22 @@ dxL0    = 0;
 dyL0    = 0;
 dzL0    = 0;
 
-phiL0   = deg2rad(60); % -e3 = 0 deg
+phiL0   = deg2rad(0); % -e3 = 0 deg
 thetaL0 = 0;
 psiL0   = 0;
 pL0     = 0;
 qL0     = 0;
 rL0     = 0;
 
-phiQ0   = deg2rad(-50); %deg
+phiQ0   = deg2rad(45); %deg
 thetaQ0 = 0;
 psiQ0   = 0;
 pQ0     = 0;
 qQ0     = 0;
 rQ0     = 0;
 
-qvec0   = [0; sin(phiL0); -cos(phiL0)];
+q0      = [0; sin(phiL0); -cos(phiL0)];
+dq0     = [0;0;0];
 omega0  = [0;0;0];
 
 % Rx = [1 0 0;
@@ -123,23 +126,22 @@ omega0  = [0;0;0];
 
 %% Gains
 
-% kpQ = 16*mQ;
-% kdQ = 5.6*mQ*.75;
-% 
-kpL = 1.2;
-kdL = 1.4;
-
-kpxL = 5;
-kdxL = 1;
-
-kx = 16*mQ;
-kv = 5.6*mQ;
-
 kR = 8.81; %Lee2010
 kOmegaQ = 2.54; %Lee2010
 
 kq = 4;
-komega = .1;
+komega = .5;
+
+kpL = 1.2;
+kdL = 1.4;
+
+kpx = 16*mQ;
+kdx = 5.6*mQ;
+
+% kx = 2*16*mQ;
+% kv = 2*5.6*mQ;
+
+
 
 % kR_phi       = 8.81; %Lee2010
 % kR_theta     = 0.5;
@@ -156,7 +158,7 @@ komega = .1;
 % % kOmega = 2.54;
 
 %% Simulation
-fattgain = 35;
+fattgain = 50;
 
 open('QRLsim')
 sim('QRLsim')
@@ -175,34 +177,49 @@ accL     = simoutL.signals.values(:,7:9)';
 angleL   = reshape(simoutL1.signals.values(1:3,:,:),3,length(t));
 OmegaL   = reshape(simoutL1.signals.values(4:6,:,:),3,length(t));
 dOmegaL  = reshape(simoutL1.signals.values(7:9,:,:),3,length(t));
+% 
+% angleQ   = reshape(simoutL2.signals.values(1:3,:,:),3,length(t));
+% OmegaQ   = reshape(simoutL2.signals.values(4:6,:,:),3,length(t));
+% dOmegaQ  = reshape(simoutL2.signals.values(7:9,:,:),3,length(t));
 
-angleQ   = reshape(simoutL2.signals.values(1:3,:,:),3,length(t));
-OmegaQ   = reshape(simoutL2.signals.values(4:6,:,:),3,length(t));
-dOmegaQ  = reshape(simoutL2.signals.values(7:9,:,:),3,length(t));
+angleQ   = simoutL2.signals.values(:,1:3);
+OmegaQ   = simoutL2.signals.values(:,4:6);
+dOmegaQ  = simoutL2.signals.values(:,7:9);
 
 f        = simoutL3.signals.values(:,1);
 M        = simoutL3.signals.values(:,2:4)';
 omegarot = simoutL3.signals.values(:,5:8)';
 fi       = simoutL3.signals.values(:,9:12)';
 
-q = simoutq.signals.values(:,:)';
-eq = simouteq.signals.values(:,1:3);
-edq = simouteq.signals.values(:,4:6);
-eR = simouteAttitude.signals.values(:,1:3);
-eOmega = simouteAttitude.signals.values(:,4:6);
-Psiq = simoutPsiq.signals.values(:,1);
-PsiR = simoutPsiR.signals.values(:,1);
+q        = simoutq.signals.values(:,:)';
+eq       = simouteq.signals.values(:,1:3);
+edq      = simouteq.signals.values(:,4:6);
+eR       = simouteAttitude.signals.values(:,1:3);
+eOmega   = simouteAttitude.signals.values(:,4:6);
+Psiq     = simoutPsiq.signals.values(:,1);
+PsiR     = simoutPsiR.signals.values(:,1);
 
 F = reshape(simoutF.signals.values,3,length(t));
 
 posQ = posL - q*lL;
 
-if Psiq(1) >= 2
-    error('Psiq(0) <2')
+% Prop.1
+if PsiR(1) >= 2
+    error('PsiR(0) too big')
 end
+% lambdaMJQ = ?
+% eps = ?
+% if norm(eOmega(1),2)^2 >= 2/lambdaMJQ * kR/eps^2 * (2-PsiR(1))
+%     error('eOmega(0) too big')
+% end
 
-if norm(edq(1),2) >= 2/(mQ*lL)*kq*(2-Psiq(1))
-    error('')
+% Prop.2
+if Psiq(1) >= 2
+    error('Psiq(0) too big')
+end
+if norm(edq(1),2)^2 >= 2/(mQ*lL)*kq*(2-Psiq(1))
+    error('edq(0) too big')
+end
 
 %% Plots
 
@@ -212,8 +229,6 @@ labfont = 20; %Label Fontsize
 supfont = 25; %Suptitle Fontsize
 
 foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\MatlabImages\';
-
-% QRplots
 
 % QRLplots
 

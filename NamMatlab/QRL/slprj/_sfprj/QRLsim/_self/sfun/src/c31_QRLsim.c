@@ -257,7 +257,7 @@ static void sf_c31_QRLsim(SFc31_QRLsimInstanceStruct *chartInstance)
   c31_b_var = (real_T (*)[3])ssGetInputPortSignal(chartInstance->S, 0);
   _SFD_SYMBOL_SCOPE_PUSH(0U, 0U);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
-  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 5U, chartInstance->c31_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 4U, chartInstance->c31_sfEvent);
   for (c31_i2 = 0; c31_i2 < 3; c31_i2++) {
     _SFD_DATA_RANGE_CHECK((*c31_b_var)[c31_i2], 0U);
   }
@@ -272,7 +272,7 @@ static void sf_c31_QRLsim(SFc31_QRLsimInstanceStruct *chartInstance)
   }
 
   chartInstance->c31_sfEvent = CALL_EVENT;
-  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 5U, chartInstance->c31_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 4U, chartInstance->c31_sfEvent);
   c31_hoistedGlobal = *c31_b_f;
   for (c31_i5 = 0; c31_i5 < 3; c31_i5++) {
     c31_var[c31_i5] = (*c31_b_var)[c31_i5];
@@ -408,7 +408,7 @@ static void sf_c31_QRLsim(SFc31_QRLsimInstanceStruct *chartInstance)
     (*c31_b_omegai)[c31_i15] = c31_omegai[c31_i15];
   }
 
-  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 5U, chartInstance->c31_sfEvent);
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 4U, chartInstance->c31_sfEvent);
   _SFD_SYMBOL_SCOPE_POP();
   _SFD_CHECK_FOR_STATE_INCONSISTENCY(_QRLsimMachineNumber_,
     chartInstance->chartNumber, chartInstance->instanceNumber);

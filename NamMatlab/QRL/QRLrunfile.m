@@ -21,7 +21,7 @@ clear; clc; close all;
 % QRL Load Attitude Controlled mode 3
 % QRL Load Position Controlled mode 4
 
-mode = 3;
+mode = 2;
 switch mode
     case 2
         modename = 'QRL QR Attitude Controlled Mode';
@@ -42,10 +42,10 @@ end
 Tend_sim = 5;
 Ts_sim   = 0.01;
 
-xLd = [0; 0; 0];
-b1d   = [1; 0; 0];
-Rd = eye(3);
-qd = [0; 0; -1];
+xLd = [0; -1; 0];
+b1d = [1; 0; 0];
+Rd  = eye(3);
+qd  = [0; 0; -1];
 
 % phiLd   = 0;
 % phiQd   = 0;
@@ -72,10 +72,10 @@ Ir    = 0.5; %gok
 l     = 0.315; %Lee2010 %wingspan bebop 248 mm
 
 g     = 9.81;
-fc    = (mQ+mL)*g;
-
 e3    = [0;0;1];
 
+fc    = (mQ+mL)*g;
+fgain = 44.5;
 fsat  = [-1000 1000];
 
 c_der = inf;
@@ -88,16 +88,16 @@ dxL0    = 0;
 dyL0    = 0;
 dzL0    = 0;
 
-phiL0   = deg2rad(30); % -e3 = 0 deg
+phiL0   = deg2rad(0); % -e3 = 180 deg
 thetaL0 = 0;
 psiL0   = 0;
 pL0     = 0;
 qL0     = 0;
 rL0     = 0;
 
-phiQ0   = deg2rad(-60); %deg
-thetaQ0 = 0;
-psiQ0   = 0;
+phiQ0   = deg2rad(60); %deg
+thetaQ0 = deg2rad(0);
+psiQ0   = deg2rad(0);
 pQ0     = 0;
 qQ0     = 0;
 rQ0     = 0;
@@ -112,15 +112,15 @@ omega0  = [0;0;0];
 % 
 % Rinit = Rx
 
-        Rz = [cos(psiQ0) sin(psiQ0) 0;
-            -sin(psiQ0) cos(psiQ0) 0;
+        Rz = [cos(psiQ0) -sin(psiQ0) 0;
+            sin(psiQ0) cos(psiQ0) 0;
             0 0 1];
-        Ry = [cos(thetaQ0) 0 -sin(thetaQ0);
+        Ry = [cos(thetaQ0) 0 sin(thetaQ0);
             0 1 0;
-            sin(thetaQ0) 0 cos(thetaQ0)];
+            -sin(thetaQ0) 0 cos(thetaQ0)];
         Rx = [1 0 0;
-            0 cos(phiQ0) sin(phiQ0);
-            0 -sin(phiQ0) cos(phiQ0)];
+            0 cos(phiQ0) -sin(phiQ0);
+            0 sin(phiQ0) cos(phiQ0)];
         Rzyx = (Rx*Ry*Rz);
         R0 = Rzyx;
 
@@ -136,11 +136,11 @@ komega = .5;
 kpL = 1.2;
 kdL = 1.4;
 
-kpxL = 5;
-kdxL = 1;
+kpx = 16*mQ;
+kdx = 5.6*mQ;
 
-kx = 16*mQ;
-kv = 5.6*mQ;
+% kx = 2*16*mQ;
+% kv = 2*5.6*mQ;
 
 
 
@@ -159,7 +159,6 @@ kv = 5.6*mQ;
 % % kOmega = 2.54;
 
 %% Simulation
-fattgain = 50;
 
 open('QRLsim')
 sim('QRLsim')
@@ -178,10 +177,14 @@ accL     = simoutL.signals.values(:,7:9)';
 angleL   = reshape(simoutL1.signals.values(1:3,:,:),3,length(t));
 OmegaL   = reshape(simoutL1.signals.values(4:6,:,:),3,length(t));
 dOmegaL  = reshape(simoutL1.signals.values(7:9,:,:),3,length(t));
+% 
+% angleQ   = reshape(simoutL2.signals.values(1:3,:,:),3,length(t));
+% OmegaQ   = reshape(simoutL2.signals.values(4:6,:,:),3,length(t));
+% dOmegaQ  = reshape(simoutL2.signals.values(7:9,:,:),3,length(t));
 
-angleQ   = reshape(simoutL2.signals.values(1:3,:,:),3,length(t));
-OmegaQ   = reshape(simoutL2.signals.values(4:6,:,:),3,length(t));
-dOmegaQ  = reshape(simoutL2.signals.values(7:9,:,:),3,length(t));
+angleQ   = simoutL2.signals.values(:,1:3);
+OmegaQ   = simoutL2.signals.values(:,4:6);
+dOmegaQ  = simoutL2.signals.values(:,7:9);
 
 f        = simoutL3.signals.values(:,1);
 M        = simoutL3.signals.values(:,2:4)';
@@ -200,11 +203,21 @@ F = reshape(simoutF.signals.values,3,length(t));
 
 posQ = posL - q*lL;
 
-if Psiq(1) >= 2
-    error('Psiq(0) <2')
+% Prop.1
+if PsiR(1) >= 2
+    error('PsiR(0) too big')
 end
+% lambdaMJQ = ?
+% eps = ?
+% if norm(eOmega(1),2)^2 >= 2/lambdaMJQ * kR/eps^2 * (2-PsiR(1))
+%     error('eOmega(0) too big')
+% end
 
-if norm(edq(1),2) >= 2/(mQ*lL)*kq*(2-Psiq(1))
+% Prop.2
+if Psiq(1) >= 2
+    error('Psiq(0) too big')
+end
+if norm(edq(1),2)^2 >= 2/(mQ*lL)*kq*(2-Psiq(1))
     error('edq(0) too big')
 end
 
