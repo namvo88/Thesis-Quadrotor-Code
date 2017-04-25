@@ -309,7 +309,7 @@ static void sf_c46_QRLsim(SFc46_QRLsimInstanceStruct *chartInstance)
   c46_varF = (real_T (*)[4])ssGetInputPortSignal(chartInstance->S, 0);
   _SFD_SYMBOL_SCOPE_PUSH(0U, 0U);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
-  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 11U, chartInstance->c46_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 12U, chartInstance->c46_sfEvent);
   for (c46_i10 = 0; c46_i10 < 4; c46_i10++) {
     _SFD_DATA_RANGE_CHECK((*c46_varF)[c46_i10], 0U);
   }
@@ -509,7 +509,7 @@ static void c46_chartstep_c46_QRLsim(SFc46_QRLsimInstanceStruct *chartInstance)
   c46_b_mode = (real_T *)ssGetInputPortSignal(chartInstance->S, 2);
   c46_c_A = (real_T (*)[3])ssGetInputPortSignal(chartInstance->S, 1);
   c46_b_varF = (real_T (*)[4])ssGetInputPortSignal(chartInstance->S, 0);
-  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 11U, chartInstance->c46_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 12U, chartInstance->c46_sfEvent);
   c46_hoistedGlobal = *c46_b_mode;
   for (c46_i22 = 0; c46_i22 < 4; c46_i22++) {
     c46_varF[c46_i22] = (*c46_b_varF)[c46_i22];
@@ -630,7 +630,7 @@ static void c46_chartstep_c46_QRLsim(SFc46_QRLsimInstanceStruct *chartInstance)
     break;
   }
 
-  _SFD_EML_CALL(0U, chartInstance->c46_sfEvent, 15);
+  _SFD_EML_CALL(0U, chartInstance->c46_sfEvent, 17);
   c46_qhat[0] = 0.0;
   c46_qhat[3] = -c46_q[2];
   c46_qhat[6] = c46_q[1];
@@ -640,7 +640,7 @@ static void c46_chartstep_c46_QRLsim(SFc46_QRLsimInstanceStruct *chartInstance)
   c46_qhat[2] = -c46_q[1];
   c46_qhat[5] = c46_q[0];
   c46_qhat[8] = 0.0;
-  _SFD_EML_CALL(0U, chartInstance->c46_sfEvent, 19);
+  _SFD_EML_CALL(0U, chartInstance->c46_sfEvent, 21);
   for (c46_i33 = 0; c46_i33 < 9; c46_i33++) {
     c46_b_a[c46_i33] = c46_qhat[c46_i33];
   }
@@ -689,7 +689,7 @@ static void c46_chartstep_c46_QRLsim(SFc46_QRLsimInstanceStruct *chartInstance)
     }
   }
 
-  _SFD_EML_CALL(0U, chartInstance->c46_sfEvent, 20);
+  _SFD_EML_CALL(0U, chartInstance->c46_sfEvent, 22);
   for (c46_i45 = 0; c46_i45 < 3; c46_i45++) {
     c46_b_qc[c46_i45] = c46_qc[c46_i45];
   }
@@ -712,7 +712,7 @@ static void c46_chartstep_c46_QRLsim(SFc46_QRLsimInstanceStruct *chartInstance)
     c46_edq[c46_i49] = c46_dq[c46_i49] - c46_C[c46_i49];
   }
 
-  _SFD_EML_CALL(0U, chartInstance->c46_sfEvent, 22);
+  _SFD_EML_CALL(0U, chartInstance->c46_sfEvent, 24);
   c46_d_a = -c46_kq;
   for (c46_i50 = 0; c46_i50 < 3; c46_i50++) {
     c46_b[c46_i50] = c46_eq[c46_i50];
@@ -735,7 +735,7 @@ static void c46_chartstep_c46_QRLsim(SFc46_QRLsimInstanceStruct *chartInstance)
     c46_Fpd[c46_i54] = c46_b[c46_i54] - c46_C[c46_i54];
   }
 
-  _SFD_EML_CALL(0U, chartInstance->c46_sfEvent, 25);
+  _SFD_EML_CALL(0U, chartInstance->c46_sfEvent, 27);
   for (c46_i55 = 0; c46_i55 < 3; c46_i55++) {
     c46_c_qc[c46_i55] = c46_qc[c46_i55];
   }
@@ -754,7 +754,7 @@ static void c46_chartstep_c46_QRLsim(SFc46_QRLsimInstanceStruct *chartInstance)
   }
 
   c46_inprod = c46_dot(chartInstance, c46_d_q, c46_c_C);
-  _SFD_EML_CALL(0U, chartInstance->c46_sfEvent, 26);
+  _SFD_EML_CALL(0U, chartInstance->c46_sfEvent, 28);
   c46_f_a = c46_mQ;
   c46_b_b = c46_lL;
   c46_y = c46_f_a * c46_b_b;
@@ -805,7 +805,7 @@ static void c46_chartstep_c46_QRLsim(SFc46_QRLsimInstanceStruct *chartInstance)
     c46_Fff[c46_i67] = c46_b[c46_i67] + c46_C[c46_i67];
   }
 
-  _SFD_EML_CALL(0U, chartInstance->c46_sfEvent, -26);
+  _SFD_EML_CALL(0U, chartInstance->c46_sfEvent, -28);
   _SFD_SYMBOL_SCOPE_POP();
   for (c46_i68 = 0; c46_i68 < 3; c46_i68++) {
     (*c46_b_Fn)[c46_i68] = c46_Fn[c46_i68];
@@ -827,7 +827,7 @@ static void c46_chartstep_c46_QRLsim(SFc46_QRLsimInstanceStruct *chartInstance)
     (*c46_b_edq)[c46_i72] = c46_edq[c46_i72];
   }
 
-  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 11U, chartInstance->c46_sfEvent);
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 12U, chartInstance->c46_sfEvent);
 }
 
 static void initSimStructsc46_QRLsim(SFc46_QRLsimInstanceStruct *chartInstance)
@@ -2517,10 +2517,10 @@ extern void utFree(void*);
 
 void sf_c46_QRLsim_get_check_sum(mxArray *plhs[])
 {
-  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(3530961211U);
-  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(617648772U);
-  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(993829655U);
-  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(251344176U);
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(4093361001U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2296036180U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3562325415U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(2366355908U);
 }
 
 mxArray *sf_c46_QRLsim_get_autoinheritance_info(void)
@@ -2532,7 +2532,7 @@ mxArray *sf_c46_QRLsim_get_autoinheritance_info(void)
     autoinheritanceFields);
 
   {
-    mxArray *mxChecksum = mxCreateString("Rv55PdBnUue9aLbJS0LKTC");
+    mxArray *mxChecksum = mxCreateString("ue8mkop0d1mpObRdVg5zcB");
     mxSetField(mxAutoinheritanceInfo,0,"checksum",mxChecksum);
   }
 
@@ -2906,7 +2906,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
         /* Initialization of MATLAB Function Model Coverage */
         _SFD_CV_INIT_EML(0,1,1,0,0,0,1,0,0,0,0);
-        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,524);
+        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,546);
 
         {
           static int caseStart[] = { 208, 144 };
@@ -3065,7 +3065,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
 static const char* sf_get_instance_specialization(void)
 {
-  return "zOwhtABeExyOeDL5fFkSk";
+  return "HdixKNrFGw5TPGNVyoG8AD";
 }
 
 static void sf_opaque_initialize_c46_QRLsim(void *chartInstanceVar)
@@ -3237,10 +3237,10 @@ static void mdlSetWorkWidths_c46_QRLsim(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(2023079202U));
-  ssSetChecksum1(S,(1166099881U));
-  ssSetChecksum2(S,(2815553799U));
-  ssSetChecksum3(S,(460837750U));
+  ssSetChecksum0(S,(1366591728U));
+  ssSetChecksum1(S,(2019172531U));
+  ssSetChecksum2(S,(1151095104U));
+  ssSetChecksum3(S,(776173120U));
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
   ssSupportsMultipleExecInstances(S,1);

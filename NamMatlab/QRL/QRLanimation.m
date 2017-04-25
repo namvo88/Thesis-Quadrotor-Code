@@ -1,3 +1,5 @@
+pausefactor = 1;
+
 POSL = posL;
 XL = POSL(1,:);
 YL = POSL(2,:);
@@ -17,10 +19,10 @@ ts = tend/length(t);
 % xmax = max(max(XL,XQR))+0.5;
 % ymax = max(max(YL,YQR))+0.5;
 % zmax = max(max(ZL,ZQR))+1;
-zmin = -9;
-zmax = 1;
-ymin = -9;
-ymax = 1;
+zmin = -5;
+zmax = 5;
+ymin = -1;
+ymax = 9;
 xmin = -2;
 xmax = 2;
 
@@ -99,7 +101,7 @@ set(hL,'xdata',XL(k),'ydata',YL(k),'zdata',ZL(k));
 
 set(hC,'xdata',[XQR(k) XL(k)],'ydata',[YQR(k) YL(k)],'zdata',[ZQR(k) ZL(k)]);
 
-pause(ts);
+pause(ts*pausefactor);
 
 % drawnow
 end

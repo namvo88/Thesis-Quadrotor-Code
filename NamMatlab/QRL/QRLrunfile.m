@@ -21,28 +21,31 @@ clear; clc; close all;
 % QRL Load Attitude Controlled mode 3
 % QRL Load Position Controlled mode 4
 
-mode = 2;
+mode = 4;
 switch mode
     case 2
         modename = 'QRL QR Attitude Controlled Mode';
-        modecode = 'QRLQRATT';
+        modecode = 'QRATTQRL';
         disp(modename)
     case 3
         modename = 'QRL Load Attitude Controlled Mode';
-        modecode = 'QRLLATT';
+        modecode = 'LATTQRL';
         disp(modename)
     case 4
         modename = 'QRL Load Position Controlled Mode';
-        modecode = 'QRLLPOS';
+        modecode = 'LPOSQRL';
         disp(modename)
     otherwise
         disp('No Control Mode selected');
 end
 
-Tend_sim = 5;
-Ts_sim   = 0.01;
+Tsim_end = 8;
+Tsim_s   = 0.01;
+t = 0:Tsim_s:Tsim_end;
+fsine = 2*(2*pi)/Tsim_end;
+T0 = Tsim_end*4; %Time period of oscillation of load
 
-xLd = [0; -1; 0];
+% xLd = [zeros(1,length(t)); sin(2*pi*t/T0); zeros(1,length(t))];
 b1d = [1; 0; 0];
 Rd  = eye(3);
 qd  = [0; 0; -1];
@@ -75,7 +78,7 @@ g     = 9.81;
 e3    = [0;0;1];
 
 fc    = (mQ+mL)*g;
-fgain = 44.5;
+fgain = 1;
 fsat  = [-1000 1000];
 
 c_der = inf;
@@ -95,7 +98,7 @@ pL0     = 0;
 qL0     = 0;
 rL0     = 0;
 
-phiQ0   = deg2rad(60); %deg
+phiQ0   = deg2rad(0); %deg
 thetaQ0 = deg2rad(0);
 psiQ0   = deg2rad(0);
 pQ0     = 0;
@@ -130,14 +133,14 @@ omega0  = [0;0;0];
 kR = 8.81; %Lee2010
 kOmegaQ = 2.54; %Lee2010
 
-kq = 4;
-komega = .5;
+kq = kR*1;
+komega = kOmegaQ*1;
 
-kpL = 1.2;
-kdL = 1.4;
+% kpL = 1.2;
+% kdL = 1.4;
 
-kpx = 16*mQ;
-kdx = 5.6*mQ;
+kpx = 3;
+kdx = 6;
 
 % kx = 2*16*mQ;
 % kv = 2*5.6*mQ;
@@ -174,13 +177,16 @@ posL     = simoutL.signals.values(:,1:3)';
 velL     = simoutL.signals.values(:,4:6)';
 accL     = simoutL.signals.values(:,7:9)';
 
-angleL   = reshape(simoutL1.signals.values(1:3,:,:),3,length(t));
-OmegaL   = reshape(simoutL1.signals.values(4:6,:,:),3,length(t));
-dOmegaL  = reshape(simoutL1.signals.values(7:9,:,:),3,length(t));
+% angleL   = reshape(simoutL1.signals.values(1:3,:,:),3,length(t));
+% OmegaL   = reshape(simoutL1.signals.values(4:6,:,:),3,length(t));
+% dOmegaL  = reshape(simoutL1.signals.values(7:9,:,:),3,length(t));
 % 
 % angleQ   = reshape(simoutL2.signals.values(1:3,:,:),3,length(t));
 % OmegaQ   = reshape(simoutL2.signals.values(4:6,:,:),3,length(t));
 % dOmegaQ  = reshape(simoutL2.signals.values(7:9,:,:),3,length(t));
+
+angleL   = simoutL1.signals.values(:,1:3);
+OmegaL   = simoutL1.signals.values(:,4:6);
 
 angleQ   = simoutL2.signals.values(:,1:3);
 OmegaQ   = simoutL2.signals.values(:,4:6);
@@ -191,15 +197,23 @@ M        = simoutL3.signals.values(:,2:4)';
 omegarot = simoutL3.signals.values(:,5:8)';
 fi       = simoutL3.signals.values(:,9:12)';
 
-q        = simoutq.signals.values(:,:)';
-eq       = simouteq.signals.values(:,1:3);
-edq      = simouteq.signals.values(:,4:6);
-eR       = simouteAttitude.signals.values(:,1:3);
-eOmega   = simouteAttitude.signals.values(:,4:6);
-Psiq     = simoutPsiq.signals.values(:,1);
-PsiR     = simoutPsiR.signals.values(:,1);
+q      = simoutq.signals.values(:,1:3)';
+dq     = simoutq.signals.values(:,4:6)';
+ddq    = simoutq.signals.values(:,7:9)';
+
+eq     = simouteq.signals.values(:,1:3);
+edq    = simouteq.signals.values(:,4:6);
+eR     = simouteAttitude.signals.values(:,1:3);
+eOmega = simouteAttitude.signals.values(:,4:6);
+Psiq   = simoutPsiq.signals.values(:,1);
+PsiR   = simoutPsiR.signals.values(:,1);
+
+xLd      = simoutxLd.signals.values(:,1:3)';
+dxLd     = simoutxLd.signals.values(:,4:6)';
+ddxLd    = simoutxLd.signals.values(:,7:9)';
 
 F = reshape(simoutF.signals.values,3,length(t));
+qcplot = reshape(simoutqc.signals.values,[3,length(simoutqc.signals.values)]);
 
 posQ = posL - q*lL;
 
@@ -234,4 +248,4 @@ foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\Mat
 
 %% Animation
 
-QRLanimation
+% QRLanimation
