@@ -16,7 +16,7 @@
 #include "c44_QRLsim.h"
 #include "c46_QRLsim.h"
 #include "c47_QRLsim.h"
-#include "c48_QRLsim.h"
+#include "c49_QRLsim.h"
 
 /* Type Definitions */
 
@@ -113,8 +113,8 @@ unsigned int sf_QRLsim_method_dispatcher(SimStruct *simstructPtr, unsigned int
     return 1;
   }
 
-  if (chartFileNumber==48) {
-    c48_QRLsim_method_dispatcher(simstructPtr, method, data);
+  if (chartFileNumber==49) {
+    c49_QRLsim_method_dispatcher(simstructPtr, method, data);
     return 1;
   }
 
@@ -151,10 +151,10 @@ unsigned int sf_QRLsim_process_check_sum_call( int nlhs, mxArray * plhs[], int
       ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(0U);
       ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(0U);
     } else if (!strcmp(commandName,"makefile")) {
-      ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1703871078U);
-      ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2603916424U);
-      ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(144664192U);
-      ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(859486172U);
+      ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2256706214U);
+      ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2823221731U);
+      ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3023361930U);
+      ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(5600325U);
     } else if (nrhs==3 && !strcmp(commandName,"chart")) {
       unsigned int chartFileNumber;
       chartFileNumber = (unsigned int)mxGetScalar(prhs[2]);
@@ -257,10 +257,10 @@ unsigned int sf_QRLsim_process_check_sum_call( int nlhs, mxArray * plhs[], int
           break;
         }
 
-       case 48:
+       case 49:
         {
-          extern void sf_c48_QRLsim_get_check_sum(mxArray *plhs[]);
-          sf_c48_QRLsim_get_check_sum(plhs);
+          extern void sf_c49_QRLsim_get_check_sum(mxArray *plhs[]);
+          sf_c49_QRLsim_get_check_sum(plhs);
           break;
         }
 
@@ -279,10 +279,10 @@ unsigned int sf_QRLsim_process_check_sum_call( int nlhs, mxArray * plhs[], int
       return 0;
     }
   } else {
-    ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2355960841U);
-    ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(143837562U);
-    ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3769626799U);
-    ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(1516193271U);
+    ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2514616060U);
+    ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1002932204U);
+    ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(4136969059U);
+    ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(4106938960U);
   }
 
   return 1;
@@ -404,7 +404,7 @@ unsigned int sf_QRLsim_autoinheritance_info( int nlhs, mxArray * plhs[], int
 
      case 40:
       {
-        if (strcmp(aiChksum, "EDvui38t87jwvXy6ogThYF") == 0) {
+        if (strcmp(aiChksum, "0BzzR5jA3z7gfy2yokxg6C") == 0) {
           extern mxArray *sf_c40_QRLsim_get_autoinheritance_info(void);
           plhs[0] = sf_c40_QRLsim_get_autoinheritance_info();
           break;
@@ -416,7 +416,7 @@ unsigned int sf_QRLsim_autoinheritance_info( int nlhs, mxArray * plhs[], int
 
      case 41:
       {
-        if (strcmp(aiChksum, "umTfsP2JVkPamggh6ppIAB") == 0) {
+        if (strcmp(aiChksum, "MVYCpeq7BaS5ZHK8EPCGOH") == 0) {
           extern mxArray *sf_c41_QRLsim_get_autoinheritance_info(void);
           plhs[0] = sf_c41_QRLsim_get_autoinheritance_info();
           break;
@@ -464,7 +464,7 @@ unsigned int sf_QRLsim_autoinheritance_info( int nlhs, mxArray * plhs[], int
 
      case 46:
       {
-        if (strcmp(aiChksum, "ue8mkop0d1mpObRdVg5zcB") == 0) {
+        if (strcmp(aiChksum, "RSDgGYqrGyoOPictbFCzJC") == 0) {
           extern mxArray *sf_c46_QRLsim_get_autoinheritance_info(void);
           plhs[0] = sf_c46_QRLsim_get_autoinheritance_info();
           break;
@@ -486,11 +486,11 @@ unsigned int sf_QRLsim_autoinheritance_info( int nlhs, mxArray * plhs[], int
         break;
       }
 
-     case 48:
+     case 49:
       {
-        if (strcmp(aiChksum, "zzNhvphFCYfGjhleEDUc7D") == 0) {
-          extern mxArray *sf_c48_QRLsim_get_autoinheritance_info(void);
-          plhs[0] = sf_c48_QRLsim_get_autoinheritance_info();
+        if (strcmp(aiChksum, "RqFWPdbaQUXvHtOk3XKJPB") == 0) {
+          extern mxArray *sf_c49_QRLsim_get_autoinheritance_info(void);
+          plhs[0] = sf_c49_QRLsim_get_autoinheritance_info();
           break;
         }
 
@@ -673,11 +673,11 @@ unsigned int sf_QRLsim_get_eml_resolved_functions_info( int nlhs, mxArray *
         break;
       }
 
-     case 48:
+     case 49:
       {
-        extern const mxArray *sf_c48_QRLsim_get_eml_resolved_functions_info(void);
+        extern const mxArray *sf_c49_QRLsim_get_eml_resolved_functions_info(void);
         mxArray *persistentMxArray = (mxArray *)
-          sf_c48_QRLsim_get_eml_resolved_functions_info();
+          sf_c49_QRLsim_get_eml_resolved_functions_info();
         plhs[0] = mxDuplicateArray(persistentMxArray);
         mxDestroyArray(persistentMxArray);
         break;
@@ -783,7 +783,7 @@ unsigned int sf_QRLsim_third_party_uses_info( int nlhs, mxArray * plhs[], int
 
      case 40:
       {
-        if (strcmp(tpChksum, "p0erjV8sfhzGCVMLBDd5RH") == 0) {
+        if (strcmp(tpChksum, "LpioCROdKns0V6DaBjL6eC") == 0) {
           extern mxArray *sf_c40_QRLsim_third_party_uses_info(void);
           plhs[0] = sf_c40_QRLsim_third_party_uses_info();
           break;
@@ -792,7 +792,7 @@ unsigned int sf_QRLsim_third_party_uses_info( int nlhs, mxArray * plhs[], int
 
      case 41:
       {
-        if (strcmp(tpChksum, "daXPARzSBKqy9WBAGSnxV") == 0) {
+        if (strcmp(tpChksum, "hVLiEDJ4GdeKZ95yrASanH") == 0) {
           extern mxArray *sf_c41_QRLsim_third_party_uses_info(void);
           plhs[0] = sf_c41_QRLsim_third_party_uses_info();
           break;
@@ -828,7 +828,7 @@ unsigned int sf_QRLsim_third_party_uses_info( int nlhs, mxArray * plhs[], int
 
      case 46:
       {
-        if (strcmp(tpChksum, "HdixKNrFGw5TPGNVyoG8AD") == 0) {
+        if (strcmp(tpChksum, "THm6kZkUaf1FKC7htagAnB") == 0) {
           extern mxArray *sf_c46_QRLsim_third_party_uses_info(void);
           plhs[0] = sf_c46_QRLsim_third_party_uses_info();
           break;
@@ -844,11 +844,11 @@ unsigned int sf_QRLsim_third_party_uses_info( int nlhs, mxArray * plhs[], int
         }
       }
 
-     case 48:
+     case 49:
       {
-        if (strcmp(tpChksum, "b2MEIFZEwqqISnA3FbHayD") == 0) {
-          extern mxArray *sf_c48_QRLsim_third_party_uses_info(void);
-          plhs[0] = sf_c48_QRLsim_third_party_uses_info();
+        if (strcmp(tpChksum, "PFU1Rs6cd9KEOkah9hlKiE") == 0) {
+          extern mxArray *sf_c49_QRLsim_third_party_uses_info(void);
+          plhs[0] = sf_c49_QRLsim_third_party_uses_info();
           break;
         }
       }
@@ -946,7 +946,7 @@ unsigned int sf_QRLsim_updateBuildInfo_args_info( int nlhs, mxArray * plhs[],
 
      case 40:
       {
-        if (strcmp(tpChksum, "p0erjV8sfhzGCVMLBDd5RH") == 0) {
+        if (strcmp(tpChksum, "LpioCROdKns0V6DaBjL6eC") == 0) {
           extern mxArray *sf_c40_QRLsim_updateBuildInfo_args_info(void);
           plhs[0] = sf_c40_QRLsim_updateBuildInfo_args_info();
           break;
@@ -955,7 +955,7 @@ unsigned int sf_QRLsim_updateBuildInfo_args_info( int nlhs, mxArray * plhs[],
 
      case 41:
       {
-        if (strcmp(tpChksum, "daXPARzSBKqy9WBAGSnxV") == 0) {
+        if (strcmp(tpChksum, "hVLiEDJ4GdeKZ95yrASanH") == 0) {
           extern mxArray *sf_c41_QRLsim_updateBuildInfo_args_info(void);
           plhs[0] = sf_c41_QRLsim_updateBuildInfo_args_info();
           break;
@@ -991,7 +991,7 @@ unsigned int sf_QRLsim_updateBuildInfo_args_info( int nlhs, mxArray * plhs[],
 
      case 46:
       {
-        if (strcmp(tpChksum, "HdixKNrFGw5TPGNVyoG8AD") == 0) {
+        if (strcmp(tpChksum, "THm6kZkUaf1FKC7htagAnB") == 0) {
           extern mxArray *sf_c46_QRLsim_updateBuildInfo_args_info(void);
           plhs[0] = sf_c46_QRLsim_updateBuildInfo_args_info();
           break;
@@ -1007,11 +1007,11 @@ unsigned int sf_QRLsim_updateBuildInfo_args_info( int nlhs, mxArray * plhs[],
         }
       }
 
-     case 48:
+     case 49:
       {
-        if (strcmp(tpChksum, "b2MEIFZEwqqISnA3FbHayD") == 0) {
-          extern mxArray *sf_c48_QRLsim_updateBuildInfo_args_info(void);
-          plhs[0] = sf_c48_QRLsim_updateBuildInfo_args_info();
+        if (strcmp(tpChksum, "PFU1Rs6cd9KEOkah9hlKiE") == 0) {
+          extern mxArray *sf_c49_QRLsim_updateBuildInfo_args_info(void);
+          plhs[0] = sf_c49_QRLsim_updateBuildInfo_args_info();
           break;
         }
       }

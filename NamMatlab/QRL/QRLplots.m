@@ -227,8 +227,8 @@ for j=1:3
     for n=1:3
         k=(j-1)*3+n;
         subplot(3,3,k)
-        Rplot = reshape(R.signals.values(j,n,:),[length(R.signals.values),1]);
-        Rcplot = reshape(Rc.signals.values(j,n,:),[length(Rc.signals.values),1]);
+        Rplot = reshape(simoutR.signals.values(j,n,:),[length(simoutR.signals.values),1]);
+        Rcplot = reshape(simoutRc.signals.values(j,n,:),[length(simoutRc.signals.values),1]);
         hold on
         axis([0 t(end) -1.2 1.2])
         plot(t,Rplot,'Linewidth',2)
