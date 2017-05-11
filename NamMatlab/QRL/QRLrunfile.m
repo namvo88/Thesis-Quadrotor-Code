@@ -21,7 +21,13 @@ clear; clc; close all;
 % QRL Load Attitude Controlled mode 3
 % QRL Load Position Controlled mode 4
 
-mode = 4;
+mode      = 4;
+
+Tsim_end  = 30;
+Tsim_s    = 0.01;
+animation = 1;
+plots     = 0;
+
 switch mode
     case 2
         modename = 'QRL QR Attitude Controlled Mode';
@@ -39,9 +45,8 @@ switch mode
         disp('No Control Mode selected');
 end
 
-Tsim_end = 20;
-Tsim_s   = 0.01;
-t = 0:Tsim_s:Tsim_end;
+
+% t = 0:Tsim_s:Tsim_end;
 
 % ampsin = 0.5;
 % ampcos = ampsin;
@@ -56,6 +61,7 @@ T0 = Tsim_end*4; %Time period of oscillation of load
 b1d = [1; 0; 0];
 Rd  = eye(3);
 qd  = [0; 0; -1];
+% qd  = [0; 0; 1]; %inverted pendulum
 
 % phiLd   = 0;
 % phiQd   = 0;
@@ -66,126 +72,124 @@ qd  = [0; 0; -1];
 % DeltaR = [0.2; -0.1; 0.02]; %Goodarzi2013a
 
 %% Constants
-mQ    = 4.34; %Lee2010 %weight bebop 420 g
-Ixx   = 0.0820; %Lee2010
-Iyy   = 0.1; %not Tang2014
-Izz   = 0.1; %not Tang2014
-I     = diag([Ixx Iyy Izz]); %Tang2014
-ctauf = 8.004e-3; %Lee2010c
+mQ         = 4.34; %Lee2010 %weight bebop 420 g
+Ixx        = 0.0820; %Lee2010
+Iyy        = 0.0845; %Lee2010
+Izz        = 0.1377; %Lee2010
+I          = diag([Ixx Iyy Izz]); %Tang2014
+lamb_m     = min(eig(I));
+lamb_M     = max(eig(I));
+ctauf      = 8.004e-3; %Lee2010c
 
-mL    = 0.1;
-lL    = 0.4;
+mL         = 0.1;
+lL         = 0.7;
 
-b     = 0.1; %gok thrust factor
-d     = 0.1; %gok drag factor
-Ir    = 0.5; %gok
-l     = 0.315; %Lee2010 %wingspan bebop 248 mm
+b          = 0.1; %gok thrust factor
+d          = 0.1; %gok drag factor
+Ir         = 0.5; %gok
+l          = 0.315; %Lee2010 %wingspan bebop 248 mm
 
-g     = 9.81;
-e3    = [0;0;1];
+g          = 9.81;
+e3         = [0;0;1];
 
-fc    = (mQ+mL)*g;
-fsat  = 300*[-1 1];
-Msat = [-100 100];
-
-c_der = inf;
+fc         = (mQ+mL)*g;
+fsat       = 300*[-1 1];
+Msat       = 300*[-1 1];
 
 %% Initial Conditions
-phiQ0   = deg2rad(0); %deg
-thetaQ0 = deg2rad(50);
-psiQ0   = deg2rad(0);
-pQ0     = 0;
-qQ0     = 0;
-rQ0     = 0;
 
-Rz = [cos(psiQ0) -sin(psiQ0) 0;
-    sin(psiQ0) cos(psiQ0) 0;
-    0 0 1];
-Ry = [cos(thetaQ0) 0 sin(thetaQ0);
-    0 1 0;
-    -sin(thetaQ0) 0 cos(thetaQ0)];
-Rx = [1 0 0;
-    0 cos(phiQ0) -sin(phiQ0);
-    0 sin(phiQ0) cos(phiQ0)];
-Rzyx = (Rx*Ry*Rz);
-R0 = Rzyx;
+phiQ0deg   = 0;
+thetaQ0deg = 0;
+psiQ0deg   = 0;
 
-xL0     = 0;
-yL0     = 0;
-zL0     = 0;
-dxL0    = 0;
-dyL0    = 0;
-dzL0    = 0;
+phiQ0      = deg2rad(phiQ0deg);
+thetaQ0    = deg2rad(thetaQ0deg);
+psiQ0      = deg2rad(psiQ0deg);
+pQ0        = 0;
+qQ0        = 0;
+rQ0        = 0;
 
-phiL0   = deg2rad(0);
-thetaL0 = deg2rad(0);
-psiL0   = 0;
-pL0     = 0;
-qL0     = 0;
-rL0     = 0;
+Rz         = [cos(psiQ0) -sin(psiQ0) 0;
+                sin(psiQ0) cos(psiQ0) 0;
+                0 0 1];
+Ry         = [cos(thetaQ0) 0 sin(thetaQ0);
+                0 1 0;
+                -sin(thetaQ0) 0 cos(thetaQ0)];
+Rx         = [1 0 0;
+                0 cos(phiQ0) -sin(phiQ0);
+                0 sin(phiQ0) cos(phiQ0)];
+Rzyx       = (Rx*Ry*Rz);
+R0         = Rzyx;
 
-dq0     = [0;0;0];
-omega0  = [0;0;0];
+xL0        = 0;
+yL0        = 0;
+zL0        = 0;
+dxL0       = 0;
+dyL0       = 0;
+dzL0       = 0;
 
-Rz = [cos(psiL0) -sin(psiL0) 0;
-    sin(psiL0) cos(psiL0) 0;
-    0 0 1];
-Ry = [cos(thetaL0) 0 sin(thetaL0);
-    0 1 0;
-    -sin(thetaL0) 0 cos(thetaL0)];
-Rx = [1 0 0;
-    0 cos(phiL0) -sin(phiL0);
-    0 sin(phiL0) cos(phiL0)];
-Rzyx = (Rx*Ry*Rz);
+phiL0deg   = 0;
+thetaL0deg = 0;
+phiL0      = deg2rad(phiL0deg);
+thetaL0    = deg2rad(thetaL0deg);
+psiL0      = 0;
+pL0        = 0;
+qL0        = 0;
+rL0        = 0;
 
-q0 = Rzyx*-e3;
+dq0        = [0;0;0];
+omega0     = [0;0;0];
+
+Rz         = [cos(psiL0) -sin(psiL0) 0;
+                sin(psiL0) cos(psiL0) 0;
+                0 0 1];
+Ry         = [cos(thetaL0) 0 sin(thetaL0);
+                0 1 0;
+                -sin(thetaL0) 0 cos(thetaL0)];
+Rx         = [1 0 0;
+                0 cos(phiL0) -sin(phiL0);
+                0 sin(phiL0) cos(phiL0)];
+Rzyx       = (Rx*Ry*Rz);
+q0         = Rzyx*-e3;
 
 
 %% Gains
 
 fgain = 1;
+T0 = 5;
 
-kR = 8.81*4; %Lee2010
-kOmegaQ = 2.54*2; %Lee2010
+omega_n_xL = 2*pi*15;
+omega_n_q = 2*pi*.8;
+omega_n_R = 2*pi*.8;
 
-kq = 30;
-komega = 10;
+eps = 0.9; % 0<eps<1
+psi_1 = .9; % Constant Psiq(0)<Psi_1<1 Lee2010 
+exLmax = 5; %Fixed constant
 
-% kpL = 1.2;
-% kdL = 1.4;
+facR = 1;
+kR = 8.81*facR; %Lee2010
+% kOmega = 2.54*Rfac; %Lee2010
+% kR = 5*Rfac;
+kOmega = 2.4*facR;
 
-kpx = 80*(mL);
-kdx = 50*(mL);
+facq = 5;
+kq = 10*facq;
+komega = 4*facq;
 
-% kx = 2*16*mQ;
-% kv = 2*5.6*mQ;
+facx = 1.2;
+kpx = 13.6*facx;
+% kdx = 5.9*facx;
+kdx = 7.8*facx;
 
+% Simulation
+openModels = find_system('SearchDepth', 0);
+if strmatch('QRLsim',openModels)>0
+    open('QRLsim')
+end
 
-
-% kR_phi       = 8.81; %Lee2010
-% kR_theta     = 0.5;
-% kR_psi       = 0.5;
-% % kR           = diag([kR_phi;kR_theta;kR_psi]);
-% kR = kR_phi*eye(3);
-% % kR = 8.81;
-
-% kOmega_phi   = 2.54; %Lee2010
-% kOmega_theta = 0.5;
-% kOmega_psi   = 0.5;
-% % kOmega       = diag([kOmega_phi;kOmega_theta;kOmega_psi]);
-% kOmega = kOmega_phi*eye(3);
-% % kOmega = 2.54;
-
-%% Simulation
-
-open('QRLsim')
 sim('QRLsim')
 
-%%
-% if norm(inittest.signals.values(1,:))>=1
-%     norm(inittest.signals.values(1,:))
-%     error('norm( - kpL*eL - kdL*deL + ddphiLd*mQ*lL/f ) >= 1 !!')
-% end
+% Dataconversion
 
 t        = simoutL.time;
 
@@ -220,40 +224,52 @@ xLd      = simoutxLd.signals.values(:,1:3)';
 dxLd     = simoutxLd.signals.values(:,4:6)';
 ddxLd    = simoutxLd.signals.values(:,7:9)';
 
+exL      = simoutexL.signals.values(:,1:3)';
+
 F        = reshape(simoutF.signals.values,3,length(t));
 qcplot   = reshape(simoutqc.signals.values,[3,length(simoutqc.signals.values)]);
 
 posQ     = posL - q*lL;
 
-% Prop.1
-if PsiR(1) >= 2
-    error('PsiR(0) too big')
-end
-% lambdaMJQ = ?
-% eps = ?
-% if norm(eOmega(1),2)^2 >= 2/lambdaMJQ * kR/eps^2 * (2-PsiR(1))
-%     error('eOmega(0) too big')
-% end
+%% Conditions check
 
-% Prop.2
-if Psiq(1) >= 2
-    error('Psiq(0) too big')
+% Prop.1 Sreenath2013b
+if PsiR(1) >= 2
+    error('PsiR(0) >= 2')
 end
-if norm(edq(1),2)^2 >= 2/(mQ*lL)*kq*(2-Psiq(1))
-    error('edq(0) too big')
+if norm(eOmega(1),2)^2 >= 2/lamb_M * kR/eps^2 * (2-PsiR(1))
+    error('eOmega(0) too big')
+end
+
+% Prop.2 Sreenath2013b
+if mode >= 3
+    if Psiq(1) >= 2
+        error('Psiq(0) >= 2')
+    end
+    if norm(edq(1),2)^2 >= 2/(mQ*lL)*kq*(2-Psiq(1))
+        error('edq(0) too big')
+    end
+end
+
+% Prop.3 Sreenath2013b
+if mode == 4
+    if Psiq(1) >= psi_1
+        error('Psiq(0) >= psi_1')
+    end
+    if norm(exL(:,1)) >= exLmax
+        error('norm(exL(:,1)) >= exLmax')
+    end
+    if norm(edq(:,1))^2 >= 2/(mQ*lL)*kq*(psi_1-Psiq(1))
+        error('edq(0) too big. Prop.3 Sreenath2013b')
+    end
 end
 
 %% Plots
-
-lfont = 18; %Legend Fontsize
-afont = 16; %Axis Fontsize
-labfont = 20; %Label Fontsize
-supfont = 25; %Suptitle Fontsize
-
-foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\MatlabImages\';
-
-QRLplots
+if plots == 1
+    QRLplots
+end
 
 %% Animation
-
-QRLanimation
+if animation == 1
+    QRLanimation
+end

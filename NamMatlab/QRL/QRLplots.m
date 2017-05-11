@@ -1,3 +1,25 @@
+    lfont = 18; %Legend Fontsize
+    afont = 16; %Axis Fontsize
+    labfont = 20; %Label Fontsize
+    supfont = 25; %Suptitle Fontsize
+    
+    foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\MatlabImages\';
+
+for nfile = 18:100
+    savename = strcat(foldername,modecode,num2str(nfile),'.mat');
+   
+%     existname = strcat(savename,num2str(nfile),'.png');
+    
+    if exist(savename,'file') == 0
+%         saveas(gcf,strcat(savename,num2str(nfile)),'png')
+        break
+    end
+end
+
+save(strcat(foldername,modecode,num2str(nfile),'CircleYZ','.mat'))
+
+   
+
 %% Inputs
 
 filename = 'f';
@@ -25,14 +47,7 @@ plot(t,fi(4,:),'Linewidth',2)
 ylabel('\boldmath$f_4$','FontSize',labfont,'Interpreter','latex')
 xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
-savename = strcat(foldername,modecode,'-',filename);
-for nfile = 1:100
-   existname = strcat(savename,num2str(nfile),'.png');
-   if exist(existname,'file') == 0
-       saveas(gcf,strcat(savename,num2str(nfile)),'png')
-       break
-   end
-end
+saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
 filename = 'M';
 figure('Name',filename)
@@ -122,43 +137,30 @@ set(hl,'Interpreter','latex','FontSize',lfont);
 % ylabel('acc [m/s^2]','FontSize',labfont)
 saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
-filename = 'QRLpos';
-figure('Name',filename)
-h_suptitle = suptitle('QR-Load Position');
-set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
-subplot 311
-hold on
-plot(t,posL(1,:),t,posQ(1,:),'Linewidth',2);
-% plot(t,xdes(1)*ones(size(posL(1,:))),'r--','Linewidth',2);
-ylabel('\boldmath$x [m]$','FontSize',labfont,'Interpreter','latex');
-set(gca,'FontSize',afont);
-% h_t=ylabel('x');
-% set(h_t, 'FontSize',labfont);
-hl = legend('\boldmath$x_L$','\boldmath$x_Q$');
-% set(hl,'Interpreter','latex','FontSize',lfont);
-subplot 312
-hold on
-plot(t,posL(2,:),t,posQ(2,:),'Linewidth',2);
-% plot(t,xdes(2)*ones(size(posL(2,:))),'r--','Linewidth',2);
-ylabel('\boldmath$y [m]$','FontSize',labfont,'Interpreter','latex');
-set(gca,'FontSize',afont);
-% h_t=ylabel('y');
-% set(h_t, 'FontSize',labfont);
-% hl = legend('$y_L$','$y_Q$');
-set(hl,'Interpreter','latex','FontSize',lfont,'Interpreter','latex');
-subplot 313
-hold on
-plot(t,posL(3,:),t,posQ(3,:),'Linewidth',2);
-% plot(t,xdes(3)*ones(size(posL(3,:))),'r--','Linewidth',2);
-xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
-ylabel('\boldmath$z [m]$','FontSize',labfont,'Interpreter','latex');
-set(gca,'FontSize',afont);
-% h_t=ylabel('z');
-% set(h_t, 'FontSize',labfont);
-% hl = legend('$z_L$','$z_Q$');
-% set(hl,'Interpreter','latex','FontSize',lfont);
-set(hl,'Interpreter','latex','FontSize',lfont,'Position',[.8,.8,.1,.1]);
-saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
+% filename = 'QRLpos';
+% figure('Name',filename)
+% h_suptitle = suptitle('QR-Load Position');
+% set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
+% subplot 311
+% hold on
+% plot(t,posL(1,:),t,posQ(1,:),'Linewidth',2);
+% ylabel('\boldmath$x [m]$','FontSize',labfont,'Interpreter','latex');
+% set(gca,'FontSize',afont);
+% hl = legend('\boldmath$x_L$','\boldmath$x_Q$');
+% subplot 312
+% hold on
+% plot(t,posL(2,:),t,posQ(2,:),'Linewidth',2);
+% ylabel('\boldmath$y [m]$','FontSize',labfont,'Interpreter','latex');
+% set(gca,'FontSize',afont);
+% set(hl,'Interpreter','latex','FontSize',lfont,'Interpreter','latex');
+% subplot 313
+% hold on
+% plot(t,posL(3,:),t,posQ(3,:),'Linewidth',2);
+% xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+% ylabel('\boldmath$z [m]$','FontSize',labfont,'Interpreter','latex');
+% set(gca,'FontSize',afont);
+% set(hl,'Interpreter','latex','FontSize',lfont,'Position',[.8,.8,.1,.1]);
+% saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
 %%
 filename = 'QRang';
@@ -221,7 +223,7 @@ saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
 filename = 'Rotations';
 figure('Name',filename)
-h_sup = suptitle(filename);
+h_sup = suptitle('Rotation $R\in\Re^{3\times3}$');
 set(h_sup,'FontSize',supfont,'Interpreter','latex');
 for j=1:3
     for n=1:3
@@ -230,7 +232,8 @@ for j=1:3
         Rplot = reshape(simoutR.signals.values(j,n,:),[length(simoutR.signals.values),1]);
         Rcplot = reshape(simoutRc.signals.values(j,n,:),[length(simoutRc.signals.values),1]);
         hold on
-        axis([0 t(end) -1.2 1.2])
+        axis([0 t(end) -1.1 1.1])
+%         axis([0 4 -1.2 1.2])
         plot(t,Rplot,'Linewidth',2)
         plot(t,Rcplot,'r--','Linewidth',2)
         set(gca,'FontSize',afont);
@@ -319,7 +322,7 @@ saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
 %% Errors
 
-filename = 'QReAtt';
+filename = 'eR';
 figure('Name',filename)
 h_suptitle = suptitle('QR Attitude Error $\in TSO(3)$');
 set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
@@ -338,7 +341,7 @@ set(hl,'Interpreter','latex','FontSize',lfont);
 xlabel('Time [s]','FontSize',labfont,'Interpreter','latex')
 saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
-filename = 'LeAtt';
+filename = 'eq';
 figure('Name',filename)
 h_suptitle = suptitle('Load Attitude Error $\in TS^2$');
 set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
@@ -357,21 +360,46 @@ hl = legend('\boldmath$e_{\dot{q},1}$','\boldmath$e_{\dot{q},2}$','\boldmath$e_{
 set(hl,'Interpreter','latex','FontSize',lfont);
 saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
+filename = 'exL';
+figure('Name',filename)
+h_suptitle = suptitle('Load Position Error');
+set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
+% subplot 311
+plot(t,exL,'Linewidth',2)
+hl = legend('\boldmath$e_{x_L}$','\boldmath$e_{y_L}$','\boldmath$e_{z_L}$');
+ylabel('\boldmath$e_{x_L} [m]$','FontSize',labfont,'Interpreter','latex')
+xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+set(hl,'Interpreter','latex','FontSize',lfont,'Position',[.8,.8,.1,.1]);
+saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')  
+
+%% Error functions
+       
+filename = 'PsiR';
+figure('Name',filename)
+h_suptitle = suptitle('QR Attitude Error function');
+set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
+plot(t,PsiR,'Linewidth',2)
+ylabel('\boldmath$\Psi_R$','FontSize',labfont,'Interpreter','latex')
+xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')  
+
+filename = 'Psiq';
+figure('Name',filename)
+h_suptitle = suptitle('Load Attitude Error function');
+set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
+plot(t,Psiq,'Linewidth',2)
+ylabel('\boldmath$\Psi_q$','FontSize',labfont,'Interpreter','latex')
+xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')  
+
 %%
-savename = strcat(foldername,modecode,num2str(nfile),'.mat');
 save(savename)
 
 %%
 
-% 
-%         figure('Name','Attitude Error Function')
-%         plot(t,errorfunc,'Linewidth',2)
-%         xlabel('Time [s]','FontSize',labfont)
-%         ylabel('\Psi(R,R_d)','FontSize',labfont);
-%         h_suptitle = suptitle('Attitude Error function');
-%         set(h_suptitle,'FontSize',supfont,'Interpreter','latex');      
-%         set(gca,'FontSize',afont);        
-%        saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')   
 % 
 %         figure('Name','Angular Velocity')
 %         h_suptitle = suptitle('QR Angular Velocity \Omega');
