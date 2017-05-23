@@ -69,11 +69,11 @@ hLdk = plot3(XLd(1),YLd(1),ZLd(1),'rx','LineWidth',2,'MarkerSize',15);
 minax = min(min(min(XQR,YQR),ZQR))-1;  
 maxax = max(max(max(XQR,YQR),ZQR))+1;  
 axis([minax maxax minax maxax minax maxax],'vis3d')
-axis([-2 2 -2 2 -2 2])
-% axis([XQR(1)-1 XQR(1)+1 YQR(1)-1 YQR(1)+1 ZQR(1)-1 ZQR(1)+1],'square')
+% axis([-2 2 -2 2 -2 2])
+% axis([XQR(1)-1.5 XQR(1)+1.5 YQR(1)-1.5 YQR(1)+1.5 ZQR(1)-1.5 ZQR(1)+1.5],'square')
 
-view(100,30)
-% view(2)
+% view(0,0)
+view(90,0)
 grid on
 xlabel('x')
 ylabel('y') 
@@ -84,7 +84,7 @@ while waitforbuttonpress ~= 0 ;
 end
 
 for k=1:length(t)
-%     axis([XQR(k)-1 XQR(k)+1 YQR(k)-1 YQR(k)+1 ZQR(k)-1 ZQR(k)+1],'square')
+%     axis([XQR(k)-1.5 XQR(k)+1.5 YQR(k)-1.5 YQR(k)+1.5 ZQR(k)-1.5 ZQR(k)+1.5],'square')
     set(hBx,'xdata',[XQR(k) Bx(1,k)],'ydata',[YQR(k) Bx(2,k)],'zdata',[ZQR(k) Bx(3,k)]);
     set(hBy,'xdata',[XQR(k) By(1,k)],'ydata',[YQR(k) By(2,k)],'zdata',[ZQR(k) By(3,k)]);
     set(hBz,'xdata',[XQR(k) Bz(1,k)],'ydata',[YQR(k) Bz(2,k)],'zdata',[ZQR(k) Bz(3,k)]);

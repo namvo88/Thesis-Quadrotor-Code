@@ -8,6 +8,7 @@ LIBFLAGS =
 OBJECTS = \
 	"QRLsim_sfun.obj"\
 	"c7_QRLsim.obj"\
+	"c9_QRLsim.obj"\
 	"c13_QRLsim.obj"\
 	"c15_QRLsim.obj"\
 	"c30_QRLsim.obj"\
@@ -45,6 +46,8 @@ QRLsim_sfun.obj :	"QRLsim_sfun.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "QRLsim_sfun.c"
 c7_QRLsim.obj :	"c7_QRLsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c7_QRLsim.c"
+c9_QRLsim.obj :	"c9_QRLsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c9_QRLsim.c"
 c13_QRLsim.obj :	"c13_QRLsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c13_QRLsim.c"
 c15_QRLsim.obj :	"c15_QRLsim.c"

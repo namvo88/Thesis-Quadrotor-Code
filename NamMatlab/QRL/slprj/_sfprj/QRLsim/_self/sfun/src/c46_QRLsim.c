@@ -309,7 +309,7 @@ static void sf_c46_QRLsim(SFc46_QRLsimInstanceStruct *chartInstance)
   c46_varF = (real_T (*)[4])ssGetInputPortSignal(chartInstance->S, 0);
   _SFD_SYMBOL_SCOPE_PUSH(0U, 0U);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
-  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 12U, chartInstance->c46_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 13U, chartInstance->c46_sfEvent);
   for (c46_i10 = 0; c46_i10 < 4; c46_i10++) {
     _SFD_DATA_RANGE_CHECK((*c46_varF)[c46_i10], 0U);
   }
@@ -509,7 +509,7 @@ static void c46_chartstep_c46_QRLsim(SFc46_QRLsimInstanceStruct *chartInstance)
   c46_b_mode = (real_T *)ssGetInputPortSignal(chartInstance->S, 2);
   c46_c_A = (real_T (*)[3])ssGetInputPortSignal(chartInstance->S, 1);
   c46_b_varF = (real_T (*)[4])ssGetInputPortSignal(chartInstance->S, 0);
-  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 12U, chartInstance->c46_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 13U, chartInstance->c46_sfEvent);
   c46_hoistedGlobal = *c46_b_mode;
   for (c46_i22 = 0; c46_i22 < 4; c46_i22++) {
     c46_varF[c46_i22] = (*c46_b_varF)[c46_i22];
@@ -827,7 +827,7 @@ static void c46_chartstep_c46_QRLsim(SFc46_QRLsimInstanceStruct *chartInstance)
     (*c46_b_edq)[c46_i72] = c46_edq[c46_i72];
   }
 
-  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 12U, chartInstance->c46_sfEvent);
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 13U, chartInstance->c46_sfEvent);
 }
 
 static void initSimStructsc46_QRLsim(SFc46_QRLsimInstanceStruct *chartInstance)

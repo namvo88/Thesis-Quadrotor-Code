@@ -23,10 +23,11 @@ clear; clc; close all;
 
 mode      = 4;
 
-Tsim_end  = 30;
-Tsim_s    = 0.01;
 animation = 1;
 plots     = 0;
+
+Tsim_end  = 20;
+Tsim_s    = 0.01;
 
 switch mode
     case 2
@@ -45,17 +46,7 @@ switch mode
         disp('No Control Mode selected');
 end
 
-
-% t = 0:Tsim_s:Tsim_end;
-
-% ampsin = 0.5;
-% ampcos = ampsin;
-% fsin = 2*2*pi/Tsim_end;
-% fcos = 2*2*pi/Tsim_end;
-% phasecos = pi/2;
-% IC = [0;0;fsin];
-
-T0 = Tsim_end*4; %Time period of oscillation of load
+T0 = 5; %Time period of oscillation of load
 
 % xLd = [zeros(1,length(t)); sin(2*pi*t/T0); zeros(1,length(t))];
 b1d = [1; 0; 0];
@@ -63,44 +54,45 @@ Rd  = eye(3);
 qd  = [0; 0; -1];
 % qd  = [0; 0; 1]; %inverted pendulum
 
-% phiLd   = 0;
-% phiQd   = 0;
-
-% %% Uncertainties
-% 
-% Deltax = [-0.5; 0.2; 1]; %Goodarzi2013a
-% DeltaR = [0.2; -0.1; 0.02]; %Goodarzi2013a
 
 %% Constants
-mQ         = 4.34; %Lee2010 %weight bebop 420 g
-Ixx        = 0.0820; %Lee2010
-Iyy        = 0.0845; %Lee2010
-Izz        = 0.1377; %Lee2010
-I          = diag([Ixx Iyy Izz]); %Tang2014
-lamb_m     = min(eig(I));
-lamb_M     = max(eig(I));
-ctauf      = 8.004e-3; %Lee2010c
+mQ     = 4.34; %Lee2010 %weight bebop 420 g
+Ixx    = 0.0820; %Lee2010
+Iyy    = 0.0845; %Lee2010
+Izz    = 0.1377; %Lee2010
+I      = diag([Ixx Iyy Izz]); %Tang2014
+lamb_m = min(eig(I));
+lamb_M = max(eig(I));
+ctauf  = 8.004e-3; %Lee2010c
 
-mL         = 0.1;
-lL         = 0.7;
+% mL     = 0.045; %Praveen
+% lL         = 1.12; %Praveen
+mL     = 0.1;
+lL     = 0.7;
 
-b          = 0.1; %gok thrust factor
-d          = 0.1; %gok drag factor
-Ir         = 0.5; %gok
-l          = 0.315; %Lee2010 %wingspan bebop 248 mm
+b      = 0.1; %gok thrust factor
+d      = 0.1; %gok drag factor
+Ir     = 0.5; %gok
+l      = 0.315; %Lee2010 %wingspan bebop 248 mm
 
-g          = 9.81;
-e3         = [0;0;1];
+g      = 9.81;
+e3     = [0;0;1];
 
-fc         = (mQ+mL)*g;
-fsat       = 300*[-1 1];
-Msat       = 300*[-1 1];
+fc     = (mQ+mL)*g;
+fsat   = 60*[0 1];
+Msat   = 5*[-1 1];
 
 %% Initial Conditions
 
 phiQ0deg   = 0;
 thetaQ0deg = 0;
 psiQ0deg   = 0;
+
+phiL0deg   = 0;
+thetaL0deg = 0;
+phiL0      = deg2rad(phiL0deg);
+thetaL0    = deg2rad(thetaL0deg);
+psiL0      = 0;
 
 phiQ0      = deg2rad(phiQ0deg);
 thetaQ0    = deg2rad(thetaQ0deg);
@@ -128,11 +120,6 @@ dxL0       = 0;
 dyL0       = 0;
 dzL0       = 0;
 
-phiL0deg   = 0;
-thetaL0deg = 0;
-phiL0      = deg2rad(phiL0deg);
-thetaL0    = deg2rad(thetaL0deg);
-psiL0      = 0;
 pL0        = 0;
 qL0        = 0;
 rL0        = 0;
@@ -152,40 +139,66 @@ Rx         = [1 0 0;
 Rzyx       = (Rx*Ry*Rz);
 q0         = Rzyx*-e3;
 
-
 %% Gains
 
 fgain = 1;
-T0 = 5;
-
-omega_n_xL = 2*pi*15;
-omega_n_q = 2*pi*.8;
-omega_n_R = 2*pi*.8;
 
 eps = 0.9; % 0<eps<1
 psi_1 = .9; % Constant Psiq(0)<Psi_1<1 Lee2010 
 exLmax = 5; %Fixed constant
 
-facR = 1;
+% Gains QR Attitude
+facR = 1*8;
 kR = 8.81*facR; %Lee2010
 % kOmega = 2.54*Rfac; %Lee2010
 % kR = 5*Rfac;
 kOmega = 2.4*facR;
 
-facq = 5;
+% Gains Load Attitude
+facq = 3*3;
 kq = 10*facq;
-komega = 4*facq;
+komega = 6*facq;
 
-facx = 1.2;
+% Gains Load Position
+facx = 3*1.3;
 kpx = 13.6*facx;
 % kdx = 5.9*facx;
-kdx = 7.8*facx;
+kdx = 6*facx;
+
+% Save gains in mat-files
+savegain  = 0;
+
+if savegain == 1
+    foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\GainFiles\';
+    
+    comment = 'Circle X-Y. CF3';
+    
+    for nfile = 1:100
+        savename = strcat(foldername,num2str(nfile),'.mat');
+                
+        if exist(savename,'file') == 0
+            save(savename,'comment','facR','kR','kOmega','facq','kq','komega','facx','kpx','kdx','omega_n_xL','omega_n_q','omega_n_R' )
+            break
+        end
+    end
+end
 
 % Simulation
-openModels = find_system('SearchDepth', 0);
-if strmatch('QRLsim',openModels)>0
-    open('QRLsim')
-end
+
+% % Check if Simulink is already open to avoid re-opening
+% openModels = find_system('SearchDepth', 0);
+% if strmatch('QRLsim',openModels)>0
+%     open('QRLsim')
+% end
+
+loadpath = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\GainFiles\';
+loadfile = strcat(loadpath,'3','.mat');
+load(loadfile)
+
+% Command Filter Low Pass filter 2*pi* 
+omega_n_xL = 2*pi*.5;
+omega_n_q = 2*pi*.8;
+omega_n_R = 2*pi*.05;
 
 sim('QRLsim')
 
@@ -259,7 +272,7 @@ if mode == 4
     if norm(exL(:,1)) >= exLmax
         error('norm(exL(:,1)) >= exLmax')
     end
-    if norm(edq(:,1))^2 >= 2/(mQ*lL)*kq*(psi_1-Psiq(1))
+    if norm(edq(1,:))^2 >= 2/(mQ*lL)*kq*(psi_1-Psiq(1))
         error('edq(0) too big. Prop.3 Sreenath2013b')
     end
 end
