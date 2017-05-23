@@ -10,7 +10,6 @@ OBJECTS = \
 	"c7_QRLsim.obj"\
 	"c9_QRLsim.obj"\
 	"c13_QRLsim.obj"\
-	"c15_QRLsim.obj"\
 	"c30_QRLsim.obj"\
 	"c31_QRLsim.obj"\
 	"c32_QRLsim.obj"\
@@ -50,8 +49,6 @@ c9_QRLsim.obj :	"c9_QRLsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c9_QRLsim.c"
 c13_QRLsim.obj :	"c13_QRLsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c13_QRLsim.c"
-c15_QRLsim.obj :	"c15_QRLsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c15_QRLsim.c"
 c30_QRLsim.obj :	"c30_QRLsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c30_QRLsim.c"
 c31_QRLsim.obj :	"c31_QRLsim.c"
