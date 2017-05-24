@@ -24,7 +24,8 @@ clear; clc; close all;
 mode      = 4;
 
 animation = 1;
-plots     = 0;
+plots     = 1;
+savegain  = 0;
 
 Tsim_end  = 20;
 Tsim_s    = 0.01;
@@ -166,18 +167,16 @@ kpx = 13.6*facx;
 kdx = 6*facx;
 
 % Save gains in mat-files
-savegain  = 0;
-
 if savegain == 1
     foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\GainFiles\';
     
-    comment = 'Circle X-Y. CF3';
+    comment = 'Sine wave path follow';
     
     for nfile = 1:100
         savename = strcat(foldername,num2str(nfile),'.mat');
                 
         if exist(savename,'file') == 0
-            save(savename,'comment','facR','kR','kOmega','facq','kq','komega','facx','kpx','kdx','omega_n_xL','omega_n_q','omega_n_R' )
+            save(savename,'comment','facR','kR','kOmega','facq','kq','komega','facx','kpx','kdx','omega_n_xL','omega_n_q','omega_n_R','omega_n1_xL','omega_n2_xL','omega_n1_q','omega_n2_q','omega_n1_R','omega_n2_R','zeta_xL','zeta_q','zeta_R' )
             break
         end
     end
@@ -195,10 +194,21 @@ loadpath = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\GainF
 loadfile = strcat(loadpath,'3','.mat');
 load(loadfile)
 
-% Command Filter Low Pass filter 2*pi* 
+% Command Filter Low Pass filter 2nd order
 omega_n_xL = 2*pi*.5;
 omega_n_q = 2*pi*.8;
 omega_n_R = 2*pi*.05;
+
+% Command Filter Low Pass filter 3th order
+omega_n1_xL = 2*pi*.75;
+omega_n2_xL = 2*pi*.75;
+zeta_xL = 0.975;
+omega_n1_q = 2*pi*12.5;
+omega_n2_q = 2*pi*12.5;
+zeta_q = 0.975;
+omega_n1_R = 2*pi*.1;
+omega_n2_R = 2*pi*.1;
+zeta_R = 0.98;
 
 sim('QRLsim')
 

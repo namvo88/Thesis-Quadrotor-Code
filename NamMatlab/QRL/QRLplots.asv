@@ -16,7 +16,7 @@ for nfile = 18:100
     end
 end
 
-save(strcat(foldername,modecode,num2str(nfile),'SinePath','.mat'))
+save(strcat(foldername,modecode,num2str(nfile),'CircleYZ','.mat'))
 
    
 

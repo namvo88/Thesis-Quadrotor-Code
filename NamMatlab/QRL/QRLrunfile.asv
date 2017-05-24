@@ -24,7 +24,7 @@ clear; clc; close all;
 mode      = 4;
 
 animation = 1;
-plots     = 0;
+plots     = 1;
 
 Tsim_end  = 20;
 Tsim_s    = 0.01;
@@ -79,8 +79,8 @@ g      = 9.81;
 e3     = [0;0;1];
 
 fc     = (mQ+mL)*g;
-fsat   = 300*[-1 1];
-Msat   = 300*[-1 1];
+fsat   = 60*[0 1];
+Msat   = 5*[-1 1];
 
 %% Initial Conditions
 
@@ -195,10 +195,21 @@ loadpath = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\GainF
 loadfile = strcat(loadpath,'3','.mat');
 load(loadfile)
 
-% Command Filter Low Pass filter 2*pi* 
+% Command Filter Low Pass filter 2nd order
 omega_n_xL = 2*pi*.5;
 omega_n_q = 2*pi*.8;
 omega_n_R = 2*pi*.05;
+
+% Command Filter Low Pass filter 3th order
+omega_n1_xL = 2*pi*.75;
+omega_n2_xL = 2*pi*.75;
+zeta_xL = 0.975;
+omega_n1_q = 2*pi*12.5;
+omega_n2_q = 2*pi*12.5;
+zeta_q = 0.975;
+omega_n1_R = 2*pi*.1;
+omega_n2_R = 2*pi*.1;
+zeta_R = 0.98;
 
 sim('QRLsim')
 
