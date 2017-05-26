@@ -12,19 +12,25 @@ clear; clc; close all;
 % 'Data Import/Export' page of the Configuration Parameters dialog to either 'Structure' or 'Structure with time'.
 % >> Changed to 'Structure with time'
 
+% Options
+animation = 1;
+plots     = 0;
+savegain  = 0;
+
 %% Input signals
 
-% Position QR mode 0
-% Attitude QR mode 1
-
+% Control Mode
+% QR Position Controlled mode 0
+% QR Attitude Controlled mode 1
 % QRL QR Attitude Controlled mode 2
 % QRL Load Attitude Controlled mode 3
 % QRL Load Position Controlled mode 4
-
 mode      = 4;
 
-animation = 1;
-plots     = 1;
+% Normal or inverted pendulum mode
+% Normal -1
+% Inverted 1  
+qmode     = -1; 
 
 Tsim_end  = 20;
 Tsim_s    = 0.01;
@@ -51,8 +57,7 @@ T0 = 5; %Time period of oscillation of load
 % xLd = [zeros(1,length(t)); sin(2*pi*t/T0); zeros(1,length(t))];
 b1d = [1; 0; 0];
 Rd  = eye(3);
-qd  = [0; 0; -1];
-% qd  = [0; 0; 1]; %inverted pendulum
+qd  = [0; 0; qmode];
 
 
 %% Constants
@@ -137,7 +142,7 @@ Rx         = [1 0 0;
                 0 cos(phiL0) -sin(phiL0);
                 0 sin(phiL0) cos(phiL0)];
 Rzyx       = (Rx*Ry*Rz);
-q0         = Rzyx*-e3;
+q0         = Rzyx*e3*qmode;
 
 %% Gains
 
@@ -150,8 +155,6 @@ exLmax = 5; %Fixed constant
 % Gains QR Attitude
 facR = 1*8;
 kR = 8.81*facR; %Lee2010
-% kOmega = 2.54*Rfac; %Lee2010
-% kR = 5*Rfac;
 kOmega = 2.4*facR;
 
 % Gains Load Attitude
@@ -162,38 +165,7 @@ komega = 6*facq;
 % Gains Load Position
 facx = 3*1.3;
 kpx = 13.6*facx;
-% kdx = 5.9*facx;
 kdx = 6*facx;
-
-% Save gains in mat-files
-savegain  = 0;
-
-if savegain == 1
-    foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\GainFiles\';
-    
-    comment = 'Circle X-Y. CF3';
-    
-    for nfile = 1:100
-        savename = strcat(foldername,num2str(nfile),'.mat');
-                
-        if exist(savename,'file') == 0
-            save(savename,'comment','facR','kR','kOmega','facq','kq','komega','facx','kpx','kdx','omega_n_xL','omega_n_q','omega_n_R' )
-            break
-        end
-    end
-end
-
-% Simulation
-
-% % Check if Simulink is already open to avoid re-opening
-% openModels = find_system('SearchDepth', 0);
-% if strmatch('QRLsim',openModels)>0
-%     open('QRLsim')
-% end
-
-loadpath = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\GainFiles\';
-loadfile = strcat(loadpath,'3','.mat');
-load(loadfile)
 
 % Command Filter Low Pass filter 2nd order
 omega_n_xL = 2*pi*.5;
@@ -204,16 +176,49 @@ omega_n_R = 2*pi*.05;
 omega_n1_xL = 2*pi*.75;
 omega_n2_xL = 2*pi*.75;
 zeta_xL = 0.975;
-omega_n1_q = 2*pi*12.5;
-omega_n2_q = 2*pi*12.5;
+
+% % Step
+% omega_n1_q = 2*pi*5;
+% omega_n2_q = 2*pi*5;
+% omega_n1_R = 2*pi*1;
+% omega_n2_R = 2*pi*1;
+% zeta_q = 0.975;
+% zeta_R = 0.98;
+
+% Path following
+omega_n1_R = 2*pi*9;
+omega_n2_R = 2*pi*9;
+omega_n1_q = 2*pi*15;
+omega_n2_q = 2*pi*15;
 zeta_q = 0.975;
-omega_n1_R = 2*pi*.1;
-omega_n2_R = 2*pi*.1;
 zeta_R = 0.98;
+
+% Save Gains and CF paramters in mat-files
+if savegain == 1
+    
+    comment = 'Sine wave path follow';
+    
+    foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\GainFiles\';
+    for nfile = 1:100
+        savename = strcat(foldername,num2str(nfile),'.mat');
+                
+        if exist(savename,'file') == 0
+            save(savename,'comment','facR','kR','kOmega','facq','kq','komega','facx','kpx','kdx','omega_n_xL','omega_n_q','omega_n_R','omega_n1_xL','omega_n2_xL','omega_n1_q','omega_n2_q','omega_n1_R','omega_n2_R','zeta_xL','zeta_q','zeta_R' )
+            break
+        end
+    end
+end
+
+% Simulation
+
+% Load Gain Files
+loadpath = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\GainFiles\';
+loadfile = strcat(loadpath,'6','.mat');
+load(loadfile)
 
 sim('QRLsim')
 
-% Dataconversion
+%% Dataconversion
 
 t        = simoutL.time;
 

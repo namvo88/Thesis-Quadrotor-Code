@@ -22,12 +22,13 @@ clear; clc; close all;
 % QRL Load Position Controlled mode 4
 
 mode      = 4;
+qmode     = 1; %-1 normal / 1 inverted pendulum  
 
 animation = 1;
-plots     = 1;
+plots     = 0;
 savegain  = 0;
 
-Tsim_end  = 20;
+Tsim_end  = 30;
 Tsim_s    = 0.01;
 
 switch mode
@@ -138,7 +139,7 @@ Rx         = [1 0 0;
                 0 cos(phiL0) -sin(phiL0);
                 0 sin(phiL0) cos(phiL0)];
 Rzyx       = (Rx*Ry*Rz);
-q0         = Rzyx*-e3;
+q0         = Rzyx*e3*qmode;
 
 %% Gains
 
@@ -203,16 +204,16 @@ omega_n_R = 2*pi*.05;
 omega_n1_xL = 2*pi*.75;
 omega_n2_xL = 2*pi*.75;
 zeta_xL = 0.975;
-omega_n1_q = 2*pi*12.5;
-omega_n2_q = 2*pi*12.5;
+omega_n1_q = 2*pi*15;
+omega_n2_q = 2*pi*15;
 zeta_q = 0.975;
-omega_n1_R = 2*pi*.1;
-omega_n2_R = 2*pi*.1;
+omega_n1_R = 2*pi*9;
+omega_n2_R = 2*pi*9;
 zeta_R = 0.98;
 
 sim('QRLsim')
 
-% Dataconversion
+%% Dataconversion
 
 t        = simoutL.time;
 
