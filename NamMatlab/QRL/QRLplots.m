@@ -16,7 +16,7 @@ for nfile = 18:100
     end
 end
 
-save(strcat(foldername,modecode,num2str(nfile),'SinePath','.mat'))
+save(strcat(foldername,modecode,num2str(nfile),comment,'.mat'))
 
    
 
@@ -165,50 +165,68 @@ saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 %%
 filename = 'QRang';
 figure('Name',filename)
-h_sup = suptitle('QR Angle/$\Omega$/$\dot{\Omega}$');
+h_sup = suptitle('QR Angle$');
 set(h_sup,'FontSize',supfont,'Interpreter','latex');
-subplot 311
-plot(t,angleQ,'Linewidth',2)
-hl = legend('\boldmath$\phi_Q$','\boldmath$\theta_Q$','\boldmath$\psi_Q$');
-ylabel('\boldmath$ang [rad]$','FontSize',labfont,'Interpreter','latex')
+subplot 211
+plot(t,angleQ(:,1),t,angleQ(:,2),'Linewidth',2)
+hl = legend('\boldmath$\phi_Q$','\boldmath$\theta_Q$');
+ylabel('\boldmath$ang [^\circ]$','FontSize',labfont,'Interpreter','latex')
 set(hl,'Interpreter','latex','FontSize',lfont);
 set(gca,'color','none','FontSize',afont)
-subplot 312
+set(gca,'FontSize',afont);
+subplot 212
+plot(t,angleQ(:,3),'r','Linewidth',2)
+hl = legend('\boldmath$\psi_Q$');
+ylabel('\boldmath$ang [^\circ]$','FontSize',labfont,'Interpreter','latex')
+set(hl,'Interpreter','latex','FontSize',lfont);
+set(gca,'color','none','FontSize',afont)
+set(gca,'FontSize',afont);
+saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
+
+filename = 'QRvel';
+figure('Name',filename)
+h_sup = suptitle('QR $\Omega$/$\dot{\Omega}$');
+set(h_sup,'FontSize',supfont,'Interpreter','latex');
+subplot 211
 plot(t,OmegaQ,'Linewidth',2)
 hl = legend('\boldmath$p_Q$','\boldmath$q_Q$','\boldmath$r_Q$');
 set(hl,'Interpreter','latex','FontSize',lfont);
-ylabel('\boldmath$vel [rad/s]$','FontSize',labfont,'Interpreter','latex')
+ylabel('\boldmath$vel [^\circ/s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
-subplot 313
+subplot 212
 plot(t,dOmegaQ,'Linewidth',2)
 hl = legend('\boldmath$\dot{p}_Q$','\boldmath$\dot{q}_Q$','\boldmath$\dot{r}_Q$');
 set(hl,'Interpreter','latex','FontSize',lfont);
-ylabel('\boldmath$acc [rad/s^2]$','FontSize',labfont,'Interpreter','latex')
+ylabel('\boldmath$acc [^\circ/s^2]$','FontSize',labfont,'Interpreter','latex')
 xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
 filename = 'Lang';
 figure('Name',filename)
-h_sup = suptitle('Load Angle/$\Omega$/$\dot{\Omega}$');
+h_sup = suptitle('Load Angle/$\Omega$');
 set(h_sup,'FontSize',supfont,'Interpreter','latex');
 subplot 311
-plot(t,angleL,'Linewidth',2)
-hl = legend('\boldmath$\phi_L$','\boldmath$\theta_L$','\boldmath$\psi_L$');
-ylabel('\boldmath$ang [rad]$','FontSize',labfont,'Interpreter','latex')
+% plot(t,angleL,'Linewidth',2)
+% hl = legend('\boldmath$\phi_L$','\boldmath$\theta_L$','\boldmath$\psi_L$');
+plot(t,angleL(:,1),t,angleL(:,2),'Linewidth',2)
+hl = legend('\boldmath$\phi_L$','\boldmath$\theta_L$');
+ylabel('\boldmath$ang [^\circ]$','FontSize',labfont,'Interpreter','latex')
 set(hl,'Interpreter','latex','FontSize',lfont);
 set(gca,'color','none','FontSize',afont)
 subplot 312
-plot(t,OmegaL,'Linewidth',2)
-hl = legend('\boldmath$p_L$','\boldmath$q_L$','\boldmath$r_L$');
+% plot(t,OmegaL,'Linewidth',2)
+% hl = legend('\boldmath$p_L$','\boldmath$q_L$','\boldmath$r_L$');
+plot(t,OmegaL(:,1),t,OmegaL(:,2),'Linewidth',2)
+hl = legend('\boldmath$p_L$','\boldmath$q_L$');
 set(hl,'Interpreter','latex','FontSize',lfont);
-ylabel('\boldmath$vel [rad/s]$','FontSize',labfont,'Interpreter','latex')
+ylabel('\boldmath$vel [^\circ/s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 % subplot 313
 % plot(t,dOmegaL,'Linewidth',2)
 % hl = legend('$\dot{p}_L$','$\dot{q}_L$','$\dot{r}_L$');
 % set(hl,'Interpreter','latex','FontSize',lfont);
-% ylabel('\boldmath$acc [rad/s^2]$','FontSize',labfont,'Interpreter','latex')
+% ylabel('\boldmath$acc [^\circ/s^2]$','FontSize',labfont,'Interpreter','latex')
 % xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 

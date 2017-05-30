@@ -12,23 +12,29 @@ clear; clc; close all;
 % 'Data Import/Export' page of the Configuration Parameters dialog to either 'Structure' or 'Structure with time'.
 % >> Changed to 'Structure with time'
 
-%% Input signals
-
-% Position QR mode 0
-% Attitude QR mode 1
-
-% QRL QR Attitude Controlled mode 2
-% QRL Load Attitude Controlled mode 3
-% QRL Load Position Controlled mode 4
-
-mode      = 4;
-qmode     = 1; %-1 normal / 1 inverted pendulum  
-
-animation = 1;
+% OPTIONS
+animation = 0;
 plots     = 0;
 savegain  = 0;
 
-Tsim_end  = 30;
+comment = strcat('Initial error Sine Wave',date);
+
+%% Input signals
+
+% CONTROL MODE
+% QR Position Controlled mode 0
+% QR Attitude Controlled mode 1
+% QRL QR Attitude Controlled mode 2
+% QRL Load Attitude Controlled mode 3
+% QRL Load Position Controlled mode 4
+mode      = 4;
+
+% LOAD ATTITUDE MODE
+% Normal -1
+% Inverted 1
+qmode     = -1;
+
+Tsim_end  = 20;
 Tsim_s    = 0.01;
 
 switch mode
@@ -48,13 +54,12 @@ switch mode
         disp('No Control Mode selected');
 end
 
-T0 = 5; %Time period of oscillation of load
+T0 = 3; %Time period of oscillation of load
 
 % xLd = [zeros(1,length(t)); sin(2*pi*t/T0); zeros(1,length(t))];
 b1d = [1; 0; 0];
 Rd  = eye(3);
-qd  = [0; 0; -1];
-% qd  = [0; 0; 1]; %inverted pendulum
+qd  = [0; 0; qmode];
 
 
 %% Constants
@@ -80,21 +85,15 @@ l      = 0.315; %Lee2010 %wingspan bebop 248 mm
 g      = 9.81;
 e3     = [0;0;1];
 
-fc     = (mQ+mL)*g;
-fsat   = 60*[0 1];
-Msat   = 5*[-1 1];
+% fc     = (mQ+mL)*g;
+fsat   = inf*[1 -1];
+Msat   = inf*[1 -1];
 
-%% Initial Conditions
+%% Initial Conditions QR
 
 phiQ0deg   = 0;
 thetaQ0deg = 0;
 psiQ0deg   = 0;
-
-phiL0deg   = 0;
-thetaL0deg = 0;
-phiL0      = deg2rad(phiL0deg);
-thetaL0    = deg2rad(thetaL0deg);
-psiL0      = 0;
 
 phiQ0      = deg2rad(phiQ0deg);
 thetaQ0    = deg2rad(thetaQ0deg);
@@ -115,103 +114,98 @@ Rx         = [1 0 0;
 Rzyx       = (Rx*Ry*Rz);
 R0         = Rzyx;
 
-xL0        = 0;
-yL0        = 0;
-zL0        = 0;
+%% Initial Conditions Load
 dxL0       = 0;
 dyL0       = 0;
 dzL0       = 0;
+
+phiL0deg   = 15;
+thetaL0deg = 0;
+
+phiL0      = deg2rad(phiL0deg);
+thetaL0    = deg2rad(thetaL0deg);
+psiL0      = 0;
 
 pL0        = 0;
 qL0        = 0;
 rL0        = 0;
 
 dq0        = [0;0;0];
-omega0     = [0;0;0];
+% omega0     = [0;0;0];
 
-Rz         = [cos(psiL0) -sin(psiL0) 0;
-                sin(psiL0) cos(psiL0) 0;
-                0 0 1];
 Ry         = [cos(thetaL0) 0 sin(thetaL0);
                 0 1 0;
                 -sin(thetaL0) 0 cos(thetaL0)];
 Rx         = [1 0 0;
                 0 cos(phiL0) -sin(phiL0);
                 0 sin(phiL0) cos(phiL0)];
-Rzyx       = (Rx*Ry*Rz);
+Rzyx       = (Rx*Ry);
 q0         = Rzyx*e3*qmode;
 
-%% Gains
+xL0        = q0(1)*lL;
+yL0        = q0(2)*lL;
+zL0        = q0(3)*lL;
 
-fgain = 1;
+% x0 = [xL0;yL0;zL0];
 
-eps = 0.9; % 0<eps<1
+%% Simulation
+
+eps = 0.99; % 0<eps<1
 psi_1 = .9; % Constant Psiq(0)<Psi_1<1 Lee2010 
 exLmax = 5; %Fixed constant
 
+
 % Gains QR Attitude
-facR = 1*8;
+facR = 5;
 kR = 8.81*facR; %Lee2010
-% kOmega = 2.54*Rfac; %Lee2010
-% kR = 5*Rfac;
 kOmega = 2.4*facR;
 
 % Gains Load Attitude
-facq = 3*3;
+facq = 2.9;
 kq = 10*facq;
-komega = 6*facq;
+komega = 4*facq;
 
 % Gains Load Position
-facx = 3*1.3;
+facx = 1.5;
 kpx = 13.6*facx;
-% kdx = 5.9*facx;
-kdx = 6*facx;
+kdx = 7.8*facx;
+
+
+% % Command Filter Low Pass filter 2nd order
+% omega_n_xL = 2*pi*.5;
+% omega_n_q = 2*pi*.8;
+% omega_n_R = 2*pi*.05;
+
+% Command Filter Low Pass filter 3th order
+omega_n1_xL = 2*pi*.4;
+omega_n2_xL = 2*pi*.4;
+zeta_xL = 0.975;
+omega_n1_q = 2*pi*6;
+omega_n2_q = 2*pi*6;
+zeta_q = 0.975;
+omega_n1_R = 2*pi*15;
+omega_n2_R = 2*pi*15;
+zeta_R = 0.98;
 
 % Save gains in mat-files
 if savegain == 1
     foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\GainFiles\';
-    
-    comment = 'Sine wave path follow';
-    
+        
     for nfile = 1:100
         savename = strcat(foldername,num2str(nfile),'.mat');
                 
         if exist(savename,'file') == 0
-            save(savename,'comment','facR','kR','kOmega','facq','kq','komega','facx','kpx','kdx','omega_n_xL','omega_n_q','omega_n_R','omega_n1_xL','omega_n2_xL','omega_n1_q','omega_n2_q','omega_n1_R','omega_n2_R','zeta_xL','zeta_q','zeta_R' )
+            save(savename,'comment','facR','kR','kOmega','facq','kq','komega','facx','kpx','kdx','omega_n1_xL','omega_n2_xL','omega_n1_q','omega_n2_q','omega_n1_R','omega_n2_R','zeta_xL','zeta_q','zeta_R')
             break
         end
     end
 end
 
-% Simulation
+% loadpath = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\GainFiles\';
+% loadfile = strcat(loadpath,'13','.mat');
+% load(loadfile)
 
-% % Check if Simulink is already open to avoid re-opening
-% openModels = find_system('SearchDepth', 0);
-% if strmatch('QRLsim',openModels)>0
-%     open('QRLsim')
-% end
-
-loadpath = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\GainFiles\';
-loadfile = strcat(loadpath,'3','.mat');
-load(loadfile)
-
-% Command Filter Low Pass filter 2nd order
-omega_n_xL = 2*pi*.5;
-omega_n_q = 2*pi*.8;
-omega_n_R = 2*pi*.05;
-
-% Command Filter Low Pass filter 3th order
-omega_n1_xL = 2*pi*.75;
-omega_n2_xL = 2*pi*.75;
-zeta_xL = 0.975;
-omega_n1_q = 2*pi*15;
-omega_n2_q = 2*pi*15;
-zeta_q = 0.975;
-omega_n1_R = 2*pi*9;
-omega_n2_R = 2*pi*9;
-zeta_R = 0.98;
-
-sim('QRLsim')
+sim('QRLsim');
 
 %% Dataconversion
 
@@ -221,12 +215,23 @@ posL     = simoutL.signals.values(:,1:3)';
 velL     = simoutL.signals.values(:,4:6)';
 accL     = simoutL.signals.values(:,7:9)';
 
-angleL   = simoutL1.signals.values(:,1:3);
-OmegaL   = simoutL1.signals.values(:,4:6);
+angleL   = wrapTo180(rad2deg(simoutL1.signals.values(:,1:3)));
+OmegaL   = (rad2deg(simoutL1.signals.values(:,4:6)));
 
-angleQ   = simoutL2.signals.values(:,1:3);
-OmegaQ   = simoutL2.signals.values(:,4:6);
-dOmegaQ  = simoutL2.signals.values(:,7:9);
+r11 = reshape(simoutR.signals.values(1,1,:),1,length(t));
+r21 = reshape(simoutR.signals.values(2,1,:),1,length(t));
+r31= reshape(simoutR.signals.values(3,1,:),1,length(t));
+r32= reshape(simoutR.signals.values(3,2,:),1,length(t));
+r33= reshape(simoutR.signals.values(3,3,:),1,length(t));
+
+psi = atan(r21./r11);
+theta = atan(-r31./sqrt(r32.^2+r33.^2));
+phi = atan(r32./r33);
+
+angleQ = rad2deg([phi;theta;psi])';
+% angleQ   = wrapTo180(rad2deg(simoutL2.signals.values(:,1:3)));
+OmegaQ   = (rad2deg(simoutL2.signals.values(:,4:6)));
+dOmegaQ  = (rad2deg(simoutL2.signals.values(:,7:9)));
 
 f        = simoutL3.signals.values(:,1);
 M        = simoutL3.signals.values(:,2:4)';
@@ -259,7 +264,7 @@ posQ     = posL - q*lL;
 
 % Prop.1 Sreenath2013b
 if PsiR(1) >= 2
-    error('PsiR(0) >= 2')
+    error('PsiR(0) >= 2');
 end
 if norm(eOmega(1),2)^2 >= 2/lamb_M * kR/eps^2 * (2-PsiR(1))
     error('eOmega(0) too big')
@@ -268,10 +273,10 @@ end
 % Prop.2 Sreenath2013b
 if mode >= 3
     if Psiq(1) >= 2
-        error('Psiq(0) >= 2')
+        error('Psiq(0) >= 2');
     end
     if norm(edq(1),2)^2 >= 2/(mQ*lL)*kq*(2-Psiq(1))
-        error('edq(0) too big')
+        error('edq(0) too big');
     end
 end
 
