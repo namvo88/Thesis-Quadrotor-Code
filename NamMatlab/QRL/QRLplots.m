@@ -6,14 +6,17 @@
     foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\MatlabImages\';
 
 for nfile = 18:100
+
     savename = strcat(foldername,modecode,num2str(nfile),'.mat');
-   
-%     existname = strcat(savename,num2str(nfile),'.png');
-    
     if exist(savename,'file') == 0
-%         saveas(gcf,strcat(savename,num2str(nfile)),'png')
         break
     end
+    
+    savename = strcat(foldername,'Gains',num2str(nfile),'.mat');
+    if exist(savename,'file') == 0
+        save(savename,'comment','facR','kR','kOmega','facq','kq','komega','facx','kpx','kdx','omega_n1_xL','omega_n2_xL','omega_n1_q','omega_n2_q','omega_n1_R','omega_n2_R','zeta_xL','zeta_q','zeta_R')
+        break
+    end    
 end
 
 save(strcat(foldername,modecode,num2str(nfile),comment,'.mat'))
@@ -70,19 +73,19 @@ subplot 311
 plot(t,posL,'Linewidth',2)
 hl = legend('\boldmath$x$','\boldmath$y$','\boldmath$z$');
 set(hl,'Interpreter','latex','FontSize',lfont);
-ylabel('\boldmath$pos [m]$','FontSize',labfont,'Interpreter','latex')
+ylabel('\boldmath$[m]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 subplot 312
 plot(t,velL,'Linewidth',2)
 hl = legend('\boldmath$\dot{x}$','\boldmath$\dot{y}$','\boldmath$\dot{z}$');
 set(hl,'Interpreter','latex','FontSize',lfont);
-ylabel('\boldmath$vel [m/s]$','FontSize',labfont,'Interpreter','latex')
+ylabel('\boldmath$[m/s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 subplot 313
 plot(t,accL,'Linewidth',2)
 hl = legend('\boldmath$\ddot{x}$','\boldmath$\ddot{y}$','\boldmath$\ddot{z}$');
 set(hl,'Interpreter','latex','FontSize',lfont);
-ylabel('\boldmath$acc [m/s^2]$','FontSize',labfont,'Interpreter','latex')
+ylabel('\boldmath$[m/s^2]$','FontSize',labfont,'Interpreter','latex')
 xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 hLPosOverview = gcf;
@@ -121,7 +124,7 @@ set(h_sup,'FontSize',supfont,'Interpreter','latex');
 subplot 311
 plot(t,posQ,'Linewidth',2)
 hl = legend('\boldmath$x$','\boldmath$y$','\boldmath$z$');
-ylabel('\boldmath$pos [m]$','FontSize',labfont,'Interpreter','latex')
+ylabel('\boldmath$[m]$','FontSize',labfont,'Interpreter','latex')
 xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 set(hl,'Interpreter','latex','FontSize',lfont);
@@ -170,14 +173,14 @@ set(h_sup,'FontSize',supfont,'Interpreter','latex');
 subplot 211
 plot(t,angleQ(:,1),t,angleQ(:,2),'Linewidth',2)
 hl = legend('\boldmath$\phi_Q$','\boldmath$\theta_Q$');
-ylabel('\boldmath$ang [^\circ]$','FontSize',labfont,'Interpreter','latex')
+ylabel('\boldmath$[^\circ]$','FontSize',labfont,'Interpreter','latex')
 set(hl,'Interpreter','latex','FontSize',lfont);
 set(gca,'color','none','FontSize',afont)
 set(gca,'FontSize',afont);
 subplot 212
 plot(t,angleQ(:,3),'r','Linewidth',2)
 hl = legend('\boldmath$\psi_Q$');
-ylabel('\boldmath$ang [^\circ]$','FontSize',labfont,'Interpreter','latex')
+ylabel('\boldmath$[^\circ]$','FontSize',labfont,'Interpreter','latex')
 set(hl,'Interpreter','latex','FontSize',lfont);
 set(gca,'color','none','FontSize',afont)
 set(gca,'FontSize',afont);
@@ -191,13 +194,13 @@ subplot 211
 plot(t,OmegaQ,'Linewidth',2)
 hl = legend('\boldmath$p_Q$','\boldmath$q_Q$','\boldmath$r_Q$');
 set(hl,'Interpreter','latex','FontSize',lfont);
-ylabel('\boldmath$vel [^\circ/s]$','FontSize',labfont,'Interpreter','latex')
+ylabel('\boldmath$[^\circ/s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 subplot 212
 plot(t,dOmegaQ,'Linewidth',2)
 hl = legend('\boldmath$\dot{p}_Q$','\boldmath$\dot{q}_Q$','\boldmath$\dot{r}_Q$');
 set(hl,'Interpreter','latex','FontSize',lfont);
-ylabel('\boldmath$acc [^\circ/s^2]$','FontSize',labfont,'Interpreter','latex')
+ylabel('\boldmath$[^\circ/s^2]$','FontSize',labfont,'Interpreter','latex')
 xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
@@ -211,7 +214,7 @@ subplot 311
 % hl = legend('\boldmath$\phi_L$','\boldmath$\theta_L$','\boldmath$\psi_L$');
 plot(t,angleL(:,1),t,angleL(:,2),'Linewidth',2)
 hl = legend('\boldmath$\phi_L$','\boldmath$\theta_L$');
-ylabel('\boldmath$ang [^\circ]$','FontSize',labfont,'Interpreter','latex')
+ylabel('\boldmath$[^\circ]$','FontSize',labfont,'Interpreter','latex')
 set(hl,'Interpreter','latex','FontSize',lfont);
 set(gca,'color','none','FontSize',afont)
 subplot 312
@@ -220,7 +223,7 @@ subplot 312
 plot(t,OmegaL(:,1),t,OmegaL(:,2),'Linewidth',2)
 hl = legend('\boldmath$p_L$','\boldmath$q_L$');
 set(hl,'Interpreter','latex','FontSize',lfont);
-ylabel('\boldmath$vel [^\circ/s]$','FontSize',labfont,'Interpreter','latex')
+ylabel('\boldmath$[^\circ/s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 % subplot 313
 % plot(t,dOmegaL,'Linewidth',2)

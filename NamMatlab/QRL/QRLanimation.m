@@ -65,13 +65,12 @@ hC   = line([XQR(1) XL(1)],[YQR(1) YL(1)],[ZQR(1) ZL(1)],'Color','black');
 line([XQR(1) XL(1)],[YQR(1) YL(1)],[ZQR(1) ZL(1)],'Color','black');
 
 % draw initial Load
-hL   = plot3(XL(1),YL(1),ZL(1),'k-');
+hL   = plot3(XL(1),YL(1),ZL(1),'--b','LineWidth',1);
 hLk  = plot3(XL(1),YL(1),ZL(1),'ko','LineWidth',6,'MarkerSize',4);
 plot3(XL(1),YL(1),ZL(1),'ko','LineWidth',1);
 
-
 % draw initial Load path
-hLd  = plot3(XLd(1),YLd(1),ZLd(1),'r-','LineWidth',2);
+hLd  = plot3(XLd(1),YLd(1),ZLd(1),':r','LineWidth',2);
 hLdk = plot3(XLd(1),YLd(1),ZLd(1),'rx','LineWidth',2,'MarkerSize',15);
 
 minax = min(min(min(XQR,YQR),ZQR))-1;  
@@ -102,12 +101,15 @@ for k=1:length(t)
 %     [-Bx(1) Bx(1)],[2*YQR(1)-Bx(2) Bx(2)],[2*ZQR(1)-Bx(3) Bx(3)]
        
     set(hL,'xdata',XL(1:k),'ydata',YL(1:k),'zdata',ZL(1:k));
+
     set(hLk,'xdata',XL(k),'ydata',YL(k),'zdata',ZL(k));
     
     set(hC,'xdata',[XQR(k) XL(k)],'ydata',[YQR(k) YL(k)],'zdata',[ZQR(k) ZL(k)]);
-    
+
     set(hLd,'xdata',XLd(1:k),'ydata',YLd(1:k),'zdata',ZLd(1:k));
     set(hLdk,'xdata',XLd(k),'ydata',YLd(k),'zdata',ZLd(k));
     
     pause(ts*pausefactor);
 end
+hleg = legend([hL hLd],'$x_L$','$x_{L,des}$');
+set(hleg,'Interpreter','latex','FontSize',lfont);

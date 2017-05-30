@@ -13,11 +13,11 @@ clear; clc; close all;
 % >> Changed to 'Structure with time'
 
 % OPTIONS
-animation = 0;
+animation = 1;
 plots     = 0;
 savegain  = 0;
 
-comment = strcat('Initial error Sine Wave',date);
+comment = strcat('SineUpDown3D',date);
 
 %% Input signals
 
@@ -34,7 +34,7 @@ mode      = 4;
 % Inverted 1
 qmode     = -1;
 
-Tsim_end  = 20;
+Tsim_end  = 15;
 Tsim_s    = 0.01;
 
 switch mode
@@ -119,7 +119,7 @@ dxL0       = 0;
 dyL0       = 0;
 dzL0       = 0;
 
-phiL0deg   = 15;
+phiL0deg   = 0;
 thetaL0deg = 0;
 
 phiL0      = deg2rad(phiL0deg);
@@ -142,9 +142,13 @@ Rx         = [1 0 0;
 Rzyx       = (Rx*Ry);
 q0         = Rzyx*e3*qmode;
 
-xL0        = q0(1)*lL;
-yL0        = q0(2)*lL;
-zL0        = q0(3)*lL;
+% xL0        = q0(1)*lL;
+% yL0        = q0(2)*lL;
+% zL0        = q0(3)*lL;
+
+xL0        = 0;
+yL0        = 0;
+zL0        = 0;
 
 % x0 = [xL0;yL0;zL0];
 
@@ -166,7 +170,7 @@ kq = 10*facq;
 komega = 4*facq;
 
 % Gains Load Position
-facx = 1.5;
+facx = 5;
 kpx = 13.6*facx;
 kdx = 7.8*facx;
 
@@ -190,6 +194,7 @@ zeta_R = 0.98;
 % Save gains in mat-files
 if savegain == 1
     foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\GainFiles\';
+%     foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\MatlabImages\';
         
     for nfile = 1:100
         savename = strcat(foldername,num2str(nfile),'.mat');
