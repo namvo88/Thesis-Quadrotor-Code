@@ -168,7 +168,7 @@ saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 %%
 filename = 'QRang';
 figure('Name',filename)
-h_sup = suptitle('QR Angle$');
+h_sup = suptitle('QR Angle');
 set(h_sup,'FontSize',supfont,'Interpreter','latex');
 subplot 211
 plot(t,angleQ(:,1),t,angleQ(:,2),'Linewidth',2)
@@ -183,6 +183,7 @@ hl = legend('\boldmath$\psi_Q$');
 ylabel('\boldmath$[^\circ]$','FontSize',labfont,'Interpreter','latex')
 set(hl,'Interpreter','latex','FontSize',lfont);
 set(gca,'color','none','FontSize',afont)
+xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 

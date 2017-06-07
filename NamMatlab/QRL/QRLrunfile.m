@@ -13,11 +13,12 @@ clear; clc; close all;
 % >> Changed to 'Structure with time'
 
 % OPTIONS
-animation = 1;
-plots     = 0;
-savegain  = 0;
+animation = 0;
+plots     = 1;
+savegain  = 1;
 
-comment = strcat('SineUpDown3D',date);
+comment = strcat('LessSmoothSquare10m',date);
+comment2 = ('CFSQ/1.2pi/pi-CFP/100xL/50xL');
 
 %% Input signals
 
@@ -34,7 +35,7 @@ mode      = 4;
 % Inverted 1
 qmode     = -1;
 
-Tsim_end  = 15;
+Tsim_end  = 22;
 Tsim_s    = 0.01;
 
 switch mode
@@ -162,7 +163,7 @@ exLmax = 5; %Fixed constant
 % Gains QR Attitude
 facR = 5;
 kR = 8.81*facR; %Lee2010
-kOmega = 2.4*facR;
+kOmega = 1.4*facR;
 
 % Gains Load Attitude
 facq = 2.9;
@@ -170,9 +171,9 @@ kq = 10*facq;
 komega = 4*facq;
 
 % Gains Load Position
-facx = 5;
-kpx = 13.6*facx;
-kdx = 7.8*facx;
+facx = 2.5;
+kpx = 12.5*facx;
+kdx = 2*4*facx;
 
 
 % % Command Filter Low Pass filter 2nd order
@@ -184,11 +185,11 @@ kdx = 7.8*facx;
 omega_n1_xL = 2*pi*.4;
 omega_n2_xL = 2*pi*.4;
 zeta_xL = 0.975;
-omega_n1_q = 2*pi*6;
-omega_n2_q = 2*pi*6;
+omega_n1_q = 2*pi*3;
+omega_n2_q = 2*pi*5;
 zeta_q = 0.975;
-omega_n1_R = 2*pi*15;
-omega_n2_R = 2*pi*15;
+omega_n1_R = 2*pi*6.5;
+omega_n2_R = 2*pi*8;
 zeta_R = 0.98;
 
 % Save gains in mat-files
@@ -200,7 +201,7 @@ if savegain == 1
         savename = strcat(foldername,num2str(nfile),'.mat');
                 
         if exist(savename,'file') == 0
-            save(savename,'comment','facR','kR','kOmega','facq','kq','komega','facx','kpx','kdx','omega_n1_xL','omega_n2_xL','omega_n1_q','omega_n2_q','omega_n1_R','omega_n2_R','zeta_xL','zeta_q','zeta_R')
+            save(savename,'comment','comment2','facR','kR','kOmega','facq','kq','komega','facx','kpx','kdx','omega_n1_xL','omega_n2_xL','omega_n1_q','omega_n2_q','omega_n1_R','omega_n2_R','zeta_xL','zeta_q','zeta_R')
             break
         end
     end
@@ -234,7 +235,6 @@ theta = atan(-r31./sqrt(r32.^2+r33.^2));
 phi = atan(r32./r33);
 
 angleQ = rad2deg([phi;theta;psi])';
-% angleQ   = wrapTo180(rad2deg(simoutL2.signals.values(:,1:3)));
 OmegaQ   = (rad2deg(simoutL2.signals.values(:,4:6)));
 dOmegaQ  = (rad2deg(simoutL2.signals.values(:,7:9)));
 

@@ -111,5 +111,7 @@ for k=1:length(t)
     
     pause(ts*pausefactor);
 end
+
+lfont = 18; %Legend Fontsize
 hleg = legend([hL hLd],'$x_L$','$x_{L,des}$');
 set(hleg,'Interpreter','latex','FontSize',lfont);
