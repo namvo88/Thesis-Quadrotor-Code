@@ -40,26 +40,29 @@ omega_n2_R = 2*pi*8;
 zeta_R = 0.98;
 
 LQRA = [zeros(8) eye(8);
-    zeros(1,4) g zeros(1,11); %Depends on Rotation matrix!
-    zeros(1,3) -g zeros(1,12); %Depends on Rotation matrix!
-    zeros(6,16)]; 
+        zeros(1,3) 0 g zeros(1,11); %Depends on Rotation matrix!
+        zeros(1,3) -g 0 zeros(1,11); %Depends on Rotation matrix!
+        zeros(6,16)]; 
 LQRB = [zeros(10,4);
-    1/mQ 0 0 0;
-    0 1/Ixx 0 0;
-    0 0 1/Iyy 0;
-    0 0 0 1/Izz;
-    0 1/mL 0 0;
-    0 0 1/mL 0];   
+        1/mQ 0 0 0;
+        0 1/Ixx 0 0;
+        0 0 1/Iyy 0;
+        0 0 0 1/Izz;
+        0 1/mL 0 0;
+        0 0 1/mL 0];   
 % LQRC = [eye(3) zeros(3,13);
 %     zeros(1,5) 1 zeros(1,10)];
 LQRC = eye(16);
 
-Qdiag = [100 100 10 ones(1,13)];
-Q = diag(Qdiag);
+% x = [x y z phi the psi phiL theL dx dy dz dphi dthe dpsi dphiL dtheL]' \in R^16 
+% Qdiag = [0.06 0.06 3.16 .8 .8 1.2 .1 .1 , .7 .7 7 .2 .2 .145 .1 .1 ];
+Qdiag = ones(1,16);
+LQRQ = diag(Qdiag);
 
-R = eye(4);
+% u = [f Mphi Mthe Mpsi]'
+LQRR = eye(4);
 
-K = lqr(LQRA,LQRB,Q,R);
+K = lqr(LQRA,LQRB,LQRQ,LQRR);
 
 sim('LQR_QRLsim');
 
