@@ -47,9 +47,9 @@ LQRA = [zeros(8,3) zeros(8,1) zeros(8,1) zeros(8,3) eye(8);
         zeros(1,3) 0 g zeros(1,11); %Depends on Rotation matrix!
         zeros(1,3) -g 0 zeros(1,11); %Depends on Rotation matrix!
         zeros(6,16)]; 
-LQRB = [zeros(8,4);
-        zeros(2,4);
+LQRB = [zeros(2,4);
         1/mQ 0 0 0;
+        zeros(8,4);
         0 1/Ixx 0 0;
         0 0 1/Iyy 0;
         0 0 0 1/Izz;

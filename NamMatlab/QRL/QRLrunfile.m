@@ -13,12 +13,12 @@ clear; clc; close all;
 % >> Changed to 'Structure with time'
 
 % OPTIONS
-animation = 1;
-plots     = 0;
-savegain  = 0;
+animation = 0;
+plots     = 1;
+savegain  = 1;
 
-comment = strcat('SineUpdown',date);
-comment2 = ('1,25 zijwaarts / omeganR verhoogd');
+comment = strcat('Step',date);
+comment2 = ('Fpd is afhankelijk van kq en kOmega, betere demping/voorspelling');
 
 %% Input signals
 
@@ -35,7 +35,7 @@ mode      = 4;
 % Inverted 1
 qmode     = -1;
 
-Tsim_end  = 22;
+Tsim_end  = 15;
 Tsim_s    = 0.01;
 
 switch mode
@@ -161,19 +161,19 @@ exLmax = 5; %Fixed constant
 
 
 % Gains QR Attitude
-facR = 5;
+facR = 4.5;
 kR = 8.81*facR; %Lee2010
 kOmega = 2.4*facR;
 
 % Gains Load Attitude
-facq = 2.9;
-kq = 10*facq;
-komega = 4*facq;
+facq = 5; %2.9;
+kq = facq*10;
+komega = facq*2.5;%*4;
 
 % Gains Load Position
-facx = 5;
-kpx = 13.6*facx;
-kdx = 7.8*facx;
+facx = 1; %4;
+kpx = facx*17.5;
+kdx = facx*5; %*7.8;
 
 
 % % Command Filter Low Pass filter 2nd order
@@ -183,12 +183,12 @@ kdx = 7.8*facx;
 
 % Command Filter Low Pass filter 3th order
 omega_n1_xL = 2*pi*0.4;
-omega_n2_xL = 2*pi*0.4;
+omega_n2_xL = 2*pi*0.55;
 omega_n1_CFP = 2*pi*2;%*30;
 omega_n2_CFP = 2*pi*2;%*20;
 zeta_xL = 0.975;
-omega_n1_q = 2*pi*6;
-omega_n2_q = 2*pi*6;
+omega_n1_q = 2*pi*10;
+omega_n2_q = 2*pi*10;
 zeta_q = 0.975;
 omega_n1_R = 2*pi*20; %15
 omega_n2_R = 2*pi*15;
@@ -214,7 +214,9 @@ end
 % load(loadfile)
 
 %%
+LQRrunfile
 sim('QRLsim');
+
 
 % Dataconversion
 
