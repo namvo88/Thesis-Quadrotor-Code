@@ -6,71 +6,146 @@
 % x = [x y z phi the psi phiL theL dx dy dz dphi dthe dpsi dphiL dtheL]'
 % u = [f Mphi Mthe Mpsi]'
 % y = [x y z psi]'
+ 
+%% A B C D 16 states
 
-% clear;clc;close all;
+IL = mL*L^2;
+LQRM = [mQ+mL 0 0, 0 0 0, mL*L 0;%ddx
+        0 mQ+mL 0, 0 0 0, 0 mL*L;%ddy
+        0 0 mQ+mL, 0 0 0, 0 0;% ddz
+        0 0 0, Ixx 0 0, 0 0;% ddphi
+        0 0 0, 0 Iyy 0, 0 0;% ddthe
+        0 0 0, 0 0 Izz, 0 0;% ddpsi
+       -L*mL 0 0, 0 0 0, IL+L^2*mL 0;%ddtheL        
+        0 L*mL 0, 0 0 0, 0 IL+L^2*mL];%ddphiL
 
-%% Settings
-% Warning: Using a default value of 0.2 for maximum step size.  The simulation step size will be
-% equal to or less than this value.  You can disable this diagnostic by setting 'Automatic solver
-% parameter selection' diagnostic to 'none' in the Diagnostics page of the configuration
-% parameters dialog
-% >> Changed to max to 0.1
-
-% Tsim_end  = 22;
-% Tsim_s    = 0.01;
-% 
-% g = 9.81;
-% Ixx    = 0.0820; %Lee2010
-% Iyy    = 0.0845; %Lee2010
-% Izz    = 0.1377; %Lee2010
-% 
-% mQ     = 4.34; %Lee2010 %weight bebop 420 g
-% mL     = 0.1;
-% lL     = 0.7;
-% 
-% % Command Filter Low Pass filter 3th order
-% omega_n1_xL = 2*pi*.4;
-% omega_n2_xL = 2*pi*.4;
-% zeta_xL = 0.975;
-% omega_n1_q = 2*pi*3;
-% omega_n2_q = 2*pi*5;
-% zeta_q = 0.975;
-% omega_n1_R = 2*pi*6.5;
-% omega_n2_R = 2*pi*8;
-% zeta_R = 0.98;
-
-% x = [x y z phi the psi phiL theL dx dy dz dphi dthe dpsi dphiL dtheL]'
-% u = [f Mphi Mthe Mpsi]'
-% y = [x y z psi]'
-
-LQRA = [zeros(8,3) zeros(8,1) zeros(8,1) zeros(8,3) eye(8);
-        zeros(1,3) 0 g zeros(1,11); %Depends on Rotation matrix!
-        zeros(1,3) -g 0 zeros(1,11); %Depends on Rotation matrix!
-        zeros(6,16)]; 
+LQRM2 = [0 0 0, -g*(mQ+mL) 0 0, 0 0;%x
+         0 0 0, 0 g*(mQ+mL) 0, 0 0;%y
+         0 0 0, 0 0 0, 0 0;% z
+         0 0 0, 0 0 0, 0 0;% phi
+         0 0 0, 0 0 0, 0 0;% the
+         0 0 0, 0 0 0, 0 0;% psi
+         0 0 0, 0 0 0, g*L*mL 0;%theL
+         0 0 0, 0 0 0, 0 g*L*mL];%phiL
+     
+LQRM3 = [0 0 0 0;
+         0 0 0 0;
+         1 0 0 0;
+         0 -1 0 0;
+         0 0 -1 0;
+         0 0 0 1;
+         0 1 0 0;
+         0 0 1 0];
+     
+LQRA = [zeros(8) eye(8);
+        -inv(LQRM)*LQRM2 zeros(8)];
 LQRB = [zeros(8,4);
-        zeros(2,4);
-        1/mQ 0 0 0;
-        0 1/Ixx 0 0;
-        0 0 1/Iyy 0;
-        0 0 0 1/Izz;
-        0 1/mL 0 0;
-        0 0 1/mL 0];   
+        inv(LQRM)*LQRM3];
 LQRC = [eye(3) zeros(3,13);
-    zeros(1,5) 1 zeros(1,10)];
-% LQRC = eye(16);
+        zeros(1,5) 1 zeros(1,10)];
+LQRD = zeros(4);     
 
-% load linsys
-% LQRA = linsys1.a;
-% LQRB = linsys1.b;
-% LQRC = linsys1.c;
+sys=ss(LQRA,LQRB,LQRC,LQRD,'StateName',{'x','y','z','phi','the','psi','theL','phiL','dx','dy','dz','dphi','dthe','dpsi','dtheL','dphiL'},...
+        'InputName',{'f','Mphi','Mthe','Mpsi'},...
+        'OutputName',{'x','y','z','psi'});
 
-% x = [x y z phi the psi phiL theL dx dy dz dphi dthe dpsi dphiL dtheL]' \in R^16 
-% Qdiag = [0.06 0.06 3.16 .8 .8 1.2 .1 .1 , .7 .7 7 .2 .2 .145 .1 .1 ];
-Qdiag = ones(1,16);
+%% A B C D 16 states
+
+IL = mL*L^2;
+LQRM = [mQ+mL 0 0, 0 0 0, mL*L 0;%ddx
+        0 mQ+mL 0, 0 0 0, 0 mL*L;%ddy
+        0 0 mQ+mL, 0 0 0, 0 0;% ddz
+        0 0 0, Ixx 0 0, 0 0;% ddphi
+        0 0 0, 0 Iyy 0, 0 0;% ddthe
+        0 0 0, 0 0 Izz, 0 0;% ddpsi
+       -L*mL 0 0, 0 0 0, IL+L^2*mL 0;%ddtheL        
+        0 L*mL 0, 0 0 0, 0 IL+L^2*mL];%ddphiL
+
+LQRM2 = [0 0 0, 0 -g*(mQ+mL) 0 0, 0 0;%x
+         0 0 0, g*(mQ+mL) 0 0, 0 0;%y
+         0 0 0, 0 0 0, 0 0;% z
+         0 0 0, 0 0 0, 0 0;% phi
+         0 0 0, 0 0 0, 0 0;% the
+         0 0 0, 0 0 0, 0 0;% psi
+         0 0 0, 0 0 0, g*L*mL 0;%theL
+         0 0 0, 0 0 0, 0 g*L*mL];%phiL
+     
+LQRM3 = [0 0 0 0;
+         0 0 0 0;
+         1 0 0 0;
+         0 -1 0 0;
+         0 0 -1 0;
+         0 0 0 1;
+         0 1 0 0;
+         0 0 1 0];
+     
+LQRA = [zeros(8) eye(8);
+        -inv(LQRM)*LQRM2 zeros(8)];
+LQRB = [zeros(8,4);
+        inv(LQRM)*LQRM3];
+LQRC = [eye(3) zeros(3,13);
+        zeros(1,5) 1 zeros(1,10)];
+LQRD = zeros(4);     
+
+sys=ss(LQRA,LQRB,LQRC,LQRD,'StateName',{'x','y','z','phi','the','psi','theL','phiL','dx','dy','dz','dphi','dthe','dpsi','dtheL','dphiL'},...
+        'InputName',{'f','Mphi','Mthe','Mpsi'},...
+        'OutputName',{'x','y','z','psi'});    
+    
+% %% A B C D 18 states
+% 
+% IL = mL*L^2;
+% LQRM = [mQ 0 0, 0 0 0, mL 0 0;%ddx
+%         0 mQ 0, 0 0 0, 0 mL 0;%ddy
+%         0 0 mQ, 0 0 0, 0 0 mL;% ddz
+%         0 0 0, Ixx 0 0, 0 0 0;% ddphi
+%         0 0 0, 0 Iyy 0, 0 0 0;% ddthe
+%         0 0 0, 0 0 Izz, 0 0 0;% ddpsi
+%         -1 0 0, 0 0 0, 1 0 0;% ddxL 
+%         0 -1 0, 0 0 0, 0 1 0;% ddyL
+%         0 0 -1, 0 0 0, 0 0 1];% ddzL
+
+% 
+% LQRM2 = [0 0 0, 0 -g*(mQ+mL) 0 0, 0 0 0;%x
+%          0 0 0, g*(mQ+mL) 0 0, 0 0 0;%y
+%          0 0 0, 0 0 0, 0 0 0;% z
+%          0 0 0, 0 0 0, 0 0 0;% phi
+%          0 0 0, 0 0 0, 0 0 0;% the
+%          0 0 0, 0 0 0, 0 0 0;% psi
+%          0 0 0, 0 0 0, 0 0 0;% xL 
+%          0 0 0, 0 0 0, 0 0 0;% yL
+%          0 0 0, 0 0 0, 0 0 0];% zL
+
+%      
+% LQRM3 = [0 0 0 0;
+%          0 0 0 0;
+%          1 0 0 0;
+%          0 -1 0 0;
+%          0 0 -1 0;
+%          0 0 0 1;
+%          0 0 0 0;
+%          0 0 0 0;
+%          0 0 0 0];
+
+%      
+% LQRA = [zeros(9) eye(9);
+%         -inv(LQRM)*LQRM2 zeros(9)];
+% LQRB = [zeros(9,4);
+%         inv(LQRM)*LQRM3];
+% LQRC = [eye(3) zeros(3,15);
+%         zeros(1,5) 1 zeros(1,12)];
+% LQRD = zeros(4);
+% 
+% sys=ss(LQRA,LQRB,LQRC,LQRD,'StateName',{'x','y','z','phi','the','psi','xL','yL','zL','dx','dy','dz','dphi','dthe','dpsi','dxL','dyL','dzL'},...
+%         'InputName',{'f','Mphi','Mthe','Mpsi'},...
+%         'OutputName',{'x','y','z','psi'});
+
+%% Q R K
+Qdiag = [10 10 100 ones(1,13)];
 LQRQ = diag(Qdiag);
 
 % u = [f Mphi Mthe Mpsi]'
-LQRR = eye(4);
+Rdiag = [0.044 1.56 1.56 1.56];
+LQRR = diag(Rdiag); 
 
 K = lqr(LQRA,LQRB,LQRQ,LQRR);
 

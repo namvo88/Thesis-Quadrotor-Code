@@ -14,11 +14,11 @@ clear; clc; close all;
 
 % OPTIONS
 animation = 0;
-plots     = 1;
-savegain  = 1;
+plots     = 0;
+savegain  = 0;
 
-comment = strcat('Step',date);
-comment2 = ('Fpd is afhankelijk van kq en kOmega, betere demping/voorspelling');
+comment = strcat('StepWithInitError',date);
+comment2 = ('');
 
 %% Input signals
 
@@ -35,7 +35,7 @@ mode      = 4;
 % Inverted 1
 qmode     = -1;
 
-Tsim_end  = 15;
+Tsim_end  = 25;
 Tsim_s    = 0.01;
 
 switch mode
@@ -76,7 +76,7 @@ ctauf  = 8.004e-3; %Lee2010c
 % mL     = 0.045; %Praveen
 % lL         = 1.12; %Praveen
 mL     = 0.1;
-lL     = 0.7;
+L     = 0.7;
 
 b      = 0.1; %gok thrust factor
 d      = 0.1; %gok drag factor
@@ -171,7 +171,7 @@ kq = facq*10;
 komega = facq*2.5;%*4;
 
 % Gains Load Position
-facx = 1; %4;
+facx = 2; %4;
 kpx = facx*17.5;
 kdx = facx*5; %*7.8;
 
@@ -182,8 +182,8 @@ kdx = facx*5; %*7.8;
 % omega_n_R = 2*pi*.05;
 
 % Command Filter Low Pass filter 3th order
-omega_n1_xL = 2*pi*0.4;
-omega_n2_xL = 2*pi*0.55;
+omega_n1_xL = 2*pi*.3;
+omega_n2_xL = 2*pi*0.3;
 omega_n1_CFP = 2*pi*2;%*30;
 omega_n2_CFP = 2*pi*2;%*20;
 zeta_xL = 0.975;
@@ -268,7 +268,7 @@ exL      = simoutexL.signals.values(:,1:3)';
 F        = reshape(simoutF.signals.values,3,length(t));
 qcplot   = reshape(simoutqc.signals.values,[3,length(simoutqc.signals.values)]);
 
-posQ     = posL - q*lL;
+posQ     = posL - q*L;
 
 %% Conditions check
 
@@ -285,7 +285,7 @@ if mode >= 3
     if Psiq(1) >= 2
         error('Psiq(0) >= 2');
     end
-    if norm(edq(1),2)^2 >= 2/(mQ*lL)*kq*(2-Psiq(1))
+    if norm(edq(1),2)^2 >= 2/(mQ*L)*kq*(2-Psiq(1))
         error('edq(0) too big');
     end
 end
@@ -298,7 +298,7 @@ if mode == 4
     if norm(exL(:,1)) >= exLmax
         error('norm(exL(:,1)) >= exLmax')
     end
-    if norm(edq(1,:))^2 >= 2/(mQ*lL)*kq*(psi_1-Psiq(1))
+    if norm(edq(1,:))^2 >= 2/(mQ*L)*kq*(psi_1-Psiq(1))
         error('edq(0) too big. Prop.3 Sreenath2013b')
     end
 end

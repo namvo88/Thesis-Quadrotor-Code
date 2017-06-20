@@ -7,11 +7,7 @@ LIBFLAGS =
 
 OBJECTS = \
 	"QRLsim_sfun.obj"\
-	"c1_QRLsim.obj"\
-	"c2_QRLsim.obj"\
-	"c3_QRLsim.obj"\
-	"c4_QRLsim.obj"\
-	"c5_QRLsim.obj"\
+	"c6_QRLsim.obj"\
 	"c7_QRLsim.obj"\
 	"c13_QRLsim.obj"\
 	"c31_QRLsim.obj"\
@@ -46,16 +42,8 @@ QRLsim_sfun.mexw64 : $(MAKEFILE) $(OBJECTS)
 	$(LD) $(LDFLAGS) -o QRLsim_sfun.mexw64 @QRLsim_sfun.lmko
 QRLsim_sfun.obj :	"QRLsim_sfun.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "QRLsim_sfun.c"
-c1_QRLsim.obj :	"c1_QRLsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c1_QRLsim.c"
-c2_QRLsim.obj :	"c2_QRLsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c2_QRLsim.c"
-c3_QRLsim.obj :	"c3_QRLsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c3_QRLsim.c"
-c4_QRLsim.obj :	"c4_QRLsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c4_QRLsim.c"
-c5_QRLsim.obj :	"c5_QRLsim.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c5_QRLsim.c"
+c6_QRLsim.obj :	"c6_QRLsim.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c6_QRLsim.c"
 c7_QRLsim.obj :	"c7_QRLsim.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c7_QRLsim.c"
 c13_QRLsim.obj :	"c13_QRLsim.c"
