@@ -69,14 +69,23 @@ Ixx    = 0.0820; %Lee2010
 Iyy    = 0.0845; %Lee2010
 Izz    = 0.1377; %Lee2010
 I      = diag([Ixx Iyy Izz]); %Tang2014
+ctauf  = 8.004e-3; %Lee2010c
+mL     = 0.1;
+L      = 0.7;
+
+% mQ     = 0.7; %Becker
+% Ixx    = 4.6e-3; %Becker
+% Iyy    = 4.6e-3; %Becker
+% Izz    = 8.2e-3; %Becker
+% I      = diag([Ixx Iyy Izz]);
+% mL     = 0.2; %Becker
+% L     = 0.7; %Becker
+
 lamb_m = min(eig(I));
 lamb_M = max(eig(I));
-ctauf  = 8.004e-3; %Lee2010c
 
 % mL     = 0.045; %Praveen
 % lL         = 1.12; %Praveen
-mL     = 0.1;
-L     = 0.7;
 
 b      = 0.1; %gok thrust factor
 d      = 0.1; %gok drag factor
@@ -155,25 +164,25 @@ zL0        = 0;
 
 %% Simulation
 
-eps = 0.99; % 0<eps<1
-psi_1 = .9; % Constant Psiq(0)<Psi_1<1 Lee2010 
-exLmax = 5; %Fixed constant
+eps         = 0.99; % 0<eps<1
+psi_1       = .9; % Constant Psiq(0)<Psi_1<1 Lee2010 
+exLmax      = 5; %Fixed constant
 
 
 % Gains QR Attitude
-facR = 4.5;
-kR = 8.81*facR; %Lee2010
-kOmega = 2.4*facR;
+facR        = 4.5;
+kR          = 8.81*facR; %Lee2010
+kOmega      = 2.4*facR;
 
 % Gains Load Attitude
-facq = 5; %2.9;
-kq = facq*10;
-komega = facq*2.5;%*4;
+facq        = 5; %2.9;
+kq          = facq*10;
+komega      = facq*2.5;%*4;
 
 % Gains Load Position
-facx = 2; %4;
-kpx = facx*17.5;
-kdx = facx*5; %*7.8;
+facx        = 1; %4;
+kpx         = facx*17.5;
+kdx         = facx*5; %*7.8;
 
 
 % % Command Filter Low Pass filter 2nd order
@@ -182,17 +191,17 @@ kdx = facx*5; %*7.8;
 % omega_n_R = 2*pi*.05;
 
 % Command Filter Low Pass filter 3th order
-omega_n1_xL = 2*pi*.3;
-omega_n2_xL = 2*pi*0.3;
+omega_n1_xL  = 2*pi*.4;
+omega_n2_xL  = 2*pi*.4;
 omega_n1_CFP = 2*pi*2;%*30;
 omega_n2_CFP = 2*pi*2;%*20;
-zeta_xL = 0.975;
-omega_n1_q = 2*pi*10;
-omega_n2_q = 2*pi*10;
-zeta_q = 0.975;
-omega_n1_R = 2*pi*20; %15
-omega_n2_R = 2*pi*15;
-zeta_R = 0.98;
+zeta_xL      = 0.975;
+omega_n1_q   = 2*pi*10;
+omega_n2_q   = 2*pi*10;
+zeta_q       = 0.975;
+omega_n1_R   = 2*pi*20; %15
+omega_n2_R   = 2*pi*15;
+zeta_R       = 0.98;
 
 % Save gains in mat-files
 if savegain == 1
@@ -217,58 +226,6 @@ end
 LQRrunfile
 sim('QRLsim');
 
-
-% Dataconversion
-
-t        = simoutL.time;
-
-posL     = simoutL.signals.values(:,1:3)';
-velL     = simoutL.signals.values(:,4:6)';
-accL     = simoutL.signals.values(:,7:9)';
-
-angleL   = wrapTo180(rad2deg(simoutL1.signals.values(:,1:3)));
-OmegaL   = (rad2deg(simoutL1.signals.values(:,4:6)));
-
-r11 = reshape(simoutR.signals.values(1,1,:),1,length(t));
-r21 = reshape(simoutR.signals.values(2,1,:),1,length(t));
-r31= reshape(simoutR.signals.values(3,1,:),1,length(t));
-r32= reshape(simoutR.signals.values(3,2,:),1,length(t));
-r33= reshape(simoutR.signals.values(3,3,:),1,length(t));
-
-psi = atan(r21./r11);
-theta = atan(-r31./sqrt(r32.^2+r33.^2));
-phi = atan(r32./r33);
-
-angleQ = rad2deg([phi;theta;psi])';
-OmegaQ   = (rad2deg(simoutL2.signals.values(:,4:6)));
-dOmegaQ  = (rad2deg(simoutL2.signals.values(:,7:9)));
-
-f        = simoutL3.signals.values(:,1);
-M        = simoutL3.signals.values(:,2:4)';
-omegarot = simoutL3.signals.values(:,5:8)';
-fi       = simoutL3.signals.values(:,9:12)';
-
-q        = simoutq.signals.values(:,1:3)';
-dq       = simoutq.signals.values(:,4:6)';
-ddq      = simoutq.signals.values(:,7:9)';
-
-eq       = simouteq.signals.values(:,1:3);
-edq      = simouteq.signals.values(:,4:6);
-eR       = simouterrorR.signals.values(:,1:3);
-eOmega   = simouterrorR.signals.values(:,4:6);
-Psiq     = simoutPsiq.signals.values(:,1);
-PsiR     = simoutPsiR.signals.values(:,1);
-
-xLd      = simoutxLd.signals.values(:,1:3)';
-dxLd     = simoutxLd.signals.values(:,4:6)';
-ddxLd    = simoutxLd.signals.values(:,7:9)';
-
-exL      = simoutexL.signals.values(:,1:3)';
-
-F        = reshape(simoutF.signals.values,3,length(t));
-qcplot   = reshape(simoutqc.signals.values,[3,length(simoutqc.signals.values)]);
-
-posQ     = posL - q*L;
 
 %% Conditions check
 
@@ -305,7 +262,8 @@ end
 
 %% Plots
 if plots == 1
-    QRLplots
+    QRLplots;
+    QRLplotsLQR;
 end
 
 %% Animation

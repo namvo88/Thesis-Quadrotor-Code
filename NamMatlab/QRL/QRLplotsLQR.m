@@ -2,10 +2,12 @@
 
 t            = simoutL.time;
 
-posL        = simoutL.signals.values(:,1:3)';
+lqrposL         = lqrsimoutL.signals.values(:,1:3)';
+posL         = simoutL.signals.values(:,1:3)';
 velL         = simoutL.signals.values(:,4:6)';
 accL         = simoutL.signals.values(:,7:9)';
 
+lqrangleL       = wrapTo180((lqrsimoutL1.signals.values(:,1:3)));
 angleL       = wrapTo180((simoutL1.signals.values(:,1:3)));
 OmegaL       = (rad2deg(simoutL1.signals.values(:,4:6)));
 
@@ -19,7 +21,9 @@ psi          = atan(r21./r11);
 theta        = atan(-r31./sqrt(r32.^2+r33.^2));
 phi          = atan(r32./r33);
 
+lqrangleQ       = ((lqrsimoutL2.signals.values(:,1:3)));
 angleQ       = rad2deg([phi;theta;psi]);
+
 OmegaQ       = (rad2deg(simoutL2.signals.values(:,4:6)));
 dOmegaQ      = (rad2deg(simoutL2.signals.values(:,7:9)));
 
@@ -60,14 +64,18 @@ posQ         = posL - q*L;
 
 for nfile = 18:100
 
-    savename = strcat(foldername,modecode,num2str(nfile),'.mat');
+    savename = strcat(foldername,'LQR',num2str(nfile),'.mat');
     if exist(savename,'file') == 0
         break
     end
     
     savename = strcat(foldername,'Gains',num2str(nfile),'.mat');
     if exist(savename,'file') == 0
-        save(savename,'comment','facR','kR','kOmega','facq','kq','komega','facx','kpx','kdx','omega_n1_xL','omega_n2_xL','omega_n1_q','omega_n2_q','omega_n1_R','omega_n2_R','zeta_xL','zeta_q','zeta_R')
+        save(savename,'comment','facR','kR','kOmega','facq','kq','komega','facx','kpx','kdx',...
+            'omega_n1_xL','omega_n2_xL','omega_n1_q','omega_n2_q','omega_n1_R','omega_n2_R',...
+            'zeta_xL','zeta_q','zeta_R','LQRA','LQRB','LQRC','LQRD','K','LQRQ','LQRR')
+%         save(savename,'comment','LQRA','LQRB','LQRC','LQRD','K','LQRQ','LQRR')
+
         break
     end    
 end
@@ -123,7 +131,7 @@ figure('Name',filename)
 h_sup = suptitle('Load Pos./Vel./Acc.');
 set(h_sup,'FontSize',supfont,'Interpreter','latex');
 subplot 311
-plot(t,posL,'Linewidth',2)
+plot(t,lqrposL,'Linewidth',2)
 hl = legend('\boldmath$x$','\boldmath$y$','\boldmath$z$');
 set(hl,'Interpreter','latex','FontSize',lfont);
 ylabel('\boldmath$[m]$','FontSize',labfont,'Interpreter','latex')
@@ -151,16 +159,16 @@ figure('Name',filename)
 h_sup = suptitle('Load Position');
 set(h_sup,'FontSize',supfont,'Interpreter','latex');
 subplot 311
-plot(t,posL(1,:),t,xLd(1,:),'r--','Linewidth',2)
+plot(t,lqrposL(1,:),t,xLd(1,:),'r--','Linewidth',2)
 hl = legend('\boldmath$x_L$','\boldmath$x_{L,d}$');
 ylabel('\boldmath$x [m]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 subplot 312
-plot(t,posL(2,:),t,xLd(2,:),'r--','Linewidth',2)
+plot(t,lqrposL(2,:),t,xLd(2,:),'r--','Linewidth',2)
 ylabel('\boldmath$y [m]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 subplot 313
-plot(t,posL(3,:),t,xLd(3,:),'r--','Linewidth',2)
+plot(t,lqrposL(3,:),t,xLd(3,:),'r--','Linewidth',2)
 ylabel('\boldmath$z [m]$','FontSize',labfont,'Interpreter','latex')
 xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
@@ -224,14 +232,14 @@ figure('Name',filename)
 h_sup = suptitle('QR Angle');
 set(h_sup,'FontSize',supfont,'Interpreter','latex');
 subplot 211
-plot(t,angleQ(:,1),t,angleQ(:,2),'Linewidth',2)
+plot(t,lqrangleQ(:,1),t,lqrangleQ(:,2),'Linewidth',2)
 hl = legend('\boldmath$\phi_Q$','\boldmath$\theta_Q$');
 ylabel('\boldmath$[^\circ]$','FontSize',labfont,'Interpreter','latex')
 set(hl,'Interpreter','latex','FontSize',lfont);
 set(gca,'color','none','FontSize',afont)
 set(gca,'FontSize',afont);
 subplot 212
-plot(t,angleQ(:,3),'r','Linewidth',2)
+plot(t,lqrangleQ(:,3),'r','Linewidth',2)
 hl = legend('\boldmath$\psi_Q$');
 ylabel('\boldmath$[^\circ]$','FontSize',labfont,'Interpreter','latex')
 set(hl,'Interpreter','latex','FontSize',lfont);
@@ -266,7 +274,7 @@ set(h_sup,'FontSize',supfont,'Interpreter','latex');
 subplot 311
 % plot(t,angleL,'Linewidth',2)
 % hl = legend('\boldmath$\phi_L$','\boldmath$\theta_L$','\boldmath$\psi_L$');
-plot(t,angleL(:,1),t,angleL(:,2),'Linewidth',2)
+plot(t,lqrangleL(:,1),t,lqrangleL(:,2),'Linewidth',2)
 hl = legend('\boldmath$\phi_L$','\boldmath$\theta_L$');
 ylabel('\boldmath$[^\circ]$','FontSize',labfont,'Interpreter','latex')
 set(hl,'Interpreter','latex','FontSize',lfont);

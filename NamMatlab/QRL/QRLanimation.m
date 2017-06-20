@@ -80,7 +80,7 @@ axis([minax maxax minax maxax minax maxax],'vis3d')
 % axis([XQR(1)-1.5 XQR(1)+1.5 YQR(1)-1.5 YQR(1)+1.5 ZQR(1)-1.5 ZQR(1)+1.5],'square')
 
 % view(0,0)
-view(3)
+view(90,0)
 grid on
 xlabel('x')
 ylabel('y') 
