@@ -17,8 +17,8 @@ animation = 0;
 plots     = 0;
 savegain  = 0;
 
-comment = strcat('StepWithInitError',date);
-comment2 = ('');
+comment  = strcat('TESTWITHLQR',date);
+comment2 = ('-');
 
 %% Input signals
 
@@ -80,9 +80,6 @@ L      = 0.7;
 % I      = diag([Ixx Iyy Izz]);
 % mL     = 0.2; %Becker
 % L     = 0.7; %Becker
-
-lamb_m = min(eig(I));
-lamb_M = max(eig(I));
 
 % mL     = 0.045; %Praveen
 % lL         = 1.12; %Praveen
@@ -165,24 +162,21 @@ zL0        = 0;
 %% Simulation
 
 eps         = 0.99; % 0<eps<1
-psi_1       = .9; % Constant Psiq(0)<Psi_1<1 Lee2010 
-exLmax      = 5; %Fixed constant
-
 
 % Gains QR Attitude
-facR        = 4.5;
+facR        = 5;
 kR          = 8.81*facR; %Lee2010
 kOmega      = 2.4*facR;
 
 % Gains Load Attitude
-facq        = 5; %2.9;
-kq          = facq*10;
-komega      = facq*2.5;%*4;
+facq        = 1; %2.9;
+kq          = facq*;%29
+komega      = facq*35;%11.6
 
 % Gains Load Position
 facx        = 1; %4;
-kpx         = facx*17.5;
-kdx         = facx*5; %*7.8;
+kpx         = facx*10;%20.4
+kdx         = facx*10;%11.7
 
 
 % % Command Filter Low Pass filter 2nd order
@@ -191,16 +185,16 @@ kdx         = facx*5; %*7.8;
 % omega_n_R = 2*pi*.05;
 
 % Command Filter Low Pass filter 3th order
-omega_n1_xL  = 2*pi*.4;
-omega_n2_xL  = 2*pi*.4;
-omega_n1_CFP = 2*pi*2;%*30;
-omega_n2_CFP = 2*pi*2;%*20;
+omega_n1_xL  = 30;
+omega_n2_xL  = 30;
+omega_n1_CFP = 2;
+omega_n2_CFP = 2;
 zeta_xL      = 0.975;
-omega_n1_q   = 2*pi*10;
-omega_n2_q   = 2*pi*10;
+omega_n1_q   = 37;
+omega_n2_q   = 37;
 zeta_q       = 0.975;
-omega_n1_R   = 2*pi*20; %15
-omega_n2_R   = 2*pi*15;
+omega_n1_R   = 94;
+omega_n2_R   = 94;
 zeta_R       = 0.98;
 
 % Save gains in mat-files
@@ -228,6 +222,16 @@ sim('QRLsim');
 
 
 %% Conditions check
+Psiq   = simoutPsiq.signals.values(:,1);
+PsiR   = simoutPsiR.signals.values(:,1);
+eOmega = simouterrorR.signals.values(:,4:6);
+edq    = simouteq.signals.values(:,4:6);
+exL    = simoutexL.signals.values(:,1:3)';
+
+lamb_m = min(eig(I));
+lamb_M = max(eig(I));
+psi_1  = .9; % Constant Psiq(0)<Psi_1<1 Lee2010 
+exLmax = 5; %Fixed constant
 
 % Prop.1 Sreenath2013b
 if PsiR(1) >= 2

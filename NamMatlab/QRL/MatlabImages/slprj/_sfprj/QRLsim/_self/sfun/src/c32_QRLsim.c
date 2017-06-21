@@ -184,7 +184,7 @@ static void sf_c32_QRLsim(SFc32_QRLsimInstanceStruct *chartInstance)
   c32_varddxL = (real_T (*)[4])ssGetInputPortSignal(chartInstance->S, 0);
   _SFD_SYMBOL_SCOPE_PUSH(0U, 0U);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
-  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 5U, chartInstance->c32_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 4U, chartInstance->c32_sfEvent);
   for (c32_i2 = 0; c32_i2 < 4; c32_i2++) {
     _SFD_DATA_RANGE_CHECK((*c32_varddxL)[c32_i2], 0U);
   }
@@ -283,7 +283,7 @@ static void c32_chartstep_c32_QRLsim(SFc32_QRLsimInstanceStruct *chartInstance)
   c32_d_dq = (real_T (*)[3])ssGetInputPortSignal(chartInstance->S, 2);
   c32_c_q = (real_T (*)[3])ssGetInputPortSignal(chartInstance->S, 1);
   c32_b_varddxL = (real_T (*)[4])ssGetInputPortSignal(chartInstance->S, 0);
-  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 5U, chartInstance->c32_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 4U, chartInstance->c32_sfEvent);
   c32_hoistedGlobal = *c32_b_f;
   for (c32_i7 = 0; c32_i7 < 4; c32_i7++) {
     c32_varddxL[c32_i7] = (*c32_b_varddxL)[c32_i7];
@@ -412,7 +412,7 @@ static void c32_chartstep_c32_QRLsim(SFc32_QRLsimInstanceStruct *chartInstance)
     (*c32_b_ddxL)[c32_i26] = c32_ddxL[c32_i26];
   }
 
-  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 5U, chartInstance->c32_sfEvent);
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 4U, chartInstance->c32_sfEvent);
 }
 
 static void initSimStructsc32_QRLsim(SFc32_QRLsimInstanceStruct *chartInstance)

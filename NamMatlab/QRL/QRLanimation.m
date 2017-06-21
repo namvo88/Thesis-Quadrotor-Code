@@ -1,5 +1,11 @@
 pausefactor = 1;
 
+t            = simoutL.time;
+xLd          = simoutxLd.signals.values(:,1:3)';
+posL         = simoutL.signals.values(:,1:3)';
+q            = simoutq.signals.values(:,1:3)';
+posQ         = posL - q*L;
+
 POSL = posL;
 XL = POSL(1,:);
 YL = POSL(2,:);
@@ -80,7 +86,7 @@ axis([minax maxax minax maxax minax maxax],'vis3d')
 % axis([XQR(1)-1.5 XQR(1)+1.5 YQR(1)-1.5 YQR(1)+1.5 ZQR(1)-1.5 ZQR(1)+1.5],'square')
 
 % view(0,0)
-view(90,0)
+view(0,0)
 grid on
 xlabel('x')
 ylabel('y') 

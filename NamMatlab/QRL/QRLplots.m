@@ -2,12 +2,14 @@
 
 t            = simoutL.time;
 
-posL        = simoutL.signals.values(:,1:3)';
+lqrposL      = lqrsimoutL.signals.values(:,1:3)';
+posL         = simoutL.signals.values(:,1:3)';
 velL         = simoutL.signals.values(:,4:6)';
 accL         = simoutL.signals.values(:,7:9)';
 
+lqrangleL    = wrapTo180((lqrsimoutL1.signals.values(:,1:2)));
 angleL       = wrapTo180((simoutL1.signals.values(:,1:3)));
-OmegaL       = (rad2deg(simoutL1.signals.values(:,4:6)));
+OmegaL       = rad2deg(simoutL1.signals.values(:,4:6));
 
 r11          = reshape(simoutR.signals.values(1,1,:),1,length(t));
 r21          = reshape(simoutR.signals.values(2,1,:),1,length(t));
@@ -19,9 +21,11 @@ psi          = atan(r21./r11);
 theta        = atan(-r31./sqrt(r32.^2+r33.^2));
 phi          = atan(r32./r33);
 
-angleQ       = rad2deg([phi;theta;psi]);
-OmegaQ       = (rad2deg(simoutL2.signals.values(:,4:6)));
-dOmegaQ      = (rad2deg(simoutL2.signals.values(:,7:9)));
+angleQ       = rad2deg([phi;theta;psi])';
+lqrangleQ    = lqrsimoutL2.signals.values(:,1:3);
+
+OmegaQ       = rad2deg(simoutL2.signals.values(:,4:6));
+dOmegaQ      = rad2deg(simoutL2.signals.values(:,7:9));
 
 f            = simoutL3.signals.values(:,1);
 M            = simoutL3.signals.values(:,2:4)';
@@ -44,11 +48,14 @@ dxLd         = simoutxLd.signals.values(:,4:6)';
 ddxLd        = simoutxLd.signals.values(:,7:9)';
 
 exL          = simoutexL.signals.values(:,1:3)';
+lqrexL       = lqrsimoutexL.signals.values(:,1:3)';
 
 F            = reshape(simoutF.signals.values,3,length(t));
 qcplot       = reshape(simoutqc.signals.values,[3,length(simoutqc.signals.values)]);
 
 posQ         = posL - q*L;
+lqrposQd     = lqrsimoutL3.signals.values(:,1:3);
+lqrposQ      = lqrsimoutL3.signals.values(:,4:6);
 
 %%
     lfont = 18; %Legend Fontsize
@@ -58,7 +65,7 @@ posQ         = posL - q*L;
     
     foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\MatlabImages\';
 
-for nfile = 18:100
+for nfile = 40:100
 
     savename = strcat(foldername,modecode,num2str(nfile),'.mat');
     if exist(savename,'file') == 0
@@ -67,12 +74,17 @@ for nfile = 18:100
     
     savename = strcat(foldername,'Gains',num2str(nfile),'.mat');
     if exist(savename,'file') == 0
-        save(savename,'comment','facR','kR','kOmega','facq','kq','komega','facx','kpx','kdx','omega_n1_xL','omega_n2_xL','omega_n1_q','omega_n2_q','omega_n1_R','omega_n2_R','zeta_xL','zeta_q','zeta_R')
+        save(savename,'comment','facR','kR','kOmega','facq','kq','komega',...
+            'facx','kpx','kdx','omega_n1_xL','omega_n2_xL','omega_n1_q',...
+            'omega_n2_q','omega_n1_R','omega_n2_R','omega_n1_CFP','omega_n2_CFP','zeta_xL','zeta_q',...
+            'zeta_R','LQRA','LQRB','LQRC','LQRD','K','LQRQ','LQRR')
         break
     end    
 end
 
-save(strcat(foldername,'LQR',num2str(nfile),comment,'.mat'))
+save(strcat(foldername,modecode,num2str(nfile),'.mat'))
+save
+save(strcat(foldername,modecode,num2str(nfile),comment,'.mat'))
 
    
 
@@ -164,11 +176,52 @@ plot(t,posL(3,:),t,xLd(3,:),'r--','Linewidth',2)
 ylabel('\boldmath$z [m]$','FontSize',labfont,'Interpreter','latex')
 xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
-set(hl,'Interpreter','latex','FontSize',lfont,'Position',[.8,.8,.1,.1]);
+set(hl,'Interpreter','latex','FontSize',lfont);
 saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')  
-    
+
+
+filename = 'xLdes';
+figure('Name',filename)
+h_sup = suptitle('Desired Load Position');
+set(h_sup,'FontSize',supfont,'Interpreter','latex');
+subplot 311
+plot(t,xLd(1,:),'r--','Linewidth',2)
+hl = legend('\boldmath$x_{L,d}$');
+ylabel('\boldmath$x [m]$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+subplot 312
+plot(t,xLd(2,:),'r--','Linewidth',2)
+ylabel('\boldmath$y [m]$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+subplot 313
+plot(t,xLd(3,:),'r--','Linewidth',2)
+ylabel('\boldmath$z [m]$','FontSize',labfont,'Interpreter','latex')
+xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+set(hl,'Interpreter','latex','FontSize',lfont);
+saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')  
+
+filename = 'xLdesplot';
+figure('Name',filename)
+h_sup = suptitle('Desired Load Position');
+set(h_sup,'FontSize',supfont,'Interpreter','latex');
+hold on
+plot3(xLd(1,:),xLd(2,:),xLd(3,:),'LineWidth',3)
+plot3(xLd(1,1),xLd(2,1),xLd(3,1),'go','LineWidth',3)
+plot3(xLd(1,end),xLd(2,end),xLd(3,end),'rd','LineWidth',3)
+grid on
+hold off
+hl = legend('\boldmath$x_{L,d}$','Start','End');
+view(-76,46)
+xlabel('\boldmath$x [m]$','FontSize',labfont,'Interpreter','latex')
+ylabel('\boldmath$y [m]$','FontSize',labfont,'Interpreter','latex')
+zlabel('\boldmath$z [m]$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+set(hl,'Interpreter','latex','FontSize',lfont);
+saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')  
+
 end
-        
+      
 
 filename = 'QRpos';
 figure('Name',filename)
@@ -470,7 +523,7 @@ set(gca,'FontSize',afont);
 saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')  
 
 %%
-save(savename)
+% save(savename)
 
 %%
 
