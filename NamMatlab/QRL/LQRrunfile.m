@@ -8,7 +8,7 @@
 % y = [x y z psi]'
  
 %% A, B, C, D
-lqr0   = [0 0 L 0 0 0 0 0 zeros(1,8)]';
+lqr0   = [xL0 yL0 zL0+L phiQ0 thetaQ0 psiQ0 phiL0 thetaL0 zeros(1,8)]';
 I_L    = mL*L^2;
 LQRM   = [mQ+mL 0 0, 0 0 0, 0 mL*L;%ddx
          0 mQ+mL 0, 0 0 0, mL*L 0;%ddy

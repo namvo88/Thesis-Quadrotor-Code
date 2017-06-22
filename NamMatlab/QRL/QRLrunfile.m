@@ -14,8 +14,8 @@ clear; clc; close all;
 
 % OPTIONS
 animation = 0;
-plots     = 1;
-savegain  = 1;
+plots     = 0;
+savegain  = 0;
 
 comment  = strcat('SmoothStep',date);
 comment2 = ('SmoothStep with LQR');
@@ -126,11 +126,8 @@ dxL0       = 0;
 dyL0       = 0;
 dzL0       = 0;
 
-phiL0deg   = 0;
-thetaL0deg = 0;
-
-phiL0      = deg2rad(phiL0deg);
-thetaL0    = deg2rad(thetaL0deg);
+phiL0      = deg2rad(0);
+thetaL0    = deg2rad(0);
 psiL0      = 0;
 
 pL0        = 0;
@@ -164,19 +161,19 @@ zL0        = 0;
 eps         = 0.99; % 0<eps<1
 
 % Gains QR Attitude
-facR        = 5;
+facR        = 1;
 kR          = 8.81*facR; %Lee2010
 kOmega      = 2.4*facR;
 
 % Gains Load Attitude
-facq        = 1; %2.9;
-kq          = facq*35;%29
+facq        = 1.5; %2.9;
+kq          = facq*20;%29
 komega      = facq*35;%11.6
 
 % Gains Load Position
-facx        = 1; %4;
+facx        = 0.5; %4;
 kpx         = facx*8;%20.4
-kdx         = facx*10;%11.7
+kdx         = facx*5;%11.7
 
 
 % % Command Filter Low Pass filter 2nd order

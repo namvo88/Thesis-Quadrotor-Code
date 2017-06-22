@@ -8,7 +8,7 @@
 % y = [x y z psi]'
  
 %% A, B, C, D
-lqr0   = [0 0 L 0 0 0 0 0 zeros(1,8)]';
+lqr0   = [xL0 yL0 zL0+L phiQ0 thetaQ0 psiQ0 phiL0 thetaL0 zeros(1,8)]';
 I_L    = mL*L^2;
 LQRM   = [mQ+mL 0 0, 0 0 0, 0 mL*L;%ddx
          0 mQ+mL 0, 0 0 0, mL*L 0;%ddy
@@ -16,8 +16,8 @@ LQRM   = [mQ+mL 0 0, 0 0 0, 0 mL*L;%ddx
          0 0 0, Ixx 0 0, 0 0;% ddphi
          0 0 0, 0 Iyy 0, 0 0;% ddthe
          0 0 0, 0 0 Izz, 0 0;% ddpsi
-         0 -L*mL 0, 0 0 0, I_L+L^2*mL 0;%ddphiL        
-         L*mL 0 0, 0 0 0, 0 I_L+L^2*mL];%ddtheL
+         0 L*mL 0, 0 0 0, I_L+L^2*mL 0;%ddphiL        
+         -L*mL 0 0, 0 0 0, 0 I_L+L^2*mL];%ddtheL
 
 LQRM2  = [0 0 0, 0 -g*(mQ+mL) 0, 0 0;%x
          0 0 0, g*(mQ+mL) 0 0, 0 0; %y
@@ -41,6 +41,7 @@ LQRA = [zeros(8) eye(8);
         -inv(LQRM)*LQRM2 zeros(8)];
 LQRB = [zeros(8,4);
         inv(LQRM)*LQRM3];
+    
 LQRC = [eye(3) zeros(3,13);
         zeros(1,5) 1 zeros(1,10)];
 LQRD = zeros(4);     

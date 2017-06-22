@@ -160,20 +160,20 @@ if mode==4
    
 filename = 'xL';
 figure('Name',filename)
-h_sup = suptitle('Load Position');
+h_sup = suptitle('Load Position $[m]$');
 set(h_sup,'FontSize',supfont,'Interpreter','latex');
 subplot 311
 plot(t,posL(1,:),t,xLd(1,:),'r--','Linewidth',2)
 hl = legend('\boldmath$x_L$','\boldmath$x_{L,d}$');
-ylabel('\boldmath$x [m]$','FontSize',labfont,'Interpreter','latex')
+ylabel('\boldmath$x$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 subplot 312
 plot(t,posL(2,:),t,xLd(2,:),'r--','Linewidth',2)
-ylabel('\boldmath$y [m]$','FontSize',labfont,'Interpreter','latex')
+ylabel('\boldmath$y$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 subplot 313
 plot(t,posL(3,:),t,xLd(3,:),'r--','Linewidth',2)
-ylabel('\boldmath$z [m]$','FontSize',labfont,'Interpreter','latex')
+ylabel('\boldmath$z$','FontSize',labfont,'Interpreter','latex')
 xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 set(hl,'Interpreter','latex','FontSize',lfont);
@@ -489,15 +489,15 @@ saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
 filename = 'exL';
 figure('Name',filename)
-h_suptitle = suptitle('Load Position Error');
+h_suptitle = suptitle('Load Position Error $[m]$');
 set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
 % subplot 311
 plot(t,exL,'Linewidth',2)
 hl = legend('\boldmath$e_{x_L}$','\boldmath$e_{y_L}$','\boldmath$e_{z_L}$');
-ylabel('\boldmath$e_{x_L} [m]$','FontSize',labfont,'Interpreter','latex')
+ylabel('\boldmath$e_{x_L}$','FontSize',labfont,'Interpreter','latex')
 xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
-set(hl,'Interpreter','latex','FontSize',lfont,'Position',[.8,.8,.1,.1]);
+set(hl,'Interpreter','latex','FontSize',lfont);
 saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')  
 
 %% Error functions
