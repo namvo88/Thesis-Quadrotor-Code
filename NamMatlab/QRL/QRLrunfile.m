@@ -1,4 +1,9 @@
 clear; clc; close all;
+%% Parameter overview
+% QR Parameters
+% 
+% Load Parameters
+% xL/dxL/ddxL - Load position/velocity/acceleration
 
 %% Settings
 % Warning: Using a default value of 0.2 for maximum step size.  The simulation step size will be
@@ -13,12 +18,12 @@ clear; clc; close all;
 % >> Changed to 'Structure with time'
 
 % OPTIONS
-animation = 0;
-plots     = 0;
-savegain  = 0;
+animation = 0; % Turn animation on/off
+plots     = 0; % Turn plot generation on/off
+savegain  = 0; % Save gains into file on/off
 
-comment  = strcat('SmoothStep',date);
-comment2 = ('SmoothStep with LQR');
+comment  = strcat('SmoothStep',date); % comment added to save file
+comment2 = ('SmoothStep with LQR'); % comment added to save file
 
 %% Input signals
 
@@ -57,7 +62,6 @@ end
 
 T0 = 3; %Time period of oscillation of load
 
-% xLd = [zeros(1,length(t)); sin(2*pi*t/T0); zeros(1,length(t))];
 b1d = [1; 0; 0];
 Rd  = eye(3);
 qd  = [0; 0; qmode];

@@ -1,4 +1,9 @@
 clear; clc; close all;
+%%
+QR Parameters
+
+Load Parameters
+xL/dxL/ddxL - Load position/velo
 
 %% Settings
 % Warning: Using a default value of 0.2 for maximum step size.  The simulation step size will be
@@ -28,7 +33,7 @@ comment2 = ('SmoothStep with LQR');
 % QRL QR Attitude Controlled mode 2
 % QRL Load Attitude Controlled mode 3
 % QRL Load Position Controlled mode 4
-mode      = 3;
+mode      = 4;
 
 % LOAD ATTITUDE MODE
 % Normal -1
@@ -150,9 +155,9 @@ q0         = Rzyx*e3*qmode;
 % yL0        = q0(2)*lL;
 % zL0        = q0(3)*lL;
 
-xL0        = 1;
-yL0        = 1;
-zL0        = 1;
+xL0        = 0;
+yL0        = 0;
+zL0        = 0;
 
 % x0 = [xL0;yL0;zL0];
 
@@ -161,19 +166,19 @@ zL0        = 1;
 eps         = 0.99; % 0<eps<1
 
 % Gains QR Attitude
-facR        = 5;
+facR        = 1;
 kR          = 8.81*facR; %Lee2010
 kOmega      = 2.4*facR;
 
 % Gains Load Attitude
-facq        = .5; %2.9;
-kq          = facq*35;%29
+facq        = 1.5; %2.9;
+kq          = facq*20;%29
 komega      = facq*35;%11.6
 
 % Gains Load Position
-facx        = 1; %4;
+facx        = 0.5; %4;
 kpx         = facx*8;%20.4
-kdx         = facx*7;%11.7
+kdx         = facx*5;%11.7
 
 
 % % Command Filter Low Pass filter 2nd order
