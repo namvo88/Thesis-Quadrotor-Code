@@ -106,16 +106,17 @@ figure('Name',filename)
 h_sup = suptitle('Load Position $[m]$');
 set(h_sup,'FontSize',supfont,'Interpreter','latex');
 subplot 311
-plot(t,posL(1,:),t,lqrposL(1,:),'[0 0.5 0]-.',t,xLd(1,:),'r--','Linewidth',2)
+plot(t,posL(1,:),t,lqrposL(1,:),'-.',t,xLd(1,:),'r--','Linewidth',2)
+axis([0 25 -.1 1.2])
 hl = legend('\boldmath$x_{L,GC}$','\boldmath$x_{L,LQR}$','\boldmath$x_{L,d}$');
 ylabel('\boldmath$x$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 subplot 312
-plot(t,posL(2,:),t,lqrposL(2,:),'[0 0.5 0]-.',t,xLd(2,:),'r--','Linewidth',2)
+plot(t,posL(2,:),t,lqrposL(2,:),'-.',t,xLd(2,:),'r--','Linewidth',2)
 ylabel('\boldmath$y$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 subplot 313
-plot(t,posL(3,:),t,lqrposL(3,:),'[0 0.5 0]-.',t,xLd(3,:),'r--','Linewidth',2)
+plot(t,posL(3,:),t,lqrposL(3,:),'-.',t,xLd(3,:),'r--','Linewidth',2)
 ylabel('\boldmath$z$','FontSize',labfont,'Interpreter','latex')
 xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
@@ -176,13 +177,13 @@ end
 %%
 filename = 'QRang';
 figure('Name',filename)
-h_sup = suptitle('QR Angle');
+h_sup = suptitle('QR Angle [deg]');
 set(h_sup,'FontSize',supfont,'Interpreter','latex');
 subplot 211
 plot(t,angleQ(:,1),t,angleQ(:,2),'Linewidth',2)
-axis([0 t(end) min(min(angleQ(:,1),angleQ(:,2)))-10 max(max(angleQ(:,1),angleQ(:,2)))+10])
+axis([0 t(end) min(min(angleQ(:,1),angleQ(:,2)))-5 max(max(angleQ(:,1),angleQ(:,2)))+5])
 hl = legend('\boldmath$\phi_{Q,GC}$','\boldmath$\theta_{Q,GC}$');
-ylabel('\boldmath$[^\circ]$','FontSize',labfont,'Interpreter','latex')
+ylabel('GC','FontSize',labfont,'Interpreter','latex')
 set(hl,'Interpreter','latex','FontSize',lfont);
 set(gca,'color','none','FontSize',afont)
 set(gca,'FontSize',afont);
@@ -190,14 +191,15 @@ subplot 212
 % plot(t,angleQ(:,3),t,lqrangleQ(:,3),'Linewidth',2)
 % hl = legend('\boldmath$\psi_Q$','\boldmath$\psi_{Q,LQR}$');
 plot(t,lqrangleQ(:,1),t,lqrangleQ(:,2),'Linewidth',2)
+axis([0 t(end) min(min(lqrangleQ(:,1),lqrangleQ(:,2)))-5 max(max(lqrangleQ(:,1),lqrangleQ(:,2)))+5])
 hl = legend('\boldmath$\phi_{Q,LQR}$','\boldmath$\theta_{Q,LQR}$');
-ylabel('\boldmath$[^\circ]$','FontSize',labfont,'Interpreter','latex')
+ylabel('LQR','FontSize',labfont,'Interpreter','latex')
 set(hl,'Interpreter','latex','FontSize',lfont);
 set(gca,'color','none','FontSize',afont)
 set(gca,'FontSize',afont);
-ylabel('\boldmath$[^\circ]$','FontSize',labfont,'Interpreter','latex')
-set(hl,'Interpreter','latex','FontSize',lfont);
-set(gca,'color','none','FontSize',afont)
+% ylabel('\boldmath$[^\circ]$','FontSize',labfont,'Interpreter','latex')
+% set(hl,'Interpreter','latex','FontSize',lfont);
+% set(gca,'color','none','FontSize',afont)
 xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 saveas(gcf,strcat(foldername,'LQR','-',filename,num2str(nfile)),'png')
@@ -223,24 +225,24 @@ saveas(gcf,strcat(foldername,'LQR','-',filename,num2str(nfile)),'png')
 
 filename = 'Lang';
 figure('Name',filename)
-h_sup = suptitle('Load Angle');
+h_sup = suptitle('Load Angle [deg]');
 set(h_sup,'FontSize',supfont,'Interpreter','latex');
-subplot 311
+subplot 211
 % plot(t,angleL,'Linewidth',2)
 % hl = legend('\boldmath$\phi_L$','\boldmath$\theta_L$','\boldmath$\psi_L$');
 plot(t,angleL(:,1),t,angleL(:,2),'Linewidth',2)
 hl = legend('\boldmath$\phi_{L,GC}$','\boldmath$\theta_{L,GC}$');
-ylabel('\boldmath$[^\circ]$','FontSize',labfont,'Interpreter','latex')
+ylabel('GC','FontSize',labfont,'Interpreter','latex')
 set(hl,'Interpreter','latex','FontSize',lfont);
 set(gca,'color','none','FontSize',afont)
-subplot 312
+subplot 212
 % plot(t,OmegaL,'Linewidth',2)
 % hl = legend('\boldmath$p_L$','\boldmath$q_L$','\boldmath$r_L$');
 % plot(t,OmegaL(:,1),t,OmegaL(:,2),'Linewidth',2)
 plot(t,lqrangleL(:,1),t,lqrangleL(:,2),'Linewidth',2)
 hl = legend('\boldmath$\phi_{L,LQR}$','\boldmath$\theta_{L,LQR}$');
 set(hl,'Interpreter','latex','FontSize',lfont);
-ylabel('\boldmath$[^\circ]$','FontSize',labfont,'Interpreter','latex')
+ylabel('LQR','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 % subplot 313
 % plot(t,dOmegaL,'Linewidth',2)
@@ -404,14 +406,14 @@ set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
 subplot 211
 plot(t,exL,'Linewidth',2)
 hl = legend('\boldmath$e_{x_{L,GC}}$','\boldmath$e_{y_{L,GC}}$','\boldmath$e_{z_{L,GC}}$');
-ylabel('\boldmath$e_{x_L}$','FontSize',labfont,'Interpreter','latex')
+ylabel('\boldmath$e_{x_L}$,GC','FontSize',labfont,'Interpreter','latex')
 % xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 set(hl,'Interpreter','latex','FontSize',lfont);
 subplot 212
 plot(t,lqrexL,'Linewidth',2)
 hl = legend('\boldmath$e_{x_{L,LQR}}$','\boldmath$e_{y_{L,LQR}}$','\boldmath$e_{z_{L,LQR}}$');
-ylabel('\boldmath$e_{x_L}$','FontSize',labfont,'Interpreter','latex')
+ylabel('\boldmath$e_{x_L}$,LQR','FontSize',labfont,'Interpreter','latex')
 xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 set(hl,'Interpreter','latex','FontSize',lfont);
