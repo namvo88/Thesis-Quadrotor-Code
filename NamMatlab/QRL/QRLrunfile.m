@@ -1,9 +1,13 @@
 clear; clc; close all;
 %% Parameter overview
-% QR Parameters
+% R - Rotation Matrix
+% 
+% Quadrotor Parameters
+% mQ - QR mass
 % 
 % Load Parameters
 % xL/dxL/ddxL - Load position/velocity/acceleration
+% mL - Load mass
 
 %% Settings
 % Warning: Using a default value of 0.2 for maximum step size.  The simulation step size will be
@@ -22,8 +26,8 @@ animation = 0; % Turn animation on/off
 plots     = 0; % Turn plot generation on/off
 savegain  = 0; % Save gains into file on/off
 
-comment  = strcat('SmoothStep',date); % comment added to save file
-comment2 = ('SmoothStep with LQR'); % comment added to save file
+comment  = strcat('Helix',date); % comment added to save file
+comment2 = ('Helix+LQR'); % comment added to save file
 
 %% Input signals
 
@@ -175,7 +179,7 @@ kq          = facq*20;%29
 komega      = facq*35;%11.6
 
 % Gains Load Position
-facx        = 0.5; %4;
+facx        = 5; %4;
 kpx         = facx*8;%20.4
 kdx         = facx*5;%11.7
 
@@ -198,20 +202,20 @@ omega_n1_R   = 94;
 omega_n2_R   = 94;
 zeta_R       = 0.98;
 
-% Save gains in mat-files
-if savegain == 1
-    foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\GainFiles\';
-%     foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\MatlabImages\';
-        
-    for nfile = 1:100
-        savename = strcat(foldername,num2str(nfile),'.mat');
-                
-        if exist(savename,'file') == 0
-            save(savename,'comment','comment2','facR','kR','kOmega','facq','kq','komega','facx','kpx','kdx','omega_n1_CFP','omega_n2_CFP','omega_n1_xL','omega_n2_xL','omega_n1_q','omega_n2_q','omega_n1_R','omega_n2_R','zeta_xL','zeta_q','zeta_R')
-            break
-        end
-    end
-end
+% % Save gains in mat-files
+% if savegain == 1
+%     foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\GainFiles\';
+% %     foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\MatlabImages\';
+%         
+%     for nfile = 1:100
+%         savename = strcat(foldername,num2str(nfile),'.mat');
+%                 
+%         if exist(savename,'file') == 0
+%             save(savename,'comment','comment2','facR','kR','kOmega','facq','kq','komega','facx','kpx','kdx','omega_n1_CFP','omega_n2_CFP','omega_n1_xL','omega_n2_xL','omega_n1_q','omega_n2_q','omega_n1_R','omega_n2_R','zeta_xL','zeta_q','zeta_R')
+%             break
+%         end
+%     end
+% end
 
 % loadpath = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\GainFiles\';
 % loadfile = strcat(loadpath,'13','.mat');
@@ -274,4 +278,5 @@ end
 %% Animation
 if animation == 1
     QRLanimation
+    QRLanimationLQR
 end

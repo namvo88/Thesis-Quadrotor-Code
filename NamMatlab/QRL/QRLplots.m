@@ -48,14 +48,16 @@ dxLd         = simoutxLd.signals.values(:,4:6)';
 ddxLd        = simoutxLd.signals.values(:,7:9)';
 
 exL          = simoutexL.signals.values(:,1:3)';
+edxL         = simoutexL.signals.values(:,4:6)';
 lqrexL       = lqrsimoutexL.signals.values(:,1:3)';
 
-F            = reshape(simoutF.signals.values,3,length(t));
+% F            = reshape(simoutF.signals.values,3,length(t));
+% F            = simoutF.signals.values(:,10:12);
 qcplot       = reshape(simoutqc.signals.values,[3,length(simoutqc.signals.values)]);
 
 posQ         = posL - q*L;
-lqrposQd     = lqrsimoutL3.signals.values(:,1:3);
-lqrposQ      = lqrsimoutL3.signals.values(:,4:6);
+lqrposQd     = lqrsimoutL4.signals.values(:,1:3);
+lqrposQ      = lqrsimoutL3.signals.values(:,1:3);
 
 %%
     lfont = 18; %Legend Fontsize
@@ -67,14 +69,15 @@ lqrposQ      = lqrsimoutL3.signals.values(:,4:6);
 
 for nfile = 40:100
 
-    savename = strcat(foldername,modecode,num2str(nfile),'.mat');
-    if exist(savename,'file') == 0
-        break
-    end
+%     savename = strcat(foldername,modecode,num2str(nfile),'.mat');
+%     if exist(savename,'file') == 0
+%         disp(nfile)
+%         break
+%     end
     
     savename = strcat(foldername,'Gains',num2str(nfile),'.mat');
     if exist(savename,'file') == 0
-        save(savename,'comment','facR','kR','kOmega','facq','kq','komega',...
+        save(savename,'comment','comment2','facR','kR','kOmega','facq','kq','komega',...
             'facx','kpx','kdx','omega_n1_xL','omega_n2_xL','omega_n1_q',...
             'omega_n2_q','omega_n1_R','omega_n2_R','omega_n1_CFP','omega_n2_CFP','zeta_xL','zeta_q',...
             'zeta_R','LQRA','LQRB','LQRC','LQRD','K','LQRQ','LQRR')
@@ -83,7 +86,6 @@ for nfile = 40:100
 end
 
 save(strcat(foldername,modecode,num2str(nfile),'.mat'))
-save
 save(strcat(foldername,modecode,num2str(nfile),comment,'.mat'))
 
    
@@ -212,7 +214,7 @@ plot3(xLd(1,end),xLd(2,end),xLd(3,end),'rd','LineWidth',3)
 grid on
 hold off
 hl = legend('\boldmath$x_{L,d}$','Start','End');
-view(-76,46)
+view(-27,16)
 xlabel('\boldmath$x [m]$','FontSize',labfont,'Interpreter','latex')
 ylabel('\boldmath$y [m]$','FontSize',labfont,'Interpreter','latex')
 zlabel('\boldmath$z [m]$','FontSize',labfont,'Interpreter','latex')
@@ -491,13 +493,19 @@ filename = 'exL';
 figure('Name',filename)
 h_suptitle = suptitle('Load Position Error $[m]$');
 set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
-% subplot 311
+subplot 211
 plot(t,exL,'Linewidth',2)
-hl = legend('\boldmath$e_{x_L}$','\boldmath$e_{y_L}$','\boldmath$e_{z_L}$');
-ylabel('\boldmath$e_{x_L}$','FontSize',labfont,'Interpreter','latex')
-xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+ylabel('\boldmath$e_{x}$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
+hl = legend('\boldmath$e_{x}$','\boldmath$e_{y}$','\boldmath$e_{z}$');
 set(hl,'Interpreter','latex','FontSize',lfont);
+subplot 212
+plot(t,edxL,'Linewidth',2)
+ylabel('\boldmath$e_{v}$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+hl = legend('\boldmath$e_{\dot{x}}$','\boldmath$e_{\dot{y}}$','\boldmath$e_{\dot{z}}$');
+set(hl,'Interpreter','latex','FontSize',lfont);
+xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')  
 
 %% Error functions

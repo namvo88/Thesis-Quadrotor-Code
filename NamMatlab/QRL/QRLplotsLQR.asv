@@ -106,17 +106,17 @@ figure('Name',filename)
 h_sup = suptitle('Load Position $[m]$');
 set(h_sup,'FontSize',supfont,'Interpreter','latex');
 subplot 311
-plot(t,posL(1,:),t,lqrposL(1,:),'-.',t,xLd(1,:),'r--','Linewidth',2)
-axis([0 25 -.1 1.2])
-hl = legend('\boldmath$x_{L,GC}$','\boldmath$x_{L,LQR}$','\boldmath$x_{L,d}$');
+plot(t,xLd(1,:),'r--',t,posL(1,:),t,lqrposL(1,:),'-.','Linewidth',2)
+% axis([0 25 -.1 1.2])
 ylabel('\boldmath$x$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
+hl = legend('\boldmath$x_{L,d}$','\boldmath$x_{L,GC}$','\boldmath$x_{L,LQR}$');
 subplot 312
-plot(t,posL(2,:),t,lqrposL(2,:),'-.',t,xLd(2,:),'r--','Linewidth',2)
+plot(t,xLd(2,:),'r--',t,posL(2,:),t,lqrposL(2,:),'-.','Linewidth',2)
 ylabel('\boldmath$y$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 subplot 313
-plot(t,posL(3,:),t,lqrposL(3,:),'-.',t,xLd(3,:),'r--','Linewidth',2)
+plot(t,xLd(3,:),'r--',t,posL(3,:),t,lqrposL(3,:),'-.','Linewidth',2)
 ylabel('\boldmath$z$','FontSize',labfont,'Interpreter','latex')
 xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);

@@ -8,7 +8,6 @@
 % y = [x y z psi]'
  
 %% A, B, C, D
-lqr0   = [xL0 yL0 zL0+L phiQ0 thetaQ0 psiQ0 phiL0 thetaL0 zeros(1,8)]';
 I_L    = mL*L^2;
 LQRM   = [mQ+mL 0 0, 0 0 0, 0 mL*L;%ddx
          0 mQ+mL 0, 0 0 0, mL*L 0;%ddy
@@ -17,7 +16,7 @@ LQRM   = [mQ+mL 0 0, 0 0 0, 0 mL*L;%ddx
          0 0 0, 0 Iyy 0, 0 0;% ddthe
          0 0 0, 0 0 Izz, 0 0;% ddpsi
          0 L*mL 0, 0 0 0, I_L+L^2*mL 0;%ddphiL        
-         -L*mL 0 0, 0 0 0, 0 I_L+L^2*mL];%ddtheL
+         L*mL 0 0, 0 0 0, 0 I_L+L^2*mL];%ddtheL
 
 LQRM2  = [0 0 0, 0 -g*(mQ+mL) 0, 0 0;%x
          0 0 0, g*(mQ+mL) 0 0, 0 0; %y
@@ -51,13 +50,29 @@ LQRD = zeros(4);
 %         'OutputName',{'x','y','z','psi'});
 
 %% Q, R, K
-Qdiag = [2000 1 (0.1)^2, (2*pi/18)^2 (2*pi/18)^2 (2*pi/18)^2, 1 1, 0.001*ones(1,8)]; %sine on x
+% LQR0   = [-L*sin(pi/18) yL0 zL0+L*cos(pi/18) phiQ0 thetaQ0 psiQ0 phiL0 pi/18 zeros(1,8)]';
+phiL0 = 0;
+% phiL0 = deg2rad(30);
+thetaL0 = 0;
+% thetaL0 = deg2rad(30);
+lqr0   = [xL0 yL0 zL0+L phiQ0 thetaQ0 psiQ0 phiL0 thetaL0 zeros(1,8)]';
+
+% x = [x y z phi the psi phiL theL dx dy dz dphi dthe dpsi dphiL dtheL]'
+
+% Qdiag = [2000 1 (0.1)^2, (2*pi/18)^2 (2*pi/18)^2 (2*pi/18)^2, 1 1, 0.001*ones(1,8)]; %sine on x
+% Qdiag = [10 10 100 1 1 1 1/(2*pi/36)^2 1/(2*pi/36)^2 1 1 1 1 1 1 1 1];
+% Qdiag = [10 10 100 1 1 1 500 500 1 1 1 1 1 1 1 1]; %Fast anti swing, slow QR
+% Qdiag = [5000 5000 500 0.01 0.01 0.01 0.01 0.01 1 1 1 1 1 1 1 1]; %sine up down QR track
+Qdiag = [5000 5000 500 0.01 0.01 0.01 300 300 1 1 1 1 1 1 1 1]; %sine up down min load swing
+% Qdiag = [100 100 250 1 1 1 750 750 1 1 1 1 1 1 1 1]; 
 LQRQ = diag(Qdiag);
 
-Rdiag = [0.044 1 1 1];
+Rdiag = [0.05 1 1 100];
 LQRR = diag(Rdiag); 
 
 K = lqr(LQRA,LQRB,LQRQ,LQRR);
+
+sim('QRLsim');
 
     
 %% A B C D 18 states

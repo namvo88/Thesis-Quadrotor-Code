@@ -1,4 +1,4 @@
-pausefactor = 1;
+pausefactor = 2;
 
 t            = simoutL.time;
 xLd          = simoutxLd.signals.values(:,1:3)';
@@ -79,14 +79,18 @@ plot3(XL(1),YL(1),ZL(1),'ko','LineWidth',1);
 hLd  = plot3(XLd(1),YLd(1),ZLd(1),':r','LineWidth',2);
 hLdk = plot3(XLd(1),YLd(1),ZLd(1),'rx','LineWidth',2,'MarkerSize',15);
 
-minax = min(min(min(XQR,YQR),ZQR))-1;  
-maxax = max(max(max(XQR,YQR),ZQR))+1;  
-axis([minax maxax minax maxax minax maxax],'vis3d')
+minax = min(min(min(XQR,YQR),ZQR));  
+maxax = max(max(max(XQR,YQR),ZQR));
+
+difax = (maxax-minax)/2;
+% axis([XQR(1)-difax XQR(1)+difax minax maxax ZQR(1)-difax ZQR(1)+difax],'vis3d')
+axis([min(XQR)-difax max(XQR)+difax min(YQR)-difax max(YQR)+difax min(ZQR)-difax max(ZQR)+difax],'vis3d')
+
+% axis([minax maxax minax maxax minax maxax],'vis3d')
 % axis([-2 2 -2 2 -2 2])
 % axis([XQR(1)-1.5 XQR(1)+1.5 YQR(1)-1.5 YQR(1)+1.5 ZQR(1)-1.5 ZQR(1)+1.5],'square')
 
-% view(0,0)
-view(3)
+view(80,25)
 grid on
 xlabel('x')
 ylabel('y') 
