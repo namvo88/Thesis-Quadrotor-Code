@@ -22,7 +22,7 @@ clear; clc; close all;
 % >> Changed to 'Structure with time'
 
 % OPTIONS
-animation = 0; % Turn animation on/off
+animation = 1; % Turn animation on/off
 plots     = 0; % Turn plot generation on/off
 savegain  = 0; % Save gains into file on/off
 
@@ -154,13 +154,9 @@ Rx         = [1 0 0;
 Rzyx       = (Rx*Ry);
 q0         = Rzyx*e3*qmode;
 
-% xL0        = q0(1)*lL;
-% yL0        = q0(2)*lL;
-% zL0        = q0(3)*lL;
-
-xL0        = 0;
-yL0        = 0;
-zL0        = 0;
+xL0        = q0(1)*L;
+yL0        = q0(2)*L;
+zL0        = L+q0(3)*L;
 
 % x0 = [xL0;yL0;zL0];
 
@@ -179,7 +175,7 @@ kq          = facq*20;%29
 komega      = facq*35;%11.6
 
 % Gains Load Position
-facx        = 5; %4;
+facx        = 4; %4;
 kpx         = facx*8;%20.4
 kdx         = facx*5;%11.7
 
@@ -190,8 +186,8 @@ kdx         = facx*5;%11.7
 % omega_n_R = 2*pi*.05;
 
 % Command Filter Low Pass filter 3th order
-omega_n1_xL  = 30;
-omega_n2_xL  = 30;
+omega_n1_xL  = 45;
+omega_n2_xL  = 45;
 omega_n1_CFP = 2;
 omega_n2_CFP = 2;
 zeta_xL      = 0.975;
@@ -277,6 +273,7 @@ end
 
 %% Animation
 if animation == 1
-    QRLanimation
-    QRLanimationLQR
+%     QRLanimation
+%     QRLanimationLQR
+    QRLanimationboth
 end
