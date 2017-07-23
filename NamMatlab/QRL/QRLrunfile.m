@@ -22,12 +22,12 @@ clear; clc; close all;
 % >> Changed to 'Structure with time'
 
 % OPTIONS
-animation = 1; % Turn animation on/off
+animation = 0; % Turn animation on/off
 plots     = 0; % Turn plot generation on/off
 savegain  = 0; % Save gains into file on/off
 
-comment  = strcat('Helix',date); % comment added to save file
-comment2 = ('Helix+LQR'); % comment added to save file
+comment  = strcat('sineupdown',date); % comment added to save file
+comment2 = ('sineupdown+LQR'); % comment added to save file
 
 %% Input signals
 
@@ -44,7 +44,7 @@ mode      = 4;
 % Inverted 1
 qmode     = -1;
 
-Tsim_end  = 25;
+Tsim_end  = 15;
 Tsim_s    = 0.01;
 
 switch mode
@@ -72,10 +72,14 @@ qd  = [0; 0; qmode];
 
 
 %% Constants
-mQ     = 4.34; %Lee2010 %weight bebop 420 g
-Ixx    = 0.0820; %Lee2010
-Iyy    = 0.0845; %Lee2010
-Izz    = 0.1377; %Lee2010
+% mQ     = 4.34; %Lee2010 %weight bebop 420 g
+mQ = 0.4; %Cornelis2014
+% Ixx    = 0.0820; %Lee2010
+% Iyy    = 0.0845; %Lee2010
+% Izz    = 0.1377; %Lee2010
+Ixx    = 0.00223; %Cornelis2014
+Iyy    = 0.00299; %Cornelis2014
+Izz    = 0.00480; %Cornelis2014
 I      = diag([Ixx Iyy Izz]); %Tang2014
 ctauf  = 8.004e-3; %Lee2010c
 mL     = 0.1;
@@ -95,7 +99,8 @@ L      = 0.7;
 b      = 0.1; %gok thrust factor
 d      = 0.1; %gok drag factor
 Ir     = 0.5; %gok
-l      = 0.315; %Lee2010 %wingspan bebop 248 mm
+% l      = 0.315; %Lee2010 %wingspan bebop 248 mm
+l = 0.126; %Cornelis2014
 
 g      = 9.81;
 e3     = [0;0;1];
@@ -134,7 +139,7 @@ dxL0       = 0;
 dyL0       = 0;
 dzL0       = 0;
 
-phiL0      = deg2rad(0);
+phiL0      = deg2rad(-15);
 thetaL0    = deg2rad(0);
 psiL0      = 0;
 
@@ -170,12 +175,12 @@ kR          = 8.81*facR; %Lee2010
 kOmega      = 2.4*facR;
 
 % Gains Load Attitude
-facq        = 1.5; %2.9;
-kq          = facq*20;%29
-komega      = facq*35;%11.6
+facq        = 2;
+kq          = facq*25;
+komega      = facq*35;
 
 % Gains Load Position
-facx        = 4; %4;
+facx        = 2; %4;
 kpx         = facx*8;%20.4
 kdx         = facx*5;%11.7
 
@@ -191,8 +196,8 @@ omega_n2_xL  = 45;
 omega_n1_CFP = 2;
 omega_n2_CFP = 2;
 zeta_xL      = 0.975;
-omega_n1_q   = 37;
-omega_n2_q   = 37;
+omega_n1_q   = 55;
+omega_n2_q   = 55;
 zeta_q       = 0.975;
 omega_n1_R   = 94;
 omega_n2_R   = 94;

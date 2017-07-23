@@ -204,6 +204,27 @@ xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 saveas(gcf,strcat(foldername,'LQR','-',filename,num2str(nfile)),'png')
 
+filename = 'QRang';
+figure('Name',filename)
+h_sup = suptitle('QR Angle [deg]');
+set(h_sup,'FontSize',supfont,'Interpreter','latex');
+subplot 211
+plot(t,angleQ(:,1),'-k',t,lqrangleQ(:,1),'r--','Linewidth',3)
+grid on
+hl = legend('\boldmath$NGC$','\boldmath$LQR$');
+ylabel('\boldmath$\phi$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+set(hl,'Interpreter','latex','FontSize',lfont);
+subplot 212
+plot(t,angleQ(:,2),'-k',t,lqrangleQ(:,2),'r--','Linewidth',3)
+grid on
+ylabel('\boldmath$e_y$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+ylabel('\boldmath$\theta$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+saveas(gcf,strcat(foldername,'LQR','-',filename,num2str(nfile)),'png')  
+
 % filename = 'QRvel';
 % figure('Name',filename)
 % h_sup = suptitle('QR $\Omega$/$\dot{\Omega}$');
@@ -223,34 +244,55 @@ saveas(gcf,strcat(foldername,'LQR','-',filename,num2str(nfile)),'png')
 % set(gca,'FontSize',afont);
 % saveas(gcf,strcat(foldername,'LQR','-',filename,num2str(nfile)),'png')
 
+% filename = 'Lang';
+% figure('Name',filename)
+% h_sup = suptitle('Load Angle [deg]');
+% set(h_sup,'FontSize',supfont,'Interpreter','latex');
+% subplot 211
+% % plot(t,angleL,'Linewidth',2)
+% % hl = legend('\boldmath$\phi_L$','\boldmath$\theta_L$','\boldmath$\psi_L$');
+% plot(t,angleL(:,1),t,angleL(:,2),'Linewidth',2)
+% hl = legend('\boldmath$\phi_{L,GC}$','\boldmath$\theta_{L,GC}$');
+% ylabel('GC','FontSize',labfont,'Interpreter','latex')
+% set(hl,'Interpreter','latex','FontSize',lfont);
+% set(gca,'color','none','FontSize',afont)
+% subplot 212
+% % plot(t,OmegaL,'Linewidth',2)
+% % hl = legend('\boldmath$p_L$','\boldmath$q_L$','\boldmath$r_L$');
+% % plot(t,OmegaL(:,1),t,OmegaL(:,2),'Linewidth',2)
+% plot(t,lqrangleL(:,1),t,lqrangleL(:,2),'Linewidth',2)
+% hl = legend('\boldmath$\phi_{L,LQR}$','\boldmath$\theta_{L,LQR}$');
+% set(hl,'Interpreter','latex','FontSize',lfont);
+% ylabel('LQR','FontSize',labfont,'Interpreter','latex')
+% set(gca,'FontSize',afont);
+% % subplot 313
+% % plot(t,dOmegaL,'Linewidth',2)
+% % hl = legend('$\dot{p}_L$','$\dot{q}_L$','$\dot{r}_L$');
+% % set(hl,'Interpreter','latex','FontSize',lfont);
+% % ylabel('\boldmath$acc [^\circ/s^2]$','FontSize',labfont,'Interpreter','latex')
+% % xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+% saveas(gcf,strcat(foldername,'LQR','-',filename,num2str(nfile)),'png')
+
 filename = 'Lang';
 figure('Name',filename)
 h_sup = suptitle('Load Angle [deg]');
 set(h_sup,'FontSize',supfont,'Interpreter','latex');
 subplot 211
-% plot(t,angleL,'Linewidth',2)
-% hl = legend('\boldmath$\phi_L$','\boldmath$\theta_L$','\boldmath$\psi_L$');
-plot(t,angleL(:,1),t,angleL(:,2),'Linewidth',2)
-hl = legend('\boldmath$\phi_{L,GC}$','\boldmath$\theta_{L,GC}$');
-ylabel('GC','FontSize',labfont,'Interpreter','latex')
-set(hl,'Interpreter','latex','FontSize',lfont);
-set(gca,'color','none','FontSize',afont)
-subplot 212
-% plot(t,OmegaL,'Linewidth',2)
-% hl = legend('\boldmath$p_L$','\boldmath$q_L$','\boldmath$r_L$');
-% plot(t,OmegaL(:,1),t,OmegaL(:,2),'Linewidth',2)
-plot(t,lqrangleL(:,1),t,lqrangleL(:,2),'Linewidth',2)
-hl = legend('\boldmath$\phi_{L,LQR}$','\boldmath$\theta_{L,LQR}$');
-set(hl,'Interpreter','latex','FontSize',lfont);
-ylabel('LQR','FontSize',labfont,'Interpreter','latex')
+plot(t,angleL(:,1),'-k',t,lqrangleL(:,1),'r--','Linewidth',3)
+grid on
+hl = legend('\boldmath$NGC$','\boldmath$LQR$');
+ylabel('\boldmath$\phi_L$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
-% subplot 313
-% plot(t,dOmegaL,'Linewidth',2)
-% hl = legend('$\dot{p}_L$','$\dot{q}_L$','$\dot{r}_L$');
-% set(hl,'Interpreter','latex','FontSize',lfont);
-% ylabel('\boldmath$acc [^\circ/s^2]$','FontSize',labfont,'Interpreter','latex')
-% xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
-saveas(gcf,strcat(foldername,'LQR','-',filename,num2str(nfile)),'png')
+set(hl,'Interpreter','latex','FontSize',lfont);
+subplot 212
+plot(t,angleL(:,2),'-k',t,lqrangleL(:,2),'r--','Linewidth',3)
+grid on
+ylabel('\boldmath$e_y$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+ylabel('\boldmath$\theta_L$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+saveas(gcf,strcat(foldername,'LQR','-',filename,num2str(nfile)),'png')  
 
 % figure
 % plot(t,pos,'Linewidth',2)
@@ -398,26 +440,53 @@ saveas(gcf,strcat(foldername,'LQR','-',filename,num2str(nfile)),'png')
 % hl = legend('\boldmath$e_{\dot{q},1}$','\boldmath$e_{\dot{q},2}$','\boldmath$e_{\dot{q},3}$','FontSize',lfont);
 % set(hl,'Interpreter','latex','FontSize',lfont);
 % saveas(gcf,strcat(foldername,'LQR','-',filename,num2str(nfile)),'png')
+% 
+% filename = 'exL';
+% figure('Name',filename)
+% h_suptitle = suptitle('Load Position Error $[m]$');
+% set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
+% subplot 211
+% plot(t,exL,'Linewidth',2)
+% hl = legend('\boldmath$e_{x_{L,GC}}$','\boldmath$e_{y_{L,GC}}$','\boldmath$e_{z_{L,GC}}$');
+% ylabel('\boldmath$e_{x_L}$,GC','FontSize',labfont,'Interpreter','latex')
+% % xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+% set(gca,'FontSize',afont);
+% set(hl,'Interpreter','latex','FontSize',lfont);
+% subplot 212
+% plot(t,lqrexL,'Linewidth',2)
+% hl = legend('\boldmath$e_{x_{L,LQR}}$','\boldmath$e_{y_{L,LQR}}$','\boldmath$e_{z_{L,LQR}}$');
+% ylabel('\boldmath$e_{x_L}$,LQR','FontSize',labfont,'Interpreter','latex')
+% xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+% set(gca,'FontSize',afont);
+% set(hl,'Interpreter','latex','FontSize',lfont);
+% saveas(gcf,strcat(foldername,'LQR','-',filename,num2str(nfile)),'png')  
 
 filename = 'exL';
 figure('Name',filename)
 h_suptitle = suptitle('Load Position Error $[m]$');
 set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
-subplot 211
-plot(t,exL,'Linewidth',2)
-hl = legend('\boldmath$e_{x_{L,GC}}$','\boldmath$e_{y_{L,GC}}$','\boldmath$e_{z_{L,GC}}$');
-ylabel('\boldmath$e_{x_L}$,GC','FontSize',labfont,'Interpreter','latex')
-% xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+subplot 311
+plot(t,exL(1,:),'-k',t,lqrexL(1,:),'r--','Linewidth',3)
+grid on
+hl = legend('\boldmath$NGC$','\boldmath$LQR$');
+ylabel('\boldmath$e_x$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 set(hl,'Interpreter','latex','FontSize',lfont);
-subplot 212
-plot(t,lqrexL,'Linewidth',2)
-hl = legend('\boldmath$e_{x_{L,LQR}}$','\boldmath$e_{y_{L,LQR}}$','\boldmath$e_{z_{L,LQR}}$');
-ylabel('\boldmath$e_{x_L}$,LQR','FontSize',labfont,'Interpreter','latex')
+subplot 312
+plot(t,exL(2,:),'-k',t,lqrexL(2,:),'r--','Linewidth',3)
+grid on
+ylabel('\boldmath$e_y$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+subplot 313
+plot(t,exL(3,:),'-k',t,lqrexL(3,:),'r--','Linewidth',3)
+grid on
 xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+ylabel('\boldmath$e_z$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
-set(hl,'Interpreter','latex','FontSize',lfont);
 saveas(gcf,strcat(foldername,'LQR','-',filename,num2str(nfile)),'png')  
+
+
+
 
 %% Error functions
 %        

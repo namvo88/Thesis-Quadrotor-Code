@@ -225,28 +225,28 @@ saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 end
       
 
-filename = 'QRpos';
-figure('Name',filename)
-h_sup = suptitle('QR Pos./Vel./Acc.');
-set(h_sup,'FontSize',supfont,'Interpreter','latex');
-subplot 311
-plot(t,posQ,'Linewidth',2)
-hl = legend('\boldmath$x$','\boldmath$y$','\boldmath$z$');
-ylabel('\boldmath$[m]$','FontSize',labfont,'Interpreter','latex')
-xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
-set(gca,'FontSize',afont);
-set(hl,'Interpreter','latex','FontSize',lfont);
-% subplot 312
-% plot(t,velQ,'Linewidth',2)
-% hl = legend('$\dot{x}$','$\dot{y}$','$\dot{z}$');
+% filename = 'QRpos';
+% figure('Name',filename)
+% h_sup = suptitle('QR Pos./Vel./Acc.');
+% set(h_sup,'FontSize',supfont,'Interpreter','latex');
+% subplot 311
+% plot(t,posQ,'Linewidth',2)
+% hl = legend('\boldmath$x$','\boldmath$y$','\boldmath$z$');
+% ylabel('\boldmath$[m]$','FontSize',labfont,'Interpreter','latex')
+% xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+% set(gca,'FontSize',afont);
 % set(hl,'Interpreter','latex','FontSize',lfont);
-% ylabel('vel [m/s]','FontSize',labfont)
-% subplot 313
-% plot(t,accQ,'Linewidth',2)
-% hl = legend('$\ddot{x}$','$\ddot{y}$','$\ddot{z}$');
-% set(hl,'Interpreter','latex','FontSize',lfont);
-% ylabel('acc [m/s^2]','FontSize',labfont)
-saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
+% % subplot 312
+% % plot(t,velQ,'Linewidth',2)
+% % hl = legend('$\dot{x}$','$\dot{y}$','$\dot{z}$');
+% % set(hl,'Interpreter','latex','FontSize',lfont);
+% % ylabel('vel [m/s]','FontSize',labfont)
+% % subplot 313
+% % plot(t,accQ,'Linewidth',2)
+% % hl = legend('$\ddot{x}$','$\ddot{y}$','$\ddot{z}$');
+% % set(hl,'Interpreter','latex','FontSize',lfont);
+% % ylabel('acc [m/s^2]','FontSize',labfont)
+% saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
 % filename = 'QRLpos';
 % figure('Name',filename)

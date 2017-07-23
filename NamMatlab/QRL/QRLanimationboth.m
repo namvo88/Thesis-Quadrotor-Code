@@ -81,7 +81,7 @@ end
 
 minax = min(min(min(XQR,YQR),ZQR));  
 maxax = max(max(max(XQR,YQR),ZQR));
-difax = (maxax-minax)/2;
+difax = (maxax-minax)/2+1;
 
 figure
 screenSize = get(0,'Screensize');
@@ -124,7 +124,7 @@ hLdk = plot3(XLd(1),YLd(1),ZLd(1),'rx','LineWidth',2,'MarkerSize',15);
 % axis([XQR(1)-difax XQR(1)+difax minax maxax ZQR(1)-difax ZQR(1)+difax],'vis3d')
 axis([min(XQR)-difax max(XQR)+difax min(YQR)-difax max(YQR)+difax min(ZQR)-difax max(ZQR)+difax],'vis3d')
 % axis([minax maxax minax maxax minax maxax],'vis3d')
-view(0,0)
+view(90,0)
 grid on
 xlabel('$x$','FontSize',labfont,'Interpreter','latex')
 ylabel('$y$','FontSize',labfont,'Interpreter','latex') 
@@ -175,7 +175,7 @@ lqrhLdk = plot3(XLd(1),YLd(1),ZLd(1),'rx','LineWidth',2,'MarkerSize',15);
 % axis([XQR(1)-difax XQR(1)+difax minax maxax ZQR(1)-difax ZQR(1)+difax],'vis3d')
 axis([min(XQR)-difax max(XQR)+difax min(YQR)-difax max(YQR)+difax min(ZQR)-difax max(ZQR)+difax],'vis3d')
 % axis([minax maxax minax maxax minax maxax],'vis3d')
-view(0,0)
+view(90,0)
 grid on
 xlabel('$x$','FontSize',labfont,'Interpreter','latex')
 ylabel('$y$','FontSize',labfont,'Interpreter','latex') 
@@ -191,8 +191,7 @@ while waitforbuttonpress ~= 0 ;
   pause(0.01) ; % allow for ctrl-c
 end
 for k=1:length(t)
-%     axis([XQR(k)-1.5 XQR(k)+1.5 YQR(k)-1.5 YQR(k)+1.5 ZQR(k)-1.5
-%     ZQR(k)+1.5],'square'); %Uncomment to zoom in into QR
+%     axis([XQR(k)-1.5 XQR(k)+1.5 YQR(k)-1.5 YQR(k)+1.5 ZQR(k)-1.5 ZQR(k)+1.5],'square'); %Uncomment to zoom in into QR
     set(hBx,'xdata',[XQR(k) Bx(1,k)],'ydata',[YQR(k) Bx(2,k)],'zdata',[ZQR(k) Bx(3,k)]);
     set(hBy,'xdata',[XQR(k) By(1,k)],'ydata',[YQR(k) By(2,k)],'zdata',[ZQR(k) By(3,k)]);
     set(hBz,'xdata',[XQR(k) Bz(1,k)],'ydata',[YQR(k) Bz(2,k)],'zdata',[ZQR(k) Bz(3,k)]);
