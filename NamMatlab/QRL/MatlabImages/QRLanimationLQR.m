@@ -108,8 +108,8 @@ axis([LQRXQR(1)-difax LQRXQR(1)+difax minax maxax LQRZQR(1)-difax LQRZQR(1)+difa
 % axis([-2 2 -2 2 -2 2])
 % axis([XQR(1)-1.5 XQR(1)+1.5 YQR(1)-1.5 YQR(1)+1.5 ZQR(1)-1.5 ZQR(1)+1.5],'square')
 
-% view(0,0)
-view(80,25)
+view(0,90)
+% view(80,25)
 grid on
 xlabel('x')
 ylabel('y') 

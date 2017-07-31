@@ -122,8 +122,10 @@ hLd  = plot3(XLd(1),YLd(1),ZLd(1),':r','LineWidth',2);
 hLdk = plot3(XLd(1),YLd(1),ZLd(1),'rx','LineWidth',2,'MarkerSize',15);
 
 % axis([XQR(1)-difax XQR(1)+difax minax maxax ZQR(1)-difax ZQR(1)+difax],'vis3d')
-axis([min(XQR)-difax max(XQR)+difax min(YQR)-difax max(YQR)+difax min(ZQR)-difax max(ZQR)+difax],'vis3d')
+% axis([min(XQR)-difax max(XQR)+difax min(YQR)-difax max(YQR)+difax min(ZQR)-difax max(ZQR)+difax],'vis3d')
 % axis([minax maxax minax maxax minax maxax],'vis3d')
+axis([-1.5 1.5 -1.5 1.5 -1.5 1.5],'vis3d')
+% view(150,30)
 view(90,0)
 grid on
 xlabel('$x$','FontSize',labfont,'Interpreter','latex')
@@ -173,8 +175,10 @@ lqrhLd  = plot3(XLd(1),YLd(1),ZLd(1),':r','LineWidth',2);
 lqrhLdk = plot3(XLd(1),YLd(1),ZLd(1),'rx','LineWidth',2,'MarkerSize',15);
 
 % axis([XQR(1)-difax XQR(1)+difax minax maxax ZQR(1)-difax ZQR(1)+difax],'vis3d')
-axis([min(XQR)-difax max(XQR)+difax min(YQR)-difax max(YQR)+difax min(ZQR)-difax max(ZQR)+difax],'vis3d')
+% axis([min(XQR)-difax max(XQR)+difax min(YQR)-difax max(YQR)+difax min(ZQR)-difax max(ZQR)+difax],'vis3d')
 % axis([minax maxax minax maxax minax maxax],'vis3d')
+axis([-1.5 1.5 -1.5 1.5 -1.5 1.5],'vis3d')
+% view(150,30)
 view(90,0)
 grid on
 xlabel('$x$','FontSize',labfont,'Interpreter','latex')
