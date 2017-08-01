@@ -63,7 +63,7 @@ lqr0   = [xL0 yL0 zL0+L phiQ0 thetaQ0 psiQ0 phiL0 thetaL0 zeros(1,8)]';
 % Qdiag = [10 10 100 1 1 1 1/(2*pi/36)^2 1/(2*pi/36)^2 1 1 1 1 1 1 1 1];
 % Qdiag = [10 10 100 1 1 1 500 500 1 1 1 1 1 1 1 1]; %Fast anti swing, slow QR
 % Qdiag = [5000 5000 500 0.01 0.01 0.01 0.01 0.01 1 1 1 1 1 1 1 1]; %sine up down QR track
-Qdiag = [10000 10000 500 0.01 0.01 0.01 2000 2000 1 1 1 1 1 1 1 1]; %sine up down min load swing
+Qdiag = [50000 50000 500 0.001 0.001 0.001 100 100 1 1 1 1 1 1 1 1]; %sine up down min load swing
 % Qdiag = [100 100 250 1 1 1 750 750 1 1 1 1 1 1 1 1]; 
 LQRQ = diag(Qdiag);
 

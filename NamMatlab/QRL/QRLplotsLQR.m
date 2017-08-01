@@ -484,6 +484,34 @@ xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 ylabel('\boldmath$e_z$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 saveas(gcf,strcat(foldername,'LQR','-',filename,num2str(nfile)),'png')  
+%%
+exLperc = abs(xLd)./abs(exL);
+lqrexLperc = abs(xLd)./abs(lqrexL);
+
+filename = 'exL_xLd';
+figure('Name',filename)
+h_suptitle = suptitle('Load Position Error $[m]$');
+set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
+subplot 311
+plot(t,exLperc(1,:),'-k',t,lqrexLperc(1,:),'r--','Linewidth',3)
+grid on
+hl = legend('\boldmath$NGC$','\boldmath$LQR$');
+ylabel('\boldmath$e_x$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+set(hl,'Interpreter','latex','FontSize',lfont);
+subplot 312
+plot(t,exLperc(2,:),'-k',t,lqrexLperc(2,:),'r--','Linewidth',3)
+grid on
+ylabel('\boldmath$e_y$','FontSize',labfont,'Interpreter','latex')
+axis([0 t(end) 0 200])
+set(gca,'FontSize',afont);
+subplot 313
+plot(t,exLperc(3,:),'-k',t,lqrexLperc(3,:),'r--','Linewidth',3)
+grid on
+xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+ylabel('\boldmath$e_z$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+saveas(gcf,strcat(foldername,'LQR','-',filename,num2str(nfile)),'png') 
 
 
 
