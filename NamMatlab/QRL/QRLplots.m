@@ -80,9 +80,21 @@ for nfile = 40:100
         save(savename,'comment','comment2','facR','kR','kOmega','facq','kq','komega',...
             'facx','kpx','kdx','omega_n1_xL','omega_n2_xL','omega_n1_q',...
             'omega_n2_q','omega_n1_R','omega_n2_R','omega_n1_CFP','omega_n2_CFP','zeta_xL','zeta_q',...
-            'zeta_R','LQRA','LQRB','LQRC','LQRD','K','LQRQ','LQRR')
+            'zeta_R','LQRA','LQRB','LQRC','LQRD','K','LQRQ','LQRR');
+        save(strcat(num2str(nfile),'.txt'),'kR','kOmega','kq','komega','kpx','kdx','mQ','mL','I','l','L','-ascii');
+        
+        % Write to Excel
+        excelname = 'parameters.xlsx';
+%         exceldata = {'mQ',mQ;'mL',mL;'l',l;'L',L;'Ixx',Ixx;'Iyy',Iyy;'Izz',Izz;'kR',kR;'kOmega',kOmega;'kq',kq;'komega',komega;'kpx',kpx;'kdx',kdx};
+        par = {'mQ';'mL';'l';'L';'Ixx';'Iyy';'Izz';'kR';'kOmega';'kq';'komega';'kpx';'kdx'};
+        val = {mQ;mL;l;L;Ixx;Iyy;Izz;kR;kOmega;kq;komega;kpx;kdx};
+        cfpar = {'omega_n1_xL';'omega_n2_xL';'omega_n1_CFP';'omega_n2_CFP';'zeta_xL';'omega_n1_q';'omega_n2_q';'zeta_q';'omega_n1_R';'omega_n2_R';'zeta_R'};
+        cfval = {omega_n1_xL;omega_n2_xL;omega_n1_CFP;omega_n2_CFP;zeta_xL;omega_n1_q;omega_n2_q;zeta_q;omega_n1_R;omega_n2_R;zeta_R};        
+        exceldata = [{'filenumber'},{nfile};par,val;cfpar,cfval];
+        sheet = num2str(nfile);
+        xlswrite(excelname,exceldata,sheet)
         break
-    end    
+    end
 end
 
 save(strcat(foldername,modecode,num2str(nfile),'.mat'))
