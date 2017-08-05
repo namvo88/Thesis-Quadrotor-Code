@@ -226,7 +226,7 @@ for k=1:length(t)
     set(lqrhLdk,'xdata',XLd(k),'ydata',YLd(k),'zdata',ZLd(k));    
     
     pause(ts*pausefactor);
-    mov(k)=getframe(gcf);
+%     mov(k)=getframe(gcf);
     
 end
 

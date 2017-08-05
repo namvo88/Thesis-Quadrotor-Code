@@ -309,7 +309,7 @@ static void sf_c46_QRLsim(SFc46_QRLsimInstanceStruct *chartInstance)
   c46_varF = (real_T (*)[4])ssGetInputPortSignal(chartInstance->S, 0);
   _SFD_SYMBOL_SCOPE_PUSH(0U, 0U);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
-  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 10U, chartInstance->c46_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 14U, chartInstance->c46_sfEvent);
   for (c46_i10 = 0; c46_i10 < 4; c46_i10++) {
     _SFD_DATA_RANGE_CHECK((*c46_varF)[c46_i10], 0U);
   }
@@ -509,7 +509,7 @@ static void c46_chartstep_c46_QRLsim(SFc46_QRLsimInstanceStruct *chartInstance)
   c46_b_mode = (real_T *)ssGetInputPortSignal(chartInstance->S, 2);
   c46_c_A = (real_T (*)[3])ssGetInputPortSignal(chartInstance->S, 1);
   c46_b_varF = (real_T (*)[4])ssGetInputPortSignal(chartInstance->S, 0);
-  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 10U, chartInstance->c46_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 14U, chartInstance->c46_sfEvent);
   c46_hoistedGlobal = *c46_b_mode;
   for (c46_i22 = 0; c46_i22 < 4; c46_i22++) {
     c46_varF[c46_i22] = (*c46_b_varF)[c46_i22];
@@ -827,7 +827,7 @@ static void c46_chartstep_c46_QRLsim(SFc46_QRLsimInstanceStruct *chartInstance)
     (*c46_b_edq)[c46_i72] = c46_edq[c46_i72];
   }
 
-  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 10U, chartInstance->c46_sfEvent);
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 14U, chartInstance->c46_sfEvent);
 }
 
 static void initSimStructsc46_QRLsim(SFc46_QRLsimInstanceStruct *chartInstance)
@@ -2517,10 +2517,10 @@ extern void utFree(void*);
 
 void sf_c46_QRLsim_get_check_sum(mxArray *plhs[])
 {
-  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(752239073U);
-  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(3359012889U);
-  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(2220357087U);
-  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(2208239156U);
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(4087375772U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2122179342U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(2548326878U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(1027651483U);
 }
 
 mxArray *sf_c46_QRLsim_get_autoinheritance_info(void)
@@ -2532,7 +2532,7 @@ mxArray *sf_c46_QRLsim_get_autoinheritance_info(void)
     autoinheritanceFields);
 
   {
-    mxArray *mxChecksum = mxCreateString("uygwxYmxc8QSyWj4OzHbNC");
+    mxArray *mxChecksum = mxCreateString("krM8Y33xFdY4UTEbKBCClE");
     mxSetField(mxAutoinheritanceInfo,0,"checksum",mxChecksum);
   }
 
@@ -2906,7 +2906,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
         /* Initialization of MATLAB Function Model Coverage */
         _SFD_CV_INIT_EML(0,1,1,0,0,0,1,0,0,0,0);
-        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,576);
+        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,574);
 
         {
           static int caseStart[] = { 178, 142 };
@@ -3063,7 +3063,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
 static const char* sf_get_instance_specialization(void)
 {
-  return "i7IeU3HlrYveNv5cdfV0mD";
+  return "nYYlsqQqt1ClMp0nvwwJ6E";
 }
 
 static void sf_opaque_initialize_c46_QRLsim(void *chartInstanceVar)
@@ -3235,10 +3235,10 @@ static void mdlSetWorkWidths_c46_QRLsim(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(2810603910U));
-  ssSetChecksum1(S,(2499232607U));
-  ssSetChecksum2(S,(1205726239U));
-  ssSetChecksum3(S,(388637347U));
+  ssSetChecksum0(S,(2493619664U));
+  ssSetChecksum1(S,(3718286802U));
+  ssSetChecksum2(S,(1014047080U));
+  ssSetChecksum3(S,(3280925037U));
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
   ssSupportsMultipleExecInstances(S,1);

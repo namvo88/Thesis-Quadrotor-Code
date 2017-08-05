@@ -91,7 +91,7 @@ axis([XQR(1)-1.5 XQR(1)+1.5 YQR(1)-1.5 YQR(1)+1.5 ZQR(1)-1.5 ZQR(1)+1.5],'square
 % axis([-2 2 -2 2 -2 2])
 % axis([XQR(1)-1.5 XQR(1)+1.5 YQR(1)-1.5 YQR(1)+1.5 ZQR(1)-1.5 ZQR(1)+1.5],'square')
 
-view(0,90)
+view(90,0)
 grid on
 xlabel('x')
 ylabel('y') 

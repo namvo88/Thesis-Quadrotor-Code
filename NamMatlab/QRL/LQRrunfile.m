@@ -8,6 +8,18 @@
 % y = [x y z psi]'
  
 %% A, B, C, D
+
+mQ     = 4.34; %Lee2010 %weight bebop 420 g
+Ixx    = 0.0820; %Lee2010
+Iyy    = 0.0845; %Lee2010
+Izz    = 0.1377; %Lee2010
+
+mQ = 0.4; %Cornelis2014
+Ixx    = 0.00223; %Cornelis2014
+Iyy    = 0.00299; %Cornelis2014
+Izz    = 0.00480; %Cornelis2014
+
+
 I_L    = mL*L^2;
 LQRM   = [mQ+mL 0 0, 0 0 0, 0 mL*L;%ddx
          0 mQ+mL 0, 0 0 0, mL*L 0;%ddy
@@ -65,9 +77,12 @@ lqr0   = [xL0 yL0 zL0+L phiQ0 thetaQ0 psiQ0 phiL0 thetaL0 zeros(1,8)]';
 % Qdiag = [5000 5000 500 0.01 0.01 0.01 0.01 0.01 1 1 1 1 1 1 1 1]; %sine up down QR track
 Qdiag = [50000 50000 500 0.001 0.001 0.001 100 100 1 1 1 1 1 1 1 1]; %sine up down min load swing
 % Qdiag = [100 100 250 1 1 1 750 750 1 1 1 1 1 1 1 1]; 
+
+% Qdiag = [1 1 1 1 1 1 1 1 ones(1,8)];
 LQRQ = diag(Qdiag);
 
-Rdiag = [0.05 1 1 100];
+Rdiag = [1000 50 50 100];
+% Rdiag = [ones(1,4)];
 LQRR = diag(Rdiag); 
 
 K = lqr(LQRA,LQRB,LQRQ,LQRR);

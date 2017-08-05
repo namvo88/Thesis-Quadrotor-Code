@@ -198,7 +198,7 @@ static void sf_c6_QRLsim(SFc6_QRLsimInstanceStruct *chartInstance)
   c6_b_u = (real_T (*)[2])ssGetInputPortSignal(chartInstance->S, 0);
   _SFD_SYMBOL_SCOPE_PUSH(0U, 0U);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
-  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 0U, chartInstance->c6_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 4U, chartInstance->c6_sfEvent);
   for (c6_i2 = 0; c6_i2 < 2; c6_i2++) {
     _SFD_DATA_RANGE_CHECK((*c6_b_u)[c6_i2], 0U);
   }
@@ -212,7 +212,7 @@ static void sf_c6_QRLsim(SFc6_QRLsimInstanceStruct *chartInstance)
   }
 
   chartInstance->c6_sfEvent = CALL_EVENT;
-  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 0U, chartInstance->c6_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 4U, chartInstance->c6_sfEvent);
   for (c6_i5 = 0; c6_i5 < 2; c6_i5++) {
     c6_u[c6_i5] = (*c6_b_u)[c6_i5];
   }
@@ -244,9 +244,9 @@ static void sf_c6_QRLsim(SFc6_QRLsimInstanceStruct *chartInstance)
     c6_sf_marshallIn);
   CV_EML_FCN(0, 0);
   _SFD_EML_CALL(0U, chartInstance->c6_sfEvent, 4);
-  c6_theL = c6_u[0];
+  c6_theL = c6_u[1];
   _SFD_EML_CALL(0U, chartInstance->c6_sfEvent, 5);
-  c6_phiL = c6_u[1];
+  c6_phiL = c6_u[0];
   _SFD_EML_CALL(0U, chartInstance->c6_sfEvent, 7);
   c6_L = 0.7;
   _SFD_EML_CALL(0U, chartInstance->c6_sfEvent, 13);
@@ -287,7 +287,7 @@ static void sf_c6_QRLsim(SFc6_QRLsimInstanceStruct *chartInstance)
     (*c6_b_xL)[c6_i8] = c6_xL[c6_i8];
   }
 
-  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 0U, chartInstance->c6_sfEvent);
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 4U, chartInstance->c6_sfEvent);
   _SFD_SYMBOL_SCOPE_POP();
   _SFD_CHECK_FOR_STATE_INCONSISTENCY(_QRLsimMachineNumber_,
     chartInstance->chartNumber, chartInstance->instanceNumber);
@@ -722,10 +722,10 @@ extern void utFree(void*);
 
 void sf_c6_QRLsim_get_check_sum(mxArray *plhs[])
 {
-  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2066817988U);
-  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2452383678U);
-  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(2364215931U);
-  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(976490331U);
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1301380890U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1548158723U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(2793880823U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(1598806008U);
 }
 
 mxArray *sf_c6_QRLsim_get_autoinheritance_info(void)
@@ -737,7 +737,7 @@ mxArray *sf_c6_QRLsim_get_autoinheritance_info(void)
     autoinheritanceFields);
 
   {
-    mxArray *mxChecksum = mxCreateString("AmzGSazdivguUB75JfK6SE");
+    mxArray *mxChecksum = mxCreateString("wKT0ABc8qitSEUlPlAs8pD");
     mxSetField(mxAutoinheritanceInfo,0,"checksum",mxChecksum);
   }
 
@@ -957,7 +957,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
 static const char* sf_get_instance_specialization(void)
 {
-  return "2O9zhRnt6cMrASruSKvSZC";
+  return "4fHcm2WcBxcIEALYwnmCQC";
 }
 
 static void sf_opaque_initialize_c6_QRLsim(void *chartInstanceVar)
@@ -1123,10 +1123,10 @@ static void mdlSetWorkWidths_c6_QRLsim(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(3687512328U));
-  ssSetChecksum1(S,(54886223U));
-  ssSetChecksum2(S,(3916305713U));
-  ssSetChecksum3(S,(1793287939U));
+  ssSetChecksum0(S,(2546177390U));
+  ssSetChecksum1(S,(2149994039U));
+  ssSetChecksum2(S,(965619780U));
+  ssSetChecksum3(S,(3199348195U));
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
   ssSupportsMultipleExecInstances(S,1);

@@ -22,12 +22,11 @@ clear; clc; close all;
 % >> Changed to 'Structure with time'
 
 % OPTIONS
-animation = 1; % Turn animation on/off
-plots     = 1; % Turn plot generation on/off
-savegain  = 1; % Save gains into file on/off
+animation = 0; % Turn animation on/off
+plots     = 1; % Turn plot generation + save matfiles on/off
 
-comment  = strcat('sinegrowing',date); % comment added to save file
-comment2 = ('sinegrowing+LQR'); % comment added to save file
+comment  = strcat('step-Bebop-LQR',date); % comment added to save file
+comment2 = (''); % comment added to save file
 
 %% Input signals
 
@@ -38,13 +37,14 @@ comment2 = ('sinegrowing+LQR'); % comment added to save file
 % QRL Load Attitude Controlled mode 3
 % QRL Load Position Controlled mode 4
 mode      = 4;
+% mode = [4*ones(1,2000) 3*ones(1,125) 4*ones(1,126)];
 
 % LOAD ATTITUDE MODE
 % Normal -1
 % Inverted 1
 qmode     = -1;
 
-Tsim_end  = 20;
+Tsim_end  = 10;
 Tsim_s    = 0.01;
 
 switch mode
@@ -111,13 +111,9 @@ Msat   = inf*[1 -1];
 
 %% Initial Conditions QR
 
-phiQ0deg   = 0;
-thetaQ0deg = 0;
-psiQ0deg   = 0;
-
-phiQ0      = deg2rad(phiQ0deg);
-thetaQ0    = deg2rad(thetaQ0deg);
-psiQ0      = deg2rad(psiQ0deg);
+phiQ0      = deg2rad(0);
+thetaQ0    = deg2rad(0);
+psiQ0      = deg2rad(0);
 pQ0        = 0;
 qQ0        = 0;
 rQ0        = 0;
@@ -165,67 +161,46 @@ zL0        = L+q0(3)*L;
 
 % x0 = [xL0;yL0;zL0];
 
-%% Simulation
+%% Gains 
 
 eps         = 0.99; % 0<eps<1
 
 % Gains QR Attitude
-facR        = 1;
-kR          = 8.81*facR; %Lee2010
-kOmega      = 2.4*facR;
+facR        = 0.1;
+% kR          = 8.81*facR; %Lee2010
+kR          = 2.85*facR; %Lee2010
+kOmega      = 0.4*facR;
 
 % Gains Load Attitude
-facq        = 2;
-kq          = facq*25;
-komega      = facq*35;
+facq        = 1;
+kq          = facq*2.25;
+komega      = facq*.75;
 
 % Gains Load Position
-facx        = 4; %4;
-kpx         = facx*8;%20.4
-kdx         = facx*5;%11.7
+facx        = 1; %4;
+kpx         = facx*28.5;%20.4
+kdx         = facx*3;%11.7
 
-
-% % Command Filter Low Pass filter 2nd order
-% omega_n_xL = 2*pi*.5;
-% omega_n_q = 2*pi*.8;
-% omega_n_R = 2*pi*.05;
+% Step block parameters
+stept   = 1.5;
+stepamp = 0.25;
 
 % Command Filter Low Pass filter 3th order
-omega_n1_xL  = 30;
-omega_n2_xL  = 30;
+omega_n1_xL  = 60;
+omega_n2_xL  = 60;
 omega_n1_CFP = 2;
 omega_n2_CFP = 2;
 zeta_xL      = 0.975;
-omega_n1_q   = 37;
-omega_n2_q   = 37;
+omega_n1_q   = 37*2.5;
+omega_n2_q   = 37*1.5;
 zeta_q       = 0.975;
-omega_n1_R   = 94;
-omega_n2_R   = 94;
+omega_n1_R   = 130;
+omega_n2_R   = 90;
 zeta_R       = 0.98;
 
-% % Save gains in mat-files
-% if savegain == 1
-%     foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\GainFiles\';
-% %     foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\MatlabImages\';
-%         
-%     for nfile = 1:100
-%         savename = strcat(foldername,num2str(nfile),'.mat');
-%                 
-%         if exist(savename,'file') == 0
-%             save(savename,'comment','comment2','facR','kR','kOmega','facq','kq','komega','facx','kpx','kdx','omega_n1_CFP','omega_n2_CFP','omega_n1_xL','omega_n2_xL','omega_n1_q','omega_n2_q','omega_n1_R','omega_n2_R','zeta_xL','zeta_q','zeta_R')
-%             break
-%         end
-%     end
-% end
-
-% loadpath = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\GainFiles\';
-% loadfile = strcat(loadpath,'13','.mat');
-% load(loadfile)
-
-%%
+% Simulation
 LQRrunfile
 sim('QRLsim');
-
 
 %% Conditions check
 Psiq   = simoutPsiq.signals.values(:,1);
@@ -278,7 +253,7 @@ end
 
 %% Animation
 if animation == 1
-%     QRLanimation
+    QRLanimation
 %     QRLanimationLQR
-    QRLanimationboth
+%     QRLanimationboth
 end
