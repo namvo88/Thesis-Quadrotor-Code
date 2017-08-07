@@ -23,9 +23,9 @@ clear; clc; close all;
 
 % OPTIONS
 animation = 0; % Turn animation on/off
-plots     = 0; % Turn plot generation + save matfiles on/off
+plots     = 1; % Turn plot generation + save matfiles on/off
 
-comment  = strcat('step-Bebop-LQR',date); % comment added to save file
+comment  = strcat('sinus-growing-Bebop-LQR',date); % comment added to save file
 comment2 = (''); % comment added to save file
 
 %% Input signals
@@ -44,7 +44,7 @@ mode      = 4;
 % Inverted 1
 qmode     = -1;
 
-Tsim_end  = 10;
+Tsim_end  = 30;
 Tsim_s    = 0.01;
 
 switch mode
@@ -64,7 +64,7 @@ switch mode
         disp('No Control Mode selected');
 end
 
-T0 = 3; %Time period of oscillation of load
+% T0 = 3; %Time period of oscillation of load
 
 b1d = [1; 0; 0];
 Rd  = eye(3);
