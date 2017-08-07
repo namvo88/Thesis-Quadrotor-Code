@@ -8,7 +8,7 @@ velL         = simoutL.signals.values(:,4:6)';
 accL         = simoutL.signals.values(:,7:9)';
 
 lqrangleL    = wrapTo180((lqrsimoutL1.signals.values(:,1:2)));
-angleL       = wrapTo180((simoutL1.signals.values(:,1:3)));
+angleL       = wrapTo180(rad2deg(simoutL1.signals.values(:,1:3)));
 OmegaL       = rad2deg(simoutL1.signals.values(:,4:6));
 
 r11          = reshape(simoutR.signals.values(1,1,:),1,length(t));

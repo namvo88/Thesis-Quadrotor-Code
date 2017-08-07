@@ -17,7 +17,7 @@
 /* Variable Declarations */
 
 /* Variable Definitions */
-static const char * c32_debug_family_names[13] = { "mQ", "g", "mL", "lL", "e3",
+static const char * c32_debug_family_names[13] = { "mQ", "g", "mL", "L", "e3",
   "nargin", "nargout", "varddxL", "q", "dq", "R", "f", "ddxL" };
 
 /* Function Declarations */
@@ -229,7 +229,7 @@ static void c32_chartstep_c32_QRLsim(SFc32_QRLsimInstanceStruct *chartInstance)
   real_T c32_mQ;
   real_T c32_g;
   real_T c32_mL;
-  real_T c32_lL;
+  real_T c32_L;
   real_T c32_e3[3];
   real_T c32_nargin = 5.0;
   real_T c32_nargout = 1.0;
@@ -310,7 +310,7 @@ static void c32_chartstep_c32_QRLsim(SFc32_QRLsimInstanceStruct *chartInstance)
     c32_b_sf_marshallIn);
   _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c32_mL, 2U, c32_b_sf_marshallOut,
     c32_b_sf_marshallIn);
-  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c32_lL, 3U, c32_b_sf_marshallOut,
+  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c32_L, 3U, c32_b_sf_marshallOut,
     c32_b_sf_marshallIn);
   _SFD_SYMBOL_SCOPE_ADD_EML(c32_e3, 4U, c32_sf_marshallOut);
   _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c32_nargin, 5U, c32_b_sf_marshallOut,
@@ -332,7 +332,7 @@ static void c32_chartstep_c32_QRLsim(SFc32_QRLsimInstanceStruct *chartInstance)
   _SFD_EML_CALL(0U, chartInstance->c32_sfEvent, 5);
   c32_mL = c32_varddxL[2];
   _SFD_EML_CALL(0U, chartInstance->c32_sfEvent, 6);
-  c32_lL = c32_varddxL[3];
+  c32_L = c32_varddxL[3];
   _SFD_EML_CALL(0U, chartInstance->c32_sfEvent, 8);
   for (c32_i11 = 0; c32_i11 < 3; c32_i11++) {
     c32_e3[c32_i11] = c32_b[c32_i11];
@@ -360,7 +360,7 @@ static void c32_chartstep_c32_QRLsim(SFc32_QRLsimInstanceStruct *chartInstance)
   }
 
   c32_b_a = c32_mQ;
-  c32_c_b = c32_lL;
+  c32_c_b = c32_L;
   c32_b_y = c32_b_a * c32_c_b;
   c32_c_a = c32_b_y;
   for (c32_i17 = 0; c32_i17 < 3; c32_i17++) {
@@ -1875,10 +1875,10 @@ extern void utFree(void*);
 
 void sf_c32_QRLsim_get_check_sum(mxArray *plhs[])
 {
-  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(353393924U);
-  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2281574972U);
-  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(4051856576U);
-  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(2066550280U);
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1507889464U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2695819992U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3531522582U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(3517380023U);
 }
 
 mxArray *sf_c32_QRLsim_get_autoinheritance_info(void)
@@ -1890,7 +1890,7 @@ mxArray *sf_c32_QRLsim_get_autoinheritance_info(void)
     autoinheritanceFields);
 
   {
-    mxArray *mxChecksum = mxCreateString("gU3nFU9ufPORqNAfLSOUkD");
+    mxArray *mxChecksum = mxCreateString("JwYOzATQlQY37ZQMlMbrY");
     mxSetField(mxAutoinheritanceInfo,0,"checksum",mxChecksum);
   }
 
@@ -2124,7 +2124,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
         /* Initialization of MATLAB Function Model Coverage */
         _SFD_CV_INIT_EML(0,1,1,0,0,0,0,0,0,0,0);
-        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,198);
+        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,196);
 
         {
           unsigned int dimVector[1];
@@ -2197,7 +2197,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
 static const char* sf_get_instance_specialization(void)
 {
-  return "vhufjY3TQliyrJJxwjRHWG";
+  return "D4Y0cnZfoYam2H9h5rf9oG";
 }
 
 static void sf_opaque_initialize_c32_QRLsim(void *chartInstanceVar)
@@ -2366,10 +2366,10 @@ static void mdlSetWorkWidths_c32_QRLsim(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(382033398U));
-  ssSetChecksum1(S,(3176308915U));
-  ssSetChecksum2(S,(1328016453U));
-  ssSetChecksum3(S,(373896916U));
+  ssSetChecksum0(S,(1536135529U));
+  ssSetChecksum1(S,(1651906202U));
+  ssSetChecksum2(S,(369463418U));
+  ssSetChecksum3(S,(2174267743U));
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
   ssSupportsMultipleExecInstances(S,1);

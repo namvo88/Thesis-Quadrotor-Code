@@ -110,7 +110,7 @@ plot(t,xLd(1,:),'r--',t,posL(1,:),t,lqrposL(1,:),'-.','Linewidth',2)
 % axis([0 25 -.1 1.2])
 ylabel('\boldmath$x$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
-hl = legend('\boldmath$x_{L,d}$','\boldmath$x_{L,GC}$','\boldmath$x_{L,LQR}$');
+hl = legend('\boldmath$x_{L,d}$','\boldmath$x_{L},NGC$','\boldmath$x_{L},LQR$');
 subplot 312
 plot(t,xLd(2,:),'r--',t,posL(2,:),t,lqrposL(2,:),'-.','Linewidth',2)
 ylabel('\boldmath$y$','FontSize',labfont,'Interpreter','latex')
@@ -175,34 +175,34 @@ end
 % saveas(gcf,strcat(foldername,'LQR','-',filename,num2str(nfile)),'png')
 
 %%
-filename = 'QRang';
-figure('Name',filename)
-h_sup = suptitle('QR Angle [deg]');
-set(h_sup,'FontSize',supfont,'Interpreter','latex');
-subplot 211
-plot(t,angleQ(:,1),t,angleQ(:,2),'Linewidth',2)
-axis([0 t(end) min(min(angleQ(:,1),angleQ(:,2)))-5 max(max(angleQ(:,1),angleQ(:,2)))+5])
-hl = legend('\boldmath$\phi_{Q,GC}$','\boldmath$\theta_{Q,GC}$');
-ylabel('GC','FontSize',labfont,'Interpreter','latex')
-set(hl,'Interpreter','latex','FontSize',lfont);
-set(gca,'color','none','FontSize',afont)
-set(gca,'FontSize',afont);
-subplot 212
-% plot(t,angleQ(:,3),t,lqrangleQ(:,3),'Linewidth',2)
-% hl = legend('\boldmath$\psi_Q$','\boldmath$\psi_{Q,LQR}$');
-plot(t,lqrangleQ(:,1),t,lqrangleQ(:,2),'Linewidth',2)
-axis([0 t(end) min(min(lqrangleQ(:,1),lqrangleQ(:,2)))-5 max(max(lqrangleQ(:,1),lqrangleQ(:,2)))+5])
-hl = legend('\boldmath$\phi_{Q,LQR}$','\boldmath$\theta_{Q,LQR}$');
-ylabel('LQR','FontSize',labfont,'Interpreter','latex')
-set(hl,'Interpreter','latex','FontSize',lfont);
-set(gca,'color','none','FontSize',afont)
-set(gca,'FontSize',afont);
-% ylabel('\boldmath$[^\circ]$','FontSize',labfont,'Interpreter','latex')
+% filename = 'QRang';
+% figure('Name',filename)
+% h_sup = suptitle('QR Angle [deg]');
+% set(h_sup,'FontSize',supfont,'Interpreter','latex');
+% subplot 211
+% plot(t,angleQ(:,1),t,angleQ(:,2),'Linewidth',2)
+% axis([0 t(end) min(min(angleQ(:,1),angleQ(:,2)))-5 max(max(angleQ(:,1),angleQ(:,2)))+5])
+% hl = legend('\boldmath$\phi_{Q,GC}$','\boldmath$\theta_{Q,GC}$');
+% ylabel('GC','FontSize',labfont,'Interpreter','latex')
 % set(hl,'Interpreter','latex','FontSize',lfont);
 % set(gca,'color','none','FontSize',afont)
-xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
-set(gca,'FontSize',afont);
-saveas(gcf,strcat(foldername,'LQR','-',filename,num2str(nfile)),'png')
+% set(gca,'FontSize',afont);
+% subplot 212
+% % plot(t,angleQ(:,3),t,lqrangleQ(:,3),'Linewidth',2)
+% % hl = legend('\boldmath$\psi_Q$','\boldmath$\psi_{Q,LQR}$');
+% plot(t,lqrangleQ(:,1),t,lqrangleQ(:,2),'Linewidth',2)
+% axis([0 t(end) min(min(lqrangleQ(:,1),lqrangleQ(:,2)))-5 max(max(lqrangleQ(:,1),lqrangleQ(:,2)))+5])
+% hl = legend('\boldmath$\phi_{Q,LQR}$','\boldmath$\theta_{Q,LQR}$');
+% ylabel('LQR','FontSize',labfont,'Interpreter','latex')
+% set(hl,'Interpreter','latex','FontSize',lfont);
+% set(gca,'color','none','FontSize',afont)
+% set(gca,'FontSize',afont);
+% % ylabel('\boldmath$[^\circ]$','FontSize',labfont,'Interpreter','latex')
+% % set(hl,'Interpreter','latex','FontSize',lfont);
+% % set(gca,'color','none','FontSize',afont)
+% xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+% set(gca,'FontSize',afont);
+% saveas(gcf,strcat(foldername,'LQR','-',filename,num2str(nfile)),'png')
 
 filename = 'QRang';
 figure('Name',filename)

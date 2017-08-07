@@ -23,7 +23,7 @@ clear; clc; close all;
 
 % OPTIONS
 animation = 0; % Turn animation on/off
-plots     = 1; % Turn plot generation + save matfiles on/off
+plots     = 0; % Turn plot generation + save matfiles on/off
 
 comment  = strcat('step-Bebop-LQR',date); % comment added to save file
 comment2 = (''); % comment added to save file

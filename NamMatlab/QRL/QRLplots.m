@@ -81,7 +81,7 @@ for nfile = 40:100
             'facx','kpx','kdx','omega_n1_xL','omega_n2_xL','omega_n1_q',...
             'omega_n2_q','omega_n1_R','omega_n2_R','omega_n1_CFP','omega_n2_CFP','zeta_xL','zeta_q',...
             'zeta_R','LQRA','LQRB','LQRC','LQRD','K','LQRQ','LQRR');
-        save(strcat(num2str(nfile),'.txt'),'kR','kOmega','kq','komega','kpx','kdx','mQ','mL','I','l','L','-ascii');
+%         save(strcat(num2str(nfile),'.txt'),'kR','kOmega','kq','komega','kpx','kdx','mQ','mL','I','l','L','-ascii');
         
         % Write to Excel
         excelname = 'parameters.xlsx';
