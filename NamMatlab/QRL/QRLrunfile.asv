@@ -1,4 +1,13 @@
 clear; clc; close all;
+%% Parameter overview
+% R - Rotation Matrix
+% 
+% Quadrotor Parameters
+% mQ - QR mass
+% 
+% Load Parameters
+% xL/dxL/ddxL - Load position/velocity/acceleration
+% mL - Load mass
 
 %% Settings
 % Warning: Using a default value of 0.2 for maximum step size.  The simulation step size will be
@@ -13,12 +22,11 @@ clear; clc; close all;
 % >> Changed to 'Structure with time'
 
 % OPTIONS
-animation = 0;
-plots     = 0;
-savegain  = 0;
+animation = 0; % Turn animation on/off
+plots     = 0; % Turn plot generation + save matfiles on/off
 
-comment = strcat('StepWithInitError',date);
-comment2 = ('');
+comment  = strcat('sinus-growing-Bebop-LQR',date); % comment added to save file
+comment2 = (''); % comment added to save file
 
 %% Input signals
 
@@ -29,13 +37,14 @@ comment2 = ('');
 % QRL Load Attitude Controlled mode 3
 % QRL Load Position Controlled mode 4
 mode      = 4;
+% mode = [4*ones(1,2000) 3*ones(1,125) 4*ones(1,126)];
 
 % LOAD ATTITUDE MODE
 % Normal -1
 % Inverted 1
 qmode     = -1;
 
-Tsim_end  = 25;
+Tsim_end  = 30;
 Tsim_s    = 0.01;
 
 switch mode
@@ -55,33 +64,43 @@ switch mode
         disp('No Control Mode selected');
 end
 
-T0 = 3; %Time period of oscillation of load
+% T0 = 3; %Time period of oscillation of load
 
-% xLd = [zeros(1,length(t)); sin(2*pi*t/T0); zeros(1,length(t))];
 b1d = [1; 0; 0];
 Rd  = eye(3);
 qd  = [0; 0; qmode];
 
 
 %% Constants
-mQ     = 4.34; %Lee2010 %weight bebop 420 g
-Ixx    = 0.0820; %Lee2010
-Iyy    = 0.0845; %Lee2010
-Izz    = 0.1377; %Lee2010
+% mQ     = 4.34; %Lee2010 %weight bebop 420 g
+mQ = 0.4; %Cornelis2014
+% Ixx    = 0.0820; %Lee2010
+% Iyy    = 0.0845; %Lee2010
+% Izz    = 0.1377; %Lee2010
+Ixx    = 0.00223; %Cornelis2014
+Iyy    = 0.00299; %Cornelis2014
+Izz    = 0.00480; %Cornelis2014
 I      = diag([Ixx Iyy Izz]); %Tang2014
-lamb_m = min(eig(I));
-lamb_M = max(eig(I));
 ctauf  = 8.004e-3; %Lee2010c
+mL     = 0.1;
+L      = 0.7;
+
+% mQ     = 0.7; %Becker
+% Ixx    = 4.6e-3; %Becker
+% Iyy    = 4.6e-3; %Becker
+% Izz    = 8.2e-3; %Becker
+% I      = diag([Ixx Iyy Izz]);
+% mL     = 0.2; %Becker
+% L     = 0.7; %Becker
 
 % mL     = 0.045; %Praveen
 % lL         = 1.12; %Praveen
-mL     = 0.1;
-L     = 0.7;
 
 b      = 0.1; %gok thrust factor
 d      = 0.1; %gok drag factor
 Ir     = 0.5; %gok
-l      = 0.315; %Lee2010 %wingspan bebop 248 mm
+% l      = 0.315; %Lee2010 %wingspan bebop 248 mm
+l = 0.126; %Cornelis2014
 
 g      = 9.81;
 e3     = [0;0;1];
@@ -92,13 +111,9 @@ Msat   = inf*[1 -1];
 
 %% Initial Conditions QR
 
-phiQ0deg   = 0;
-thetaQ0deg = 0;
-psiQ0deg   = 0;
-
-phiQ0      = deg2rad(phiQ0deg);
-thetaQ0    = deg2rad(thetaQ0deg);
-psiQ0      = deg2rad(psiQ0deg);
+phiQ0      = deg2rad(0);
+thetaQ0    = deg2rad(0);
+psiQ0      = deg2rad(0);
 pQ0        = 0;
 qQ0        = 0;
 rQ0        = 0;
@@ -120,11 +135,8 @@ dxL0       = 0;
 dyL0       = 0;
 dzL0       = 0;
 
-phiL0deg   = 0;
-thetaL0deg = 0;
-
-phiL0      = deg2rad(phiL0deg);
-thetaL0    = deg2rad(thetaL0deg);
+phiL0      = deg2rad(0);
+thetaL0    = deg2rad(0);
 psiL0      = 0;
 
 pL0        = 0;
@@ -143,134 +155,69 @@ Rx         = [1 0 0;
 Rzyx       = (Rx*Ry);
 q0         = Rzyx*e3*qmode;
 
-% xL0        = q0(1)*lL;
-% yL0        = q0(2)*lL;
-% zL0        = q0(3)*lL;
-
-xL0        = 0;
-yL0        = 0;
-zL0        = 0;
+xL0        = q0(1)*L;
+yL0        = q0(2)*L;
+zL0        = L+q0(3)*L;
 
 % x0 = [xL0;yL0;zL0];
 
-%% Simulation
+%% Gains 
+manualgain = 1;
 
-eps = 0.99; % 0<eps<1
-psi_1 = .9; % Constant Psiq(0)<Psi_1<1 Lee2010 
-exLmax = 5; %Fixed constant
-
-
-% Gains QR Attitude
-facR = 4.5;
-kR = 8.81*facR; %Lee2010
-kOmega = 2.4*facR;
-
-% Gains Load Attitude
-facq = 5; %2.9;
-kq = facq*10;
-komega = facq*2.5;%*4;
-
-% Gains Load Position
-facx = 2; %4;
-kpx = facx*17.5;
-kdx = facx*5; %*7.8;
-
-
-% % Command Filter Low Pass filter 2nd order
-% omega_n_xL = 2*pi*.5;
-% omega_n_q = 2*pi*.8;
-% omega_n_R = 2*pi*.05;
-
-% Command Filter Low Pass filter 3th order
-omega_n1_xL = 2*pi*.3;
-omega_n2_xL = 2*pi*0.3;
-omega_n1_CFP = 2*pi*2;%*30;
-omega_n2_CFP = 2*pi*2;%*20;
-zeta_xL = 0.975;
-omega_n1_q = 2*pi*10;
-omega_n2_q = 2*pi*10;
-zeta_q = 0.975;
-omega_n1_R = 2*pi*20; %15
-omega_n2_R = 2*pi*15;
-zeta_R = 0.98;
-
-% Save gains in mat-files
-if savegain == 1
-    foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\GainFiles\';
-%     foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\MatlabImages\';
-        
-    for nfile = 1:100
-        savename = strcat(foldername,num2str(nfile),'.mat');
-                
-        if exist(savename,'file') == 0
-            save(savename,'comment','comment2','facR','kR','kOmega','facq','kq','komega','facx','kpx','kdx','omega_n1_CFP','omega_n2_CFP','omega_n1_xL','omega_n2_xL','omega_n1_q','omega_n2_q','omega_n1_R','omega_n2_R','zeta_xL','zeta_q','zeta_R')
-            break
-        end
-    end
+if manualgain == 0
+    load('Gains54');
+elseif manualgain == 1
+    eps         = 0.99; % 0<eps<1
+    
+    % Gains QR Attitude
+    facR        = 0.05;
+    kR          = 8*facR; %Lee2010
+%     kR          = 2.85*facR; %Lee2010
+    kOmega      = 2.5*facR;
+    
+    % Gains Load Attitude
+    facq        = 0.1;
+    kq          = facq*25;
+    komega      = facq*35;
+    
+    % Gains Load Position
+    facx        = 0.1; %4;
+    kpx         = facx*35;%20.4
+    kdx         = facx*30;%11.7
+    
+    % Step block parameters
+    stept   = 1.5;
+    stepamp = 0.25;
+    
+    % Command Filter Low Pass filter 3th order
+    omega_n1_xL  = 60;
+    omega_n2_xL  = 60;
+    omega_n1_CFP = 2;
+    omega_n2_CFP = 2;
+    zeta_xL      = 0.975;
+    omega_n1_q   = 37*2.5;
+    omega_n2_q   = 37*1.5;
+    zeta_q       = 0.975;
+    omega_n1_R   = 130;
+    omega_n2_R   = 90;
+    zeta_R       = 0.98;
 end
 
-% loadpath = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\GainFiles\';
-% loadfile = strcat(loadpath,'13','.mat');
-% load(loadfile)
-
-%%
+% Simulation
 LQRrunfile
 sim('QRLsim');
 
-
-% Dataconversion
-
-t        = simoutL.time;
-
-posL     = simoutL.signals.values(:,1:3)';
-velL     = simoutL.signals.values(:,4:6)';
-accL     = simoutL.signals.values(:,7:9)';
-
-angleL   = wrapTo180(rad2deg(simoutL1.signals.values(:,1:3)));
-OmegaL   = (rad2deg(simoutL1.signals.values(:,4:6)));
-
-r11 = reshape(simoutR.signals.values(1,1,:),1,length(t));
-r21 = reshape(simoutR.signals.values(2,1,:),1,length(t));
-r31= reshape(simoutR.signals.values(3,1,:),1,length(t));
-r32= reshape(simoutR.signals.values(3,2,:),1,length(t));
-r33= reshape(simoutR.signals.values(3,3,:),1,length(t));
-
-psi = atan(r21./r11);
-theta = atan(-r31./sqrt(r32.^2+r33.^2));
-phi = atan(r32./r33);
-
-angleQ = rad2deg([phi;theta;psi])';
-OmegaQ   = (rad2deg(simoutL2.signals.values(:,4:6)));
-dOmegaQ  = (rad2deg(simoutL2.signals.values(:,7:9)));
-
-f        = simoutL3.signals.values(:,1);
-M        = simoutL3.signals.values(:,2:4)';
-omegarot = simoutL3.signals.values(:,5:8)';
-fi       = simoutL3.signals.values(:,9:12)';
-
-q        = simoutq.signals.values(:,1:3)';
-dq       = simoutq.signals.values(:,4:6)';
-ddq      = simoutq.signals.values(:,7:9)';
-
-eq       = simouteq.signals.values(:,1:3);
-edq      = simouteq.signals.values(:,4:6);
-eR       = simouterrorR.signals.values(:,1:3);
-eOmega   = simouterrorR.signals.values(:,4:6);
-Psiq     = simoutPsiq.signals.values(:,1);
-PsiR     = simoutPsiR.signals.values(:,1);
-
-xLd      = simoutxLd.signals.values(:,1:3)';
-dxLd     = simoutxLd.signals.values(:,4:6)';
-ddxLd    = simoutxLd.signals.values(:,7:9)';
-
-exL      = simoutexL.signals.values(:,1:3)';
-
-F        = reshape(simoutF.signals.values,3,length(t));
-qcplot   = reshape(simoutqc.signals.values,[3,length(simoutqc.signals.values)]);
-
-posQ     = posL - q*L;
-
 %% Conditions check
+Psiq   = simoutPsiq.signals.values(:,1);
+PsiR   = simoutPsiR.signals.values(:,1);
+eOmega = simouterrorR.signals.values(:,4:6);
+edq    = simouteq.signals.values(:,4:6);
+exL    = simoutexL.signals.values(:,1:3)';
+
+lamb_m = min(eig(I));
+lamb_M = max(eig(I));
+psi_1  = .9; % Constant Psiq(0)<Psi_1<1 Lee2010 
+exLmax = 5; %Fixed constant
 
 % Prop.1 Sreenath2013b
 if PsiR(1) >= 2
@@ -305,10 +252,13 @@ end
 
 %% Plots
 if plots == 1
-    QRLplots
+    QRLplots;
+    QRLplotsLQR;
 end
 
 %% Animation
 if animation == 1
     QRLanimation
+%     QRLanimationLQR
+%     QRLanimationboth
 end
