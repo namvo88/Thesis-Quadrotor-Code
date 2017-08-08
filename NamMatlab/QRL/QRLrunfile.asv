@@ -23,7 +23,7 @@ clear; clc; close all;
 
 % OPTIONS
 animation = 0; % Turn animation on/off
-plots     = 1; % Turn plot generation + save matfiles on/off
+plots     = 0; % Turn plot generation + save matfiles on/off
 
 comment  = strcat('sinus-growing-Bebop-LQR',date); % comment added to save file
 comment2 = (''); % comment added to save file
@@ -162,41 +162,46 @@ zL0        = L+q0(3)*L;
 % x0 = [xL0;yL0;zL0];
 
 %% Gains 
+manualgain = 1;
 
-eps         = 0.99; % 0<eps<1
-
-% Gains QR Attitude
-facR        = 0.1;
-% kR          = 8.81*facR; %Lee2010
-kR          = 2.85*facR; %Lee2010
-kOmega      = 0.4*facR;
-
-% Gains Load Attitude
-facq        = 1;
-kq          = facq*2.25;
-komega      = facq*.75;
-
-% Gains Load Position
-facx        = 1; %4;
-kpx         = facx*28.5;%20.4
-kdx         = facx*3;%11.7
-
-% Step block parameters
-stept   = 1.5;
-stepamp = 0.25;
-
-% Command Filter Low Pass filter 3th order
-omega_n1_xL  = 60;
-omega_n2_xL  = 60;
-omega_n1_CFP = 2;
-omega_n2_CFP = 2;
-zeta_xL      = 0.975;
-omega_n1_q   = 37*2.5;
-omega_n2_q   = 37*1.5;
-zeta_q       = 0.975;
-omega_n1_R   = 130;
-omega_n2_R   = 90;
-zeta_R       = 0.98;
+if manualgain == 0
+    load('Gains54');
+elseif manualgain == 1
+    eps         = 0.99; % 0<eps<1
+    
+    % Gains QR Attitude
+    facR        = 0.05;
+    kR          = 8*facR; %Lee2010
+%     kR          = 2.85*facR; %Lee2010
+    kOmega      = 2.5*facR;
+    
+    % Gains Load Attitude
+    facq        = 0.1;
+    kq          = facq*25;
+    komega      = facq*35;
+    
+    % Gains Load Position
+    facx        = 0.1; %4;
+    kpx         = facx*35;%20.4
+    kdx         = facx*30;%11.7
+    
+    % Step block parameters
+    stept   = 1.5;
+    stepamp = 0.25;
+    
+    % Command Filter Low Pass filter 3th order
+    omega_n1_xL  = 60;
+    omega_n2_xL  = 60;
+    omega_n1_CFP = 2;
+    omega_n2_CFP = 2;
+    zeta_xL      = 0.975;
+    omega_n1_q   = 37*2.5;
+    omega_n2_q   = 37*1.5;
+    zeta_q       = 0.975;
+    omega_n1_R   = 130;
+    omega_n2_R   = 90;
+    zeta_R       = 0.98;
+end
 
 % Simulation
 LQRrunfile
