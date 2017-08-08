@@ -170,10 +170,10 @@ elseif manualgain == 1
     eps         = 0.99; % 0<eps<1
     
     % Gains QR Attitude
-    facR        = 0.05;
+    facR        = 0.1;
     kR          = 8*facR; %Lee2010
 %     kR          = 2.85*facR; %Lee2010
-    kOmega      = 2.5*facR;
+    kOmega      = 2.8*facR;
     
     % Gains Load Attitude
     facq        = 0.1;
