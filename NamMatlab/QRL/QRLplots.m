@@ -1,63 +1,67 @@
 %% Dataconversion
 
-t            = simoutL.time;
+t         = simoutL.time;
 
-lqrposL      = lqrsimoutL.signals.values(:,1:3)';
-posL         = simoutL.signals.values(:,1:3)';
-velL         = simoutL.signals.values(:,4:6)';
-accL         = simoutL.signals.values(:,7:9)';
+lqrposL   = lqrsimoutL.signals.values(:,1:3)';
+posL      = simoutL.signals.values(:,1:3)';
+velL      = simoutL.signals.values(:,4:6)';
+accL      = simoutL.signals.values(:,7:9)';
 
-lqrangleL    = wrapTo180((lqrsimoutL1.signals.values(:,1:2)));
-angleL       = wrapTo180(rad2deg(simoutL1.signals.values(:,1:3)));
-OmegaL       = rad2deg(simoutL1.signals.values(:,4:6));
+lqrangleL = wrapTo180((lqrsimoutL1.signals.values(:,1:2)));
+angleL    = wrapTo180(rad2deg(simoutL1.signals.values(:,1:3)));
+OmegaL    = rad2deg(simoutL1.signals.values(:,4:6));
 
-r11          = reshape(simoutR.signals.values(1,1,:),1,length(t));
-r21          = reshape(simoutR.signals.values(2,1,:),1,length(t));
-r31          = reshape(simoutR.signals.values(3,1,:),1,length(t));
-r32          = reshape(simoutR.signals.values(3,2,:),1,length(t));
-r33          = reshape(simoutR.signals.values(3,3,:),1,length(t));
+r11       = reshape(simoutR.signals.values(1,1,:),1,length(t));
+r21       = reshape(simoutR.signals.values(2,1,:),1,length(t));
+r31       = reshape(simoutR.signals.values(3,1,:),1,length(t));
+r32       = reshape(simoutR.signals.values(3,2,:),1,length(t));
+r33       = reshape(simoutR.signals.values(3,3,:),1,length(t));
 
-psi          = atan(r21./r11);
-theta        = atan(-r31./sqrt(r32.^2+r33.^2));
-phi          = atan(r32./r33);
+psi       = atan(r21./r11);
+theta     = atan(-r31./sqrt(r32.^2+r33.^2));
+phi       = atan(r32./r33);
 
-angleQ       = rad2deg([phi;theta;psi])';
-lqrangleQ    = lqrsimoutL2.signals.values(:,1:3);
+angleQ    = rad2deg([phi;theta;psi])';
+lqrangleQ = lqrsimoutL2.signals.values(:,1:3);
 
-OmegaQ       = rad2deg(simoutL2.signals.values(:,4:6));
-dOmegaQ      = rad2deg(simoutL2.signals.values(:,7:9));
+OmegaQ    = rad2deg(simoutL2.signals.values(:,4:6));
+dOmegaQ   = rad2deg(simoutL2.signals.values(:,7:9));
 
-f            = simoutL3.signals.values(:,1);
-M            = simoutL3.signals.values(:,2:4)';
-omegarot     = simoutL3.signals.values(:,5:8)';
-fi           = simoutL3.signals.values(:,9:12)';
+f         = simoutL3.signals.values(:,1);
+M         = simoutL3.signals.values(:,2:4)';
+omegarot  = simoutL3.signals.values(:,5:8)';
+fi        = simoutL3.signals.values(:,9:12)';
 
-q            = simoutq.signals.values(:,1:3)';
-dq           = simoutq.signals.values(:,4:6)';
-ddq          = simoutq.signals.values(:,7:9)';
+q         = simoutq.signals.values(:,1:3)';
+dq        = simoutq.signals.values(:,4:6)';
+ddq       = simoutq.signals.values(:,7:9)';
 
-eq           = simouteq.signals.values(:,1:3);
-edq          = simouteq.signals.values(:,4:6);
-eR           = simouterrorR.signals.values(:,1:3);
-eOmega       = simouterrorR.signals.values(:,4:6);
-Psiq         = simoutPsiq.signals.values(:,1);
-PsiR         = simoutPsiR.signals.values(:,1);
+eq        = simouteq.signals.values(:,1:3);
+edq       = simouteq.signals.values(:,4:6);
+eR        = simouterrorR.signals.values(:,1:3);
+eOmega    = simouterrorR.signals.values(:,4:6);
+Psiq      = simoutPsiq.signals.values(:,1);
+PsiR      = simoutPsiR.signals.values(:,1);
 
-xLd          = simoutxLd.signals.values(:,1:3)';
-dxLd         = simoutxLd.signals.values(:,4:6)';
-ddxLd        = simoutxLd.signals.values(:,7:9)';
+xLd       = simoutxLd.signals.values(:,1:3)';
+dxLd      = simoutxLd.signals.values(:,4:6)';
+ddxLd     = simoutxLd.signals.values(:,7:9)';
 
-exL          = simoutexL.signals.values(:,1:3)';
-edxL         = simoutexL.signals.values(:,4:6)';
-lqrexL       = lqrsimoutexL.signals.values(:,1:3)';
+exL       = simoutexL.signals.values(:,1:3)';
+edxL      = simoutexL.signals.values(:,4:6)';
+lqrexL    = lqrsimoutexL.signals.values(:,1:3)';
 
 % F            = reshape(simoutF.signals.values,3,length(t));
 % F            = simoutF.signals.values(:,10:12);
-qcplot       = reshape(simoutqc.signals.values,[3,length(simoutqc.signals.values)]);
+qcplot    = reshape(simoutqc.signals.values,[3,length(simoutqc.signals.values)]);
 
-posQ         = posL - q*L;
-lqrposQd     = lqrsimoutL4.signals.values(:,1:3);
-lqrposQ      = lqrsimoutL3.signals.values(:,1:3);
+posQ      = posL - q*L;
+lqrposQd  = lqrsimoutL4.signals.values(:,1:3);
+lqrposQ   = lqrsimoutL3.signals.values(:,1:3);
+
+caseBsine = simoutsinegrowing.signals.values(:,1)';
+caseBgrow = simoutsinegrowing.signals.values(:,2)';
+caseBend  = simoutsinegrowing.signals.values(:,3)';
 
 %%
     lfont = 18; %Legend Fontsize
@@ -77,10 +81,10 @@ for nfile = 40:100
     
     savename = strcat(foldername,'Gains',num2str(nfile),'.mat');
     if exist(savename,'file') == 0
-        save(savename,'comment','comment2','facR','kR','kOmega','facq','kq','komega',...
+        save(savename,'comment','comment2','eps','facR','kR','kOmega','facq','kq','komega',...
             'facx','kpx','kdx','omega_n1_xL','omega_n2_xL','omega_n1_q',...
             'omega_n2_q','omega_n1_R','omega_n2_R','omega_n1_CFP','omega_n2_CFP','zeta_xL','zeta_q',...
-            'zeta_R','LQRA','LQRB','LQRC','LQRD','K','LQRQ','LQRR');
+            'zeta_R','LQRA','LQRB','LQRC','LQRD','K','LQRQ','LQRR','stept','stepamp');
 %         save(strcat(num2str(nfile),'.txt'),'kR','kOmega','kq','komega','kpx','kdx','mQ','mL','I','l','L','-ascii');
         
         % Write to Excel
@@ -584,119 +588,24 @@ xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')  
 
-%%
-% save(savename)
-
-%%
-
-% 
-%         figure('Name','Angular Velocity')
-%         h_suptitle = suptitle('QR Angular Velocity \Omega');
-%         set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
-%         subplot 311
-%         hold on
-%         plot(t,Omega(1,:),'Linewidth',2)
-%         plot(t,Omegad(1,:),'r--','Linewidth',2)
-%         ylabel('p [rad/s]', 'FontSize',labfont);
-%         set(gca,'FontSize',afont);
-%         subplot 312
-%         hold on
-%         plot(t,Omega(2,:),'Linewidth',2)
-%         plot(t,Omegad(2,:),'r--','Linewidth',2)
-%         ylabel('q [rad/s]', 'FontSize',labfont);
-%         set(gca,'FontSize',afont);
-%         subplot 313
-%         hold on
-%         plot(t,Omega(3,:),'Linewidth',2)
-%         plot(t,Omegad(3,:),'r--','Linewidth',2)
-%         ylabel('r [rad/s]', 'FontSize',labfont);
-%         xlabel('Time [s]','FontSize',labfont)
-%         hl = legend('$\Omega$','$\Omega_c$');
-%         set(hl,'Interpreter','latex','FontSize',lfont);
-%         set(gca,'FontSize',afont);
-%      saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')         
-%         
-%      saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
-% 
-%         
-%     case 0 %Position
-%         modecode = 'Position Mode';
-%         figure('Name','Rotation Matrices')
-%         for j=1:3
-%             for n=1:3
-%                 k=(j-1)*3+n;
-%                 subplot(3,3,k)
-%                 Rplot = reshape(R.signals.values(j,n,:),[length(R.signals.values),1]);
-%                 Rcplot = reshape(Rc.signals.values(j,n,:),[length(Rc.signals.values),1]);
-%                 hold on
-%                 axis([0 t(end) -1.2 1.2])
-%                 plot(t,Rplot,'Linewidth',2)
-%                 plot(t,Rcplot,'r--','Linewidth',2)
-%                 set(gca,'FontSize',afont);
-%                 if k==8
-%                     xlabel('Time [s]','FontSize',labfont)
-%                 end
-%             end
-%         end
-%         h_suptitle = suptitle('R and R_c \in\Re^{3\times3}');
-%         set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
-%         hl = legend('$R$','$R_c$');
-%         set(hl,'Interpreter','latex','FontSize',lfont,'Position',[.8,.8,.1,.1]);
-%     saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
-%         
-%         figure('Name','Attitude Errors')
-%         h_suptitle = suptitle(strcat('Attitude Errors: ',modecode));
-%         set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
-%         subplot 211
-%         plot(t,eOmegac,'Linewidth',2);
-%         ylabel('e_{\Omega}','FontSize',labfont);
-%         set(gca,'FontSize',afont);
-%         hl = legend('$e_p$','$e_q$','$e_r$');
-%         set(hl,'Interpreter','latex','FontSize',lfont)
-%         subplot 212
-%         plot(t,eRc,'Linewidth',2)
-%         ylabel('e_{R_c}','FontSize',labfont);
-%         xlabel('Time [s]','FontSize',labfont)
-%         set(gca,'FontSize',afont);
-%         hl = legend('$e_{R,1}$','$e_{R,2}$','$e_{R,3}$');   
-%         set(hl,'Interpreter','latex','FontSize',lfont)
-%   saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
-%                             
-%         figure('Name','Attitude Error Function')
-%         plot(t,errorfunc,'Linewidth',2)
-%         xlabel('Time [s]','FontSize',labfont)
-%         ylabel('\Psi(R,R_d)','FontSize',labfont);
-%         h_suptitle = suptitle('Attitude Error function');
-%         set(h_suptitle,'FontSize',supfont,'Interpreter','latex');      
-%         set(gca,'FontSize',afont);        
-%      saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
-%         
-%         figure('Name','Angular Velocity')%         
-%         h_suptitle = suptitle('QR Angular Velocity \Omega');
-%         set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
-%         subplot 311
-%         hold on
-%         plot(t,Omega(1,:),'Linewidth',2)
-%         plot(t,Omegac(1,:),'r--','Linewidth',2)
-%         ylabel('p [rad/s]', 'FontSize',labfont);
-%         set(gca,'FontSize',afont);
-%         subplot 312
-%         hold on
-%         plot(t,Omega(2,:),'Linewidth',2)
-%         plot(t,Omegac(2,:),'r--','Linewidth',2)
-%         ylabel('q [rad/s]', 'FontSize',labfont);
-%         set(gca,'FontSize',afont);
-%         subplot 313
-%         hold on
-%         plot(t,Omega(3,:),'Linewidth',2)
-%         plot(t,Omegac(3,:),'r--','Linewidth',2)
-%         ylabel('r [rad/s]', 'FontSize',labfont);
-%         xlabel('Time [s]','FontSize',labfont)
-%         hl = legend('$\Omega$','$\Omega_c$');
-%         set(hl,'Interpreter','latex','FontSize',lfont)
-%         set(gca,'FontSize',afont);
-%     saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')    
-%         
-%      saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
-%         
-% end
+%% Plot Case B
+filename = 'sineCaseB';
+figure('Name',filename)
+h_sup = suptitle('Trajectory generation $[m]$');
+set(h_sup,'FontSize',supfont,'Interpreter','latex');
+subplot 311
+plot(t,caseBsine,'r--','Linewidth',2)
+% hl = legend('\boldmath$x_{L,d}$');
+ylabel('\boldmath$sign.A$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+subplot 312
+plot(t,caseBgrow,'r--','Linewidth',2)
+ylabel('\boldmath$sign.B$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+subplot 313
+plot(t,caseBend,'r--','Linewidth',2)
+ylabel('\boldmath$sign.C$','FontSize',labfont,'Interpreter','latex')
+xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+% set(hl,'Interpreter','latex','FontSize',lfont);
+saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png') 

@@ -22,10 +22,11 @@ clear; clc; close all;
 % >> Changed to 'Structure with time'
 
 % OPTIONS
-animation = 0; % Turn animation on/off
-plots     = 0; % Turn plot generation + save matfiles on/off
+animation  = 0; % Turn animation on/off
+plots      = 0; % Turn plot generation + save matfiles on/off
+manualgain = 1;
 
-comment  = strcat('sinus-growing-Bebop-LQR',date); % comment added to save file
+comment  = strcat('step-Bebop-LQR',date); % comment added to save file
 comment2 = (''); % comment added to save file
 
 %% Input signals
@@ -72,18 +73,32 @@ qd  = [0; 0; qmode];
 
 
 %% Constants
-% mQ     = 4.34; %Lee2010 %weight bebop 420 g
-mQ = 0.4; %Cornelis2014
+% Parrot Bebop 1
+% Weight 410 g 
+% Max speed 13 m/s
+% Max inclination 30 deg
+% Max climb speed 2.5 m/s
+
+% Parrot Bebop 2
+% Weight 500 g 
+% Max speed 18 m/s
+% Max inclination 35 deg
+% Max climb speed 6 m/s
+
+% mQ     = 4.34; %Lee2010
+% l      = 0.315; %Lee2010 
 % Ixx    = 0.0820; %Lee2010
 % Iyy    = 0.0845; %Lee2010
 % Izz    = 0.1377; %Lee2010
-Ixx    = 0.00223; %Cornelis2014
-Iyy    = 0.00299; %Cornelis2014
-Izz    = 0.00480; %Cornelis2014
-I      = diag([Ixx Iyy Izz]); %Tang2014
-ctauf  = 8.004e-3; %Lee2010c
-mL     = 0.1;
-L      = 0.7;
+
+mQ    = 0.4; %Cornelis2014
+l     = 0.126; %Cornelis2014
+Ixx   = 0.00223; %Cornelis2014
+Iyy   = 0.00299; %Cornelis2014
+Izz   = 0.00480; %Cornelis2014
+I     = diag([Ixx Iyy Izz]); 
+mL    = 0.1;
+L     = 0.7;
 
 % mQ     = 0.7; %Becker
 % Ixx    = 4.6e-3; %Becker
@@ -99,8 +114,7 @@ L      = 0.7;
 b      = 0.1; %gok thrust factor
 d      = 0.1; %gok drag factor
 Ir     = 0.5; %gok
-% l      = 0.315; %Lee2010 %wingspan bebop 248 mm
-l = 0.126; %Cornelis2014
+ctauf = 8.004e-3; %Lee2010c
 
 g      = 9.81;
 e3     = [0;0;1];
@@ -162,27 +176,25 @@ zL0        = L+q0(3)*L;
 % x0 = [xL0;yL0;zL0];
 
 %% Gains 
-manualgain = 1;
-
 if manualgain == 0
-    load('Gains54');
+    load('Gains51');
 elseif manualgain == 1
     eps         = 0.99; % 0<eps<1
     
     % Gains QR Attitude
-    facR        = 0.05;
-    kR          = 8*facR; %Lee2010
+    facR        = 0.1;
+    kR          = 9.81*facR; %Lee2010
 %     kR          = 2.85*facR; %Lee2010
-    kOmega      = 2.5*facR;
+    kOmega      = 4.5*facR;
     
     % Gains Load Attitude
     facq        = 0.1;
-    kq          = facq*25;
-    komega      = facq*35;
+    kq          = facq*100;
+    komega      = facq*75;
     
     % Gains Load Position
     facx        = 0.1; %4;
-    kpx         = facx*35;%20.4
+    kpx         = facx*100;%20.4
     kdx         = facx*30;%11.7
     
     % Step block parameters
@@ -194,12 +206,12 @@ elseif manualgain == 1
     omega_n2_xL  = 60;
     omega_n1_CFP = 2;
     omega_n2_CFP = 2;
-    zeta_xL      = 0.975;
-    omega_n1_q   = 37*2.5;
-    omega_n2_q   = 37*1.5;
-    zeta_q       = 0.975;
-    omega_n1_R   = 130;
-    omega_n2_R   = 90;
+    zeta_xL      = 0.98;
+    omega_n1_q   = 90;
+    omega_n2_q   = 50;
+    zeta_q       = 0.98;
+    omega_n1_R   = 100;
+    omega_n2_R   = 80;
     zeta_R       = 0.98;
 end
 
