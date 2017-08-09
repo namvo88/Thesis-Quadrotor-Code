@@ -1,6 +1,13 @@
 clear; clc; close all;
 %% Parameter overview
 % R - Rotation Matrix
+% q - Load attitude unit vector from QR to Load
+% eR - QR Attitude error
+% eOmega - QR Angular velocity error
+% eq - Load Attitude error
+% eomega - Load Angular velocity error
+% ex - Load position error
+% ev - Load velocity error
 % 
 % Quadrotor Parameters
 % mQ - QR mass
@@ -21,13 +28,15 @@ clear; clc; close all;
 % 'Data Import/Export' page of the Configuration Parameters dialog to either 'Structure' or 'Structure with time'.
 % >> Changed to 'Structure with time'
 
-% OPTIONS
-animation  = 0; % Turn animation on/off
-plots      = 0; % Turn plot generation + save matfiles on/off
-manualgain = 0;
+animation    = 0; % Turn animation on/off
 
-comment  = strcat('sineupdown-Bebop-LQR',date); % comment added to save file
-comment2 = (''); % comment added to save file
+plots        = 1; % Turn plot generation + save matfiles on/off
+comment      = strcat('sineupdown-Bebop-LQR',date); % comment added to save file
+comment2     = (''); % comment added to save file
+
+loadgain     = 1;
+nameloadgain = 'Gains61'; %Gain file to load
+
 
 %% Input signals
 
@@ -73,6 +82,7 @@ qd  = [0; 0; qmode];
 
 
 %% Constants
+
 % Parrot Bebop 1
 % Weight 410 g 
 % Max speed 13 m/s
@@ -91,15 +101,6 @@ qd  = [0; 0; qmode];
 % Iyy    = 0.0845; %Lee2010
 % Izz    = 0.1377; %Lee2010
 
-mQ    = 0.4; %Cornelis2014
-l     = 0.126; %Cornelis2014
-Ixx   = 0.00223; %Cornelis2014
-Iyy   = 0.00299; %Cornelis2014
-Izz   = 0.00480; %Cornelis2014
-I     = diag([Ixx Iyy Izz]); 
-mL    = 0.1;
-L     = 0.7;
-
 % mQ     = 0.7; %Becker
 % Ixx    = 4.6e-3; %Becker
 % Iyy    = 4.6e-3; %Becker
@@ -110,6 +111,15 @@ L     = 0.7;
 
 % mL     = 0.045; %Praveen
 % lL         = 1.12; %Praveen
+
+mQ    = 0.4; %Cornelis2014
+l     = 0.126; %Cornelis2014
+Ixx   = 0.00223; %Cornelis2014
+Iyy   = 0.00299; %Cornelis2014
+Izz   = 0.00480; %Cornelis2014
+I     = diag([Ixx Iyy Izz]); 
+mL    = 0.1;
+L     = 0.7;
 
 b      = 0.1; %gok thrust factor
 d      = 0.1; %gok drag factor
@@ -145,6 +155,7 @@ Rzyx       = (Rx*Ry*Rz);
 R0         = Rzyx;
 
 %% Initial Conditions Load
+
 dxL0       = 0;
 dyL0       = 0;
 dzL0       = 0;
@@ -176,9 +187,9 @@ zL0        = L+q0(3)*L;
 % x0 = [xL0;yL0;zL0];
 
 %% Gains 
-if manualgain == 0
-    load('Gains61');
-elseif manualgain == 1
+if loadgain == 1
+    load(nameloadgain);
+elseif loadgain == 0
     eps         = 0.99; % 0<eps<1
     
     % Gains QR Attitude

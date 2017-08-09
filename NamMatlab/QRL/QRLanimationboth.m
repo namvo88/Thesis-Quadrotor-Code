@@ -4,7 +4,7 @@ afont = 16; %Axis Fontsize
 labfont = 24; %Label Fontsize
 supfont = 25; %Suptitle Fontsize
 
-%% GC
+%% NGC
 t            = simoutL.time;
 xLd          = simoutxLd.signals.values(:,1:3)';
 posL         = simoutL.signals.values(:,1:3)';
@@ -48,7 +48,7 @@ lqrXQ         = lqrPOSQR(1,:);
 lqrYQ         = lqrPOSQR(2,:);
 lqrZQ         = lqrPOSQR(3,:);
 
-%%
+%% SETUP FIGURE
 tend = t(end);
 ts = tend/length(t);
 
@@ -81,12 +81,16 @@ end
 
 minax = min(min(min(XQR,YQR),ZQR));  
 maxax = max(max(max(XQR,YQR),ZQR));
+midx = max(XQR)-(max(XQR)-min(XQR))/2;
+midy = max(YQR)-(max(YQR)-min(YQR))/2;
+midz = max(ZQR)-(max(ZQR)-min(ZQR))/2;
 difax = (maxax-minax)/2+1;
 
 figure
 screenSize = get(0,'Screensize');
 set(gcf, 'Position', screenSize*.8);
 
+%% NGC PLOT
 subplot 121
 plottitle = title('NGC Controller');
 set(plottitle,'FontSize',supfont,'Interpreter','latex');
@@ -123,10 +127,11 @@ hLdk = plot3(XLd(1),YLd(1),ZLd(1),'rx','LineWidth',2,'MarkerSize',15);
 
 % axis([XQR(1)-difax XQR(1)+difax minax maxax ZQR(1)-difax ZQR(1)+difax],'vis3d')
 % axis([min(XQR)-difax max(XQR)+difax min(YQR)-difax max(YQR)+difax min(ZQR)-difax max(ZQR)+difax],'vis3d')
+axis([midx-difax midx+difax midy-difax midy+difax midz-difax midz+difax ],'vis3d')
 % axis([minax maxax minax maxax minax maxax],'vis3d')
-axis([-1.5 1.5 -1.5 1.5 -1.5 1.5],'vis3d')
-% view(150,30)
-view(90,0)
+% axis([-1.5 1.5 -1.5 1.5 -1.5 1.5],'vis3d')
+view(150,30)
+% view(90,0)
 grid on
 xlabel('$x$','FontSize',labfont,'Interpreter','latex')
 ylabel('$y$','FontSize',labfont,'Interpreter','latex') 
@@ -136,6 +141,7 @@ set(gca,'FontSize',afont);
 % hleg = legend([hL hLd],'$x_L$','$x_{L,des}$');
 % set(hleg,'Interpreter','latex','FontSize',lfont);
 
+%% LQR PLOT
 subplot 122
 plottitle = title('LQR Controller');
 set(plottitle,'FontSize',supfont,'Interpreter','latex');
@@ -176,10 +182,12 @@ lqrhLdk = plot3(XLd(1),YLd(1),ZLd(1),'rx','LineWidth',2,'MarkerSize',15);
 
 % axis([XQR(1)-difax XQR(1)+difax minax maxax ZQR(1)-difax ZQR(1)+difax],'vis3d')
 % axis([min(XQR)-difax max(XQR)+difax min(YQR)-difax max(YQR)+difax min(ZQR)-difax max(ZQR)+difax],'vis3d')
+axis([midx-difax midx+difax midy-difax midy+difax midz-difax midz+difax ],'vis3d')
 % axis([minax maxax minax maxax minax maxax],'vis3d')
-axis([-1.5 1.5 -1.5 1.5 -1.5 1.5],'vis3d')
-% view(150,30)
-view(90,0)
+% axis([-1.5 1.5 -1.5 1.5 -1.5 1.5],'vis3d')
+view(150,30)
+% view(90,0)
+view(0,0)
 grid on
 xlabel('$x$','FontSize',labfont,'Interpreter','latex')
 ylabel('$y$','FontSize',labfont,'Interpreter','latex') 
@@ -189,8 +197,8 @@ set(gca,'FontSize',afont);
 % hleg = legend([hL hLd],'$x_L$','$x_{L,des}$');
 % set(hleg,'Interpreter','latex','FontSize',lfont);
 
+%% ANIMATION
 
-% pause(10)
 while waitforbuttonpress ~= 0 ; 
   pause(0.01) ; % allow for ctrl-c
 end

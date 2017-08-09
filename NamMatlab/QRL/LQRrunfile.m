@@ -14,11 +14,12 @@
 % Iyy    = 0.0845; %Lee2010
 % Izz    = 0.1377; %Lee2010
 
-mQ = 0.4; %Cornelis2014
-Ixx    = 0.00223; %Cornelis2014
-Iyy    = 0.00299; %Cornelis2014
-Izz    = 0.00480; %Cornelis2014
-
+mQ           = 0.4; %Cornelis2014
+Ixx          = 0.00223; %Cornelis2014
+Iyy          = 0.00299; %Cornelis2014
+Izz          = 0.00480; %Cornelis2014
+mL           = 0.1;
+L            = 0.7;
 
 I_L    = mL*L^2;
 LQRM1   = [mQ+mL 0 0, 0 0 0, 0 mL*L;%ddx
@@ -78,7 +79,7 @@ lqr0   = [xL0 yL0 zL0+L phiQ0 thetaQ0 psiQ0 phiL0 thetaL0 zeros(1,8)]';
 % Qdiag = [50000 50000 500 0.001 0.001 0.001 100 100 1 1 1 1 1 1 1 1]; %sine up down min load swing
 % Qdiag = [100 100 250 1 1 1 750 750 1 1 1 1 1 1 1 1]; 
 
-Qdiag = [5000 5000 0.001 0 0 0.001 zeros(1,10)];
+Qdiag = [5000 5000 5000 1 1 0.001 15000 15000 zeros(1,8)];
 % Qdiag = [1 1 1 1 1 1 1 1 ones(1,8)];
 LQRQ = diag(Qdiag);
 
