@@ -30,11 +30,11 @@ clear; clc; close all;
 
 animation    = 0; % Turn animation on/off
 
-plots        = 1; % Turn plot generation + save matfiles on/off
-comment      = strcat('sineupdown-Bebop-LQR',date); % comment added to save file
+plots        = 0; % Turn plot generation + save matfiles on/off
+comment      = strcat('step-Bebop-LQR',date); % comment added to save file
 comment2     = (''); % comment added to save file
 
-loadgain     = 1;
+loadgain     = 0;
 nameloadgain = 'Gains61'; %Gain file to load
 
 
@@ -130,8 +130,6 @@ g      = 9.81;
 e3     = [0;0;1];
 
 % fc     = (mQ+mL)*g;
-fsat   = inf*[1 -1];
-Msat   = inf*[1 -1];
 
 %% Initial Conditions QR
 
@@ -188,42 +186,46 @@ zL0        = L+q0(3)*L;
 
 %% Gains 
 if loadgain == 1
-    load(nameloadgain);
+    foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\MatlabImages\';
+    load(strcat(foldername,nameloadgain));
 elseif loadgain == 0
-    eps         = 0.99; % 0<eps<1
-    
-    % Gains QR Attitude
-    facR        = 0.1;
-    kR          = 9.81*facR; %Lee2010
-%     kR          = 2.85*facR; %Lee2010
-    kOmega      = 4.5*facR;
-    
-    % Gains Load Attitude
-    facq        = 0.1;
-    kq          = facq*100;
-    komega      = facq*75;
-    
-    % Gains Load Position
-    facx        = 0.1; %4;
-    kpx         = facx*100;%20.4
-    kdx         = facx*30;%11.7
-    
-    % Step block parameters
-    stept   = 1.5;
-    stepamp = 0.25;
-    
-    % Command Filter Low Pass filter 3th order
-    omega_n1_xL  = 60;
-    omega_n2_xL  = 60;
-    omega_n1_CFP = 2;
-    omega_n2_CFP = 2;
-    zeta_xL      = 0.98;
-    omega_n1_q   = 90;
-    omega_n2_q   = 50;
-    zeta_q       = 0.98;
-    omega_n1_R   = 100;
-    omega_n2_R   = 80;
-    zeta_R       = 0.98;
+%     eps         = 0.99; % 0<eps<1
+%     
+%     Gains QR Attitude
+%     facR        = 0.1;
+%     kR          = 9.81*facR; %Lee2010
+    kR          = .981; %Lee2010
+    kOmega      = .45;
+%     
+%     Gains Load Attitude
+%     facq        = 0.1;
+    kq          = 7;
+    komega      = 5;
+%     
+%     Gains Load Position
+%     facx        = 0.1; %4;
+    kpx         = 7.5;%20.4
+    kdx         = 3;%11.7
+%     
+%     Step block parameters
+%     stept   = 1.5;
+%     stepamp = 0.25;
+%     
+%     Command Filter Low Pass filter 3th order
+%     omega_n1_xL  = 60;
+%     omega_n2_xL  = 60;
+%     omega_n1_CFP = 2;
+%     omega_n2_CFP = 2;
+%     zeta_xL      = 0.98;
+%     omega_n1_q   = 90;
+%     omega_n2_q   = 50;
+%     zeta_q       = 0.98;
+%     omega_n1_R   = 100;
+%     omega_n2_R   = 80;
+%     zeta_R       = 0.98;
+
+fsat   = 5.9*[1 -1];
+Msat   = 1*[1 -1];
 end
 
 % Simulation

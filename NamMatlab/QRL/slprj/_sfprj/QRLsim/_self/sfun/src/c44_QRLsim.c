@@ -185,7 +185,7 @@ static void sf_c44_QRLsim(SFc44_QRLsimInstanceStruct *chartInstance)
   c44_R = (real_T (*)[9])ssGetInputPortSignal(chartInstance->S, 0);
   _SFD_SYMBOL_SCOPE_PUSH(0U, 0U);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
-  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 13U, chartInstance->c44_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 15U, chartInstance->c44_sfEvent);
   for (c44_i2 = 0; c44_i2 < 9; c44_i2++) {
     _SFD_DATA_RANGE_CHECK((*c44_R)[c44_i2], 0U);
   }
@@ -291,7 +291,7 @@ static void c44_chartstep_c44_QRLsim(SFc44_QRLsimInstanceStruct *chartInstance)
   c44_b_Out = (real_T (*)[3])ssGetOutputPortSignal(chartInstance->S, 1);
   c44_b_Rc = (real_T (*)[9])ssGetInputPortSignal(chartInstance->S, 1);
   c44_b_R = (real_T (*)[9])ssGetInputPortSignal(chartInstance->S, 0);
-  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 13U, chartInstance->c44_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 15U, chartInstance->c44_sfEvent);
   for (c44_i8 = 0; c44_i8 < 9; c44_i8++) {
     c44_R[c44_i8] = (*c44_b_R)[c44_i8];
   }
@@ -476,7 +476,7 @@ static void c44_chartstep_c44_QRLsim(SFc44_QRLsimInstanceStruct *chartInstance)
     (*c44_b_Out)[c44_i48] = c44_Out[c44_i48];
   }
 
-  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 13U, chartInstance->c44_sfEvent);
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 15U, chartInstance->c44_sfEvent);
 }
 
 static void initSimStructsc44_QRLsim(SFc44_QRLsimInstanceStruct *chartInstance)

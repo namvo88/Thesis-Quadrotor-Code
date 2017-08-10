@@ -64,21 +64,16 @@ caseBgrow = simoutsinegrowing.signals.values(:,2)';
 caseBend  = simoutsinegrowing.signals.values(:,3)';
 
 %%
-    lfont = 18; %Legend Fontsize
-    afont = 16; %Axis Fontsize
-    labfont = 20; %Label Fontsize
-    supfont = 25; %Suptitle Fontsize
-    
+    lfont = 23; %Legend Fontsize
+    afont = 18; %Axis Fontsize
+    labfont = 24; %Label Fontsize
+    supfont = 26; %Suptitle Fontsize
+
+%%
     foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\MatlabImages\';
 
 for nfile = 40:100
 
-%     savename = strcat(foldername,modecode,num2str(nfile),'.mat');
-%     if exist(savename,'file') == 0
-%         disp(nfile)
-%         break
-%     end
-    
     savename = strcat(foldername,'Gains',num2str(nfile),'.mat');
     if exist(savename,'file') == 0
         save(savename,'comment','comment2','eps','facR','kR','kOmega','facq','kq','komega',...
@@ -103,8 +98,6 @@ end
 
 save(strcat(foldername,modecode,num2str(nfile),'.mat'))
 save(strcat(foldername,modecode,num2str(nfile),comment,'.mat'))
-
-   
 
 %% Inputs
 
@@ -522,10 +515,10 @@ set(hl,'Interpreter','latex','FontSize',lfont);
 subplot 212
 plot(t,eOmega,'Linewidth',2);
 ylabel('\boldmath$e_{\Omega}$','FontSize',labfont,'Interpreter','latex');
+xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 hl = legend('\boldmath$e_{\Omega,1}$','\boldmath$e_{\Omega,2}$','\boldmath$e_{\Omega,3}$','FontSize',lfont);
 set(hl,'Interpreter','latex','FontSize',lfont);
-xlabel('Time [s]','FontSize',labfont,'Interpreter','latex')
 saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
 filename = 'eq';

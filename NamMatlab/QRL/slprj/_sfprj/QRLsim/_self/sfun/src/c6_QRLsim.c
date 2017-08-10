@@ -18,7 +18,7 @@
 /* Variable Declarations */
 
 /* Variable Definitions */
-static const char * c6_debug_family_names[11] = { "theL", "phiL", "L", "x", "y",
+static const char * c6_debug_family_names[11] = { "phiL", "theL", "L", "x", "y",
   "z", "nargin", "nargout", "u", "xQ", "xL" };
 
 /* Function Declarations */
@@ -164,8 +164,8 @@ static void sf_c6_QRLsim(SFc6_QRLsimInstanceStruct *chartInstance)
   int32_T c6_i6;
   real_T c6_xQ[3];
   uint32_T c6_debug_family_var_map[11];
-  real_T c6_theL;
   real_T c6_phiL;
+  real_T c6_theL;
   real_T c6_L;
   real_T c6_x;
   real_T c6_y;
@@ -198,7 +198,7 @@ static void sf_c6_QRLsim(SFc6_QRLsimInstanceStruct *chartInstance)
   c6_b_u = (real_T (*)[2])ssGetInputPortSignal(chartInstance->S, 0);
   _SFD_SYMBOL_SCOPE_PUSH(0U, 0U);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
-  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 4U, chartInstance->c6_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 5U, chartInstance->c6_sfEvent);
   for (c6_i2 = 0; c6_i2 < 2; c6_i2++) {
     _SFD_DATA_RANGE_CHECK((*c6_b_u)[c6_i2], 0U);
   }
@@ -212,7 +212,7 @@ static void sf_c6_QRLsim(SFc6_QRLsimInstanceStruct *chartInstance)
   }
 
   chartInstance->c6_sfEvent = CALL_EVENT;
-  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 4U, chartInstance->c6_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 5U, chartInstance->c6_sfEvent);
   for (c6_i5 = 0; c6_i5 < 2; c6_i5++) {
     c6_u[c6_i5] = (*c6_b_u)[c6_i5];
   }
@@ -223,9 +223,9 @@ static void sf_c6_QRLsim(SFc6_QRLsimInstanceStruct *chartInstance)
 
   _SFD_SYMBOL_SCOPE_PUSH_EML(0U, 11U, 11U, c6_debug_family_names,
     c6_debug_family_var_map);
-  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_theL, 0U, c6_c_sf_marshallOut,
+  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_phiL, 0U, c6_c_sf_marshallOut,
     c6_b_sf_marshallIn);
-  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_phiL, 1U, c6_c_sf_marshallOut,
+  _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_theL, 1U, c6_c_sf_marshallOut,
     c6_b_sf_marshallIn);
   _SFD_SYMBOL_SCOPE_ADD_EML(&c6_L, 2U, c6_c_sf_marshallOut);
   _SFD_SYMBOL_SCOPE_ADD_EML_IMPORTABLE(&c6_x, 3U, c6_c_sf_marshallOut,
@@ -244,9 +244,9 @@ static void sf_c6_QRLsim(SFc6_QRLsimInstanceStruct *chartInstance)
     c6_sf_marshallIn);
   CV_EML_FCN(0, 0);
   _SFD_EML_CALL(0U, chartInstance->c6_sfEvent, 4);
-  c6_theL = c6_u[1];
-  _SFD_EML_CALL(0U, chartInstance->c6_sfEvent, 5);
   c6_phiL = c6_u[0];
+  _SFD_EML_CALL(0U, chartInstance->c6_sfEvent, 5);
+  c6_theL = c6_u[1];
   _SFD_EML_CALL(0U, chartInstance->c6_sfEvent, 7);
   c6_L = 0.7;
   _SFD_EML_CALL(0U, chartInstance->c6_sfEvent, 13);
@@ -287,7 +287,7 @@ static void sf_c6_QRLsim(SFc6_QRLsimInstanceStruct *chartInstance)
     (*c6_b_xL)[c6_i8] = c6_xL[c6_i8];
   }
 
-  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 4U, chartInstance->c6_sfEvent);
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 5U, chartInstance->c6_sfEvent);
   _SFD_SYMBOL_SCOPE_POP();
   _SFD_CHECK_FOR_STATE_INCONSISTENCY(_QRLsimMachineNumber_,
     chartInstance->chartNumber, chartInstance->instanceNumber);
@@ -722,10 +722,10 @@ extern void utFree(void*);
 
 void sf_c6_QRLsim_get_check_sum(mxArray *plhs[])
 {
-  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1301380890U);
-  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1548158723U);
-  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(2793880823U);
-  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(1598806008U);
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(533106061U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1475851707U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3656845240U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(2204773204U);
 }
 
 mxArray *sf_c6_QRLsim_get_autoinheritance_info(void)
@@ -737,7 +737,7 @@ mxArray *sf_c6_QRLsim_get_autoinheritance_info(void)
     autoinheritanceFields);
 
   {
-    mxArray *mxChecksum = mxCreateString("wKT0ABc8qitSEUlPlAs8pD");
+    mxArray *mxChecksum = mxCreateString("WNQkqzSqcLegKT3zUFH1NG");
     mxSetField(mxAutoinheritanceInfo,0,"checksum",mxChecksum);
   }
 
@@ -957,7 +957,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
 static const char* sf_get_instance_specialization(void)
 {
-  return "4fHcm2WcBxcIEALYwnmCQC";
+  return "eK2Pd5UzzYlpK4pHydlzV";
 }
 
 static void sf_opaque_initialize_c6_QRLsim(void *chartInstanceVar)
@@ -1123,10 +1123,10 @@ static void mdlSetWorkWidths_c6_QRLsim(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(2546177390U));
-  ssSetChecksum1(S,(2149994039U));
-  ssSetChecksum2(S,(965619780U));
-  ssSetChecksum3(S,(3199348195U));
+  ssSetChecksum0(S,(1825685419U));
+  ssSetChecksum1(S,(2365175162U));
+  ssSetChecksum2(S,(3695416654U));
+  ssSetChecksum3(S,(1759669452U));
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
   ssSupportsMultipleExecInstances(S,1);
