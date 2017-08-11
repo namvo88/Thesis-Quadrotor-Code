@@ -32,10 +32,10 @@ animation    = 0; % Turn animation on/off
 
 plots        = 0; % Turn plot generation + save matfiles on/off
 comment      = strcat('step-Bebop-LQR',date); % comment added to save file
-comment2     = (''); % comment added to save file
+comment2     = ('CFv2'); % comment added to save file
 
 loadgain     = 0;
-nameloadgain = 'Gains61'; %Gain file to load
+nameloadgain = 'Gains63'; %Gain file to load
 
 
 %% Input signals
@@ -54,7 +54,7 @@ mode      = 4;
 % Inverted 1
 qmode     = -1;
 
-Tsim_end  = 30;
+Tsim_end  = 10;
 Tsim_s    = 0.01;
 
 switch mode
@@ -194,37 +194,37 @@ elseif loadgain == 0
 %     Gains QR Attitude
 %     facR        = 0.1;
 %     kR          = 9.81*facR; %Lee2010
-    kR          = .981; %Lee2010
-    kOmega      = .45;
+    kR          = 1.5; %Lee2010
+    kOmega      = .2;
 %     
 %     Gains Load Attitude
 %     facq        = 0.1;
-    kq          = 7;
-    komega      = 5;
+    kq          = 3;
+    komega      = 1.5;
 %     
 %     Gains Load Position
 %     facx        = 0.1; %4;
-    kpx         = 7.5;%20.4
+    kpx         = 18;%20.4
     kdx         = 3;%11.7
 %     
 %     Step block parameters
-%     stept   = 1.5;
-%     stepamp = 0.25;
+    stept   = 2;
+    stepamp = 0.25;
 %     
 %     Command Filter Low Pass filter 3th order
-%     omega_n1_xL  = 60;
+    omega_n1_xL  = 60;
 %     omega_n2_xL  = 60;
 %     omega_n1_CFP = 2;
 %     omega_n2_CFP = 2;
 %     zeta_xL      = 0.98;
-%     omega_n1_q   = 90;
+    omega_n1_q   = 50;
 %     omega_n2_q   = 50;
 %     zeta_q       = 0.98;
-%     omega_n1_R   = 100;
+    omega_n1_R   = 40;
 %     omega_n2_R   = 80;
 %     zeta_R       = 0.98;
 
-fsat   = 5.9*[1 -1];
+fsat   = 20*[1 -1];
 Msat   = 1*[1 -1];
 end
 
