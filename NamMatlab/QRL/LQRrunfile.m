@@ -13,23 +13,23 @@
 % Ixx    = 0.0820; %Lee2010
 % Iyy    = 0.0845; %Lee2010
 % Izz    = 0.1377; %Lee2010
-
-mQ           = 0.4; %Cornelis2014
-Ixx          = 0.00223; %Cornelis2014
-Iyy          = 0.00299; %Cornelis2014
-Izz          = 0.00480; %Cornelis2014
-mL           = 0.1;
-L            = 0.7;
+% 
+% mQ           = 0.4; %Cornelis2014
+% Ixx          = 0.00223; %Cornelis2014
+% Iyy          = 0.00299; %Cornelis2014
+% Izz          = 0.00480; %Cornelis2014
+% mL           = 0.1;
+% L            = 0.7;
 
 I_L    = mL*L^2;
 LQRM1   = [mQ+mL 0 0, 0 0 0, 0 mL*L;%ddx
-         0 mQ+mL 0, 0 0 0, mL*L 0;%ddy
-         0 0 mQ+mL, 0 0 0, 0 0;% ddz
-         0 0 0, Ixx 0 0, 0 0;% ddphi
-         0 0 0, 0 Iyy 0, 0 0;% ddthe
-         0 0 0, 0 0 Izz, 0 0;% ddpsi
-         0 L*mL 0, 0 0 0, I_L+L^2*mL 0;%ddphiL        
-         L*mL 0 0, 0 0 0, 0 I_L+L^2*mL];%ddtheL
+    0 mQ+mL 0, 0 0 0, mL*L 0;%ddy
+    0 0 mQ+mL, 0 0 0, 0 0;% ddz
+    0 0 0, Ixx 0 0, 0 0;% ddphi
+    0 0 0, 0 Iyy 0, 0 0;% ddthe
+    0 0 0, 0 0 Izz, 0 0;% ddpsi
+    0 L*mL 0, 0 0 0, I_L+L^2*mL 0;%ddphiL
+    L*mL 0 0, 0 0 0, 0 I_L+L^2*mL];%ddtheL
 
 LQRM2  = [0 0 0, 0 -g*(mQ+mL) 0, 0 0;%x
          0 0 0, g*(mQ+mL) 0 0, 0 0; %y
@@ -69,6 +69,7 @@ phiL0 = 0;
 thetaL0 = 0;
 % thetaL0 = deg2rad(30);
 lqr0   = [xL0 yL0 zL0+L phiQ0 thetaQ0 psiQ0 phiL0 thetaL0 zeros(1,8)]';
+% lqr0   = [xL0 yL0 zL0+L deg2rad(30) thetaQ0 psiQ0 phiL0 thetaL0 zeros(1,8)]';
 
 % x = [x y z phi the psi phiL theL dx dy dz dphi dthe dpsi dphiL dtheL]'
 
@@ -79,12 +80,12 @@ lqr0   = [xL0 yL0 zL0+L phiQ0 thetaQ0 psiQ0 phiL0 thetaL0 zeros(1,8)]';
 % Qdiag = [50000 50000 500 0.001 0.001 0.001 100 100 1 1 1 1 1 1 1 1]; %sine up down min load swing
 % Qdiag = [100 100 250 1 1 1 750 750 1 1 1 1 1 1 1 1]; 
 
-Qdiag = [5000 5000 5000 1 1 0.001 15000 15000 zeros(1,8)];
+Qdiag = [50000 50000 50000 0.001 0.001 1 25000 25000 0.001*ones(1,8)];
 % Qdiag = [1 1 1 1 1 1 1 1 ones(1,8)];
 LQRQ = diag(Qdiag);
 
 % Rdiag = [1000 50 50 100];
-Rdiag = [1000 ones(1,3)];
+Rdiag = [1000 100*ones(1,3)];
 LQRR = diag(Rdiag); 
 
 K = lqr(LQRA,LQRB,LQRQ,LQRR);
@@ -93,9 +94,9 @@ K = lqr(LQRA,LQRB,LQRQ,LQRR);
 % sys=ss(LQRAc,LQRB,LQRC,LQRD);
 % step(sys)
 
-lqrCn = [eye(3) zeros(3,13)];
+% lqrCn = [eye(3) zeros(3,13)];
 % Nbar = -inv(lqrCn*((LQRA-LQRB*K)\LQRB));
-Nbar = diag([0,-70.825,0,0]);
+% Nbar = diag([0,-70.825,0,0]);
 sim('QRLsim');
 
     

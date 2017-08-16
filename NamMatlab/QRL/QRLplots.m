@@ -56,46 +56,54 @@ lqrexL    = lqrsimoutexL.signals.values(:,1:3)';
 qcplot    = reshape(simoutqc.signals.values,[3,length(simoutqc.signals.values)]);
 
 posQ      = posL - q*L;
-lqrposQd  = lqrsimoutL4.signals.values(:,1:3);
-lqrposQ   = lqrsimoutL3.signals.values(:,1:3);
+lqrposQd  = lqrsimoutL4.signals.values(:,1:3)';
+lqrposQ   = lqrsimoutL3.signals.values(:,1:3)';
+exQ       = lqrposQ - lqrposQd;
 
-caseBsine = simoutsinegrowing.signals.values(:,1)';
-caseBgrow = simoutsinegrowing.signals.values(:,2)';
-caseBend  = simoutsinegrowing.signals.values(:,3)';
+caseBsigA = simoutsinegrowing.signals.values(:,1)';
+caseBsigB = simoutsinegrowing.signals.values(:,2)';
+caseBsigC = simoutsinegrowing.signals.values(:,3)';
+% if nfile > 74
+caseBsigD = simoutsinegrowing1.signals.values(:,4)';
+caseBsigE = simoutsinegrowing1.signals.values(:,5)';
+% end
+
+exLperc = abs(exL)./xLd*100;
+lqrexLperc = abs(lqrexL)./xLd*100;
 
 %%
-    lfont = 23; %Legend Fontsize
-    afont = 18; %Axis Fontsize
-    labfont = 24; %Label Fontsize
-    supfont = 26; %Suptitle Fontsize
+lfont = 23; %Legend Fontsize
+afont = 18; %Axis Fontsize
+labfont = 24; %Label Fontsize
+supfont = 26; %Suptitle Fontsize
 
 %%
-    foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\MatlabImages\';
-
 for nfile = 40:100
-
+    
     savename = strcat(foldername,'Gains',num2str(nfile),'.mat');
     if exist(savename,'file') == 0
+    
         save(savename,'comment','comment2','eps','facR','kR','kOmega','facq','kq','komega',...
             'facx','kpx','kdx','omega_n1_xL','omega_n2_xL','omega_n1_q',...
             'omega_n2_q','omega_n1_R','omega_n2_R','omega_n1_CFP','omega_n2_CFP','zeta_xL','zeta_q',...
-            'zeta_R','LQRA','LQRB','LQRC','LQRD','K','LQRQ','LQRR','stept','stepamp');
-%         save(strcat(num2str(nfile),'.txt'),'kR','kOmega','kq','komega','kpx','kdx','mQ','mL','I','l','L','-ascii');
+            'zeta_R','LQRA','LQRB','LQRC','LQRD','K','LQRQ','LQRR','stept','stepamp','fsat','Msat');
+        %         save(strcat(num2str(nfile),'.txt'),'kR','kOmega','kq','komega','kpx','kdx','mQ','mL','I','l','L','-ascii');
         
         % Write to Excel
         excelname = 'parameters.xlsx';
-%         exceldata = {'mQ',mQ;'mL',mL;'l',l;'L',L;'Ixx',Ixx;'Iyy',Iyy;'Izz',Izz;'kR',kR;'kOmega',kOmega;'kq',kq;'komega',komega;'kpx',kpx;'kdx',kdx};
+        %         exceldata = {'mQ',mQ;'mL',mL;'l',l;'L',L;'Ixx',Ixx;'Iyy',Iyy;'Izz',Izz;'kR',kR;'kOmega',kOmega;'kq',kq;'komega',komega;'kpx',kpx;'kdx',kdx};
         par = {'mQ';'mL';'l';'L';'Ixx';'Iyy';'Izz';'kR';'kOmega';'kq';'komega';'kpx';'kdx'};
         val = {mQ;mL;l;L;Ixx;Iyy;Izz;kR;kOmega;kq;komega;kpx;kdx};
-        cfpar = {'omega_n1_xL';'omega_n2_xL';'omega_n1_CFP';'omega_n2_CFP';'zeta_xL';'omega_n1_q';'omega_n2_q';'zeta_q';'omega_n1_R';'omega_n2_R';'zeta_R'};
-        cfval = {omega_n1_xL;omega_n2_xL;omega_n1_CFP;omega_n2_CFP;zeta_xL;omega_n1_q;omega_n2_q;zeta_q;omega_n1_R;omega_n2_R;zeta_R};        
+        cfpar = {'omega_n1_xL';'omega_n2_xL';'omega_n1_CFP';'omega_n2_CFP';'zeta_xL';'omega_n1_q';'omega_n2_q';'zeta_q';'omega_n1_R';'omega_n2_R';'zeta_R';'eps'};
+        cfval = {omega_n1_xL;omega_n2_xL;omega_n1_CFP;omega_n2_CFP;zeta_xL;omega_n1_q;omega_n2_q;zeta_q;omega_n1_R;omega_n2_R;zeta_R;eps};
         exceldata = [{'filenumber'},{nfile};par,val;cfpar,cfval];
         sheet = num2str(nfile);
         xlswrite(excelname,exceldata,sheet)
+        
         break
     end
 end
-
+%%
 save(strcat(foldername,modecode,num2str(nfile),'.mat'))
 save(strcat(foldername,modecode,num2str(nfile),comment,'.mat'))
 
@@ -141,33 +149,31 @@ set(gca,'FontSize',afont);
 saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
 %%
-filename = 'Lpos';
-figure('Name',filename)
-h_sup = suptitle('Load Pos./Vel./Acc.');
-set(h_sup,'FontSize',supfont,'Interpreter','latex');
-subplot 311
-plot(t,posL,'Linewidth',2)
-hl = legend('\boldmath$x$','\boldmath$y$','\boldmath$z$');
-set(hl,'Interpreter','latex','FontSize',lfont);
-ylabel('\boldmath$[m]$','FontSize',labfont,'Interpreter','latex')
-set(gca,'FontSize',afont);
-subplot 312
-plot(t,velL,'Linewidth',2)
-hl = legend('\boldmath$\dot{x}$','\boldmath$\dot{y}$','\boldmath$\dot{z}$');
-set(hl,'Interpreter','latex','FontSize',lfont);
-ylabel('\boldmath$[m/s]$','FontSize',labfont,'Interpreter','latex')
-set(gca,'FontSize',afont);
-subplot 313
-plot(t,accL,'Linewidth',2)
-hl = legend('\boldmath$\ddot{x}$','\boldmath$\ddot{y}$','\boldmath$\ddot{z}$');
-set(hl,'Interpreter','latex','FontSize',lfont);
-ylabel('\boldmath$[m/s^2]$','FontSize',labfont,'Interpreter','latex')
-xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
-set(gca,'FontSize',afont);
-hLPosOverview = gcf;
-saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
-
-if mode==4
+% filename = 'Lpos';
+% figure('Name',filename)
+% h_sup = suptitle('Load Pos./Vel./Acc.');
+% set(h_sup,'FontSize',supfont,'Interpreter','latex');
+% subplot 311
+% plot(t,posL,'Linewidth',2)
+% hl = legend('\boldmath$x$','\boldmath$y$','\boldmath$z$');
+% set(hl,'Interpreter','latex','FontSize',lfont);
+% ylabel('\boldmath$[m]$','FontSize',labfont,'Interpreter','latex')
+% set(gca,'FontSize',afont);
+% subplot 312
+% plot(t,velL,'Linewidth',2)
+% hl = legend('\boldmath$\dot{x}$','\boldmath$\dot{y}$','\boldmath$\dot{z}$');
+% set(hl,'Interpreter','latex','FontSize',lfont);
+% ylabel('\boldmath$[m/s]$','FontSize',labfont,'Interpreter','latex')
+% set(gca,'FontSize',afont);
+% subplot 313
+% plot(t,accL,'Linewidth',2)
+% hl = legend('\boldmath$\ddot{x}$','\boldmath$\ddot{y}$','\boldmath$\ddot{z}$');
+% set(hl,'Interpreter','latex','FontSize',lfont);
+% ylabel('\boldmath$[m/s^2]$','FontSize',labfont,'Interpreter','latex')
+% xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+% set(gca,'FontSize',afont);
+% hLPosOverview = gcf;
+% saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
    
 filename = 'xL';
 figure('Name',filename)
@@ -190,10 +196,64 @@ set(gca,'FontSize',afont);
 set(hl,'Interpreter','latex','FontSize',lfont);
 saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')  
 
+filename = 'dxL';
+figure('Name',filename)
+h_sup = suptitle('Load Velocity $[m/s]$');
+set(h_sup,'FontSize',supfont,'Interpreter','latex');
+if casename == 'C'
+    subplot 311
+    plot(t,velL(1,:),t,dxLd(1,:),'r--','Linewidth',2)
+    hl = legend('\boldmath$x_L$','\boldmath$x_{L,d}$');
+    ylabel('\boldmath$\dot{x}$','FontSize',labfont,'Interpreter','latex')
+    set(gca,'FontSize',afont);
+    subplot 312
+plot(t,velL(2,:),t,dxLd(2,:),'r--','Linewidth',2)
+end
+
+if casename ~= 'C'
+    subplot 211
+    plot(t,velL(2,:),t,dxLd(2,:),'r--','Linewidth',2)
+    hl = legend('\boldmath$x_L$','\boldmath$x_{L,d}$');
+end
+ylabel('\boldmath$\dot{y}$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+if casename == 'C'
+    subplot 313
+end
+if casename ~= 'C'
+    subplot 212
+end
+plot(t,velL(3,:),t,dxLd(3,:),'r--','Linewidth',2)
+ylabel('\boldmath$\dot{z}$','FontSize',labfont,'Interpreter','latex')
+xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+set(hl,'Interpreter','latex','FontSize',lfont);
+saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
+
+if casename ~= 'C'
+    filename = 'dxLd-ddxLd';
+    figure('Name',filename)
+    h_sup = suptitle('Load Vel./Acc.');
+    set(h_sup,'FontSize',supfont,'Interpreter','latex');
+    subplot 211
+    plot(t,velL(2,:),t,dxLd(2,:),'r--','Linewidth',2)
+    hl = legend('\boldmath$\dot{y}_L$','\boldmath$\dot{y}_{L,d}$');
+    set(hl,'Interpreter','latex','FontSize',lfont);
+    ylabel('\boldmath$[m/s]$','FontSize',labfont,'Interpreter','latex')
+    set(gca,'FontSize',afont);
+    subplot 212
+    plot(t,accL(2,:),t,ddxLd(2,:),'r--','Linewidth',2)
+    hl = legend('\boldmath$\ddot{y}_L$','\boldmath$\ddot{y}_{L,d}$');
+    ylabel('\boldmath$[m/s^2]$','FontSize',labfont,'Interpreter','latex')
+    xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+    set(gca,'FontSize',afont);
+    set(hl,'Interpreter','latex','FontSize',lfont);
+    saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
+end
 
 filename = 'xLdes';
 figure('Name',filename)
-h_sup = suptitle('Desired Load Position $[m]$');
+h_sup = suptitle('Desired Load Pos. $[m]$');
 set(h_sup,'FontSize',supfont,'Interpreter','latex');
 subplot 311
 plot(t,xLd(1,:),'r--','Linewidth',2)
@@ -214,7 +274,7 @@ saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
 filename = 'dxLdes';
 figure('Name',filename)
-h_sup = suptitle('Desired Load Velocity $[m/s]$');
+h_sup = suptitle('Desired Load Vel.$[m/s]$');
 set(h_sup,'FontSize',supfont,'Interpreter','latex');
 subplot 311
 plot(t,dxLd(1,:),'r--','Linewidth',2)
@@ -235,7 +295,7 @@ saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
 filename = 'ddxLdes';
 figure('Name',filename)
-h_sup = suptitle('Desired Load Acceleration $[m/s^2]$');
+h_sup = suptitle('Desired Load Acc.$[m/s^2]$');
 set(h_sup,'FontSize',supfont,'Interpreter','latex');
 subplot 311
 plot(t,ddxLd(1,:),'r--','Linewidth',2)
@@ -253,7 +313,63 @@ xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 set(hl,'Interpreter','latex','FontSize',lfont);
 saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
+%% all xLd
+if casename == 'A'
+    filename = 'allxLd';
+    figure('Name',filename)
+    h_sup = suptitle('Desired Load Pos./Vel./Acc.');
+    set(h_sup,'FontSize',supfont,'Interpreter','latex');
+    subplot 311
+    plot(t(1:200),xLd(2,1:200),'r--','Linewidth',2)
+    hl = legend('\boldmath$y_{L,d}$');
+    set(hl,'Interpreter','latex','FontSize',lfont);
+    ylabel('\boldmath$[m]$','FontSize',labfont,'Interpreter','latex')
+    set(gca,'FontSize',afont);
+    subplot 312
+    plot(t(1:200),dxLd(2,1:200),'r--','Linewidth',2)
+        hl = legend('\boldmath$\dot{y}_{L,d}$');
+    set(hl,'Interpreter','latex','FontSize',lfont);
+    ylabel('\boldmath$[m/s]$','FontSize',labfont,'Interpreter','latex')
+    set(gca,'FontSize',afont);
+    subplot 313
+    plot(t(1:200),ddxLd(2,1:200),'r--','Linewidth',2)
+        hl = legend('\boldmath$\ddot{y}_{L,d}$');
+    set(hl,'Interpreter','latex','FontSize',lfont);
+    ylabel('\boldmath$[m/s^2]$','FontSize',labfont,'Interpreter','latex')
+    xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+    set(gca,'FontSize',afont);
+    hLPosOverview = gcf;
+    saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
+elseif casename == 'B'
+        filename = 'allxLd';
+    figure('Name',filename)
+    h_sup = suptitle('Desired Load Pos./Vel./Acc.');
+    set(h_sup,'FontSize',supfont,'Interpreter','latex');
+    subplot 311
+    plot(t,xLd(2,:),'r--','Linewidth',2)
+    hl = legend('\boldmath$y_{L,d}$');
+    set(hl,'Interpreter','latex','FontSize',lfont);
+    ylabel('\boldmath$[m]$','FontSize',labfont,'Interpreter','latex')
+    set(gca,'FontSize',afont);
+    subplot 312
+    plot(t,dxLd(2,:),'r--','Linewidth',2)
+        hl = legend('\boldmath$\dot{y}_{L,d}$');
+    set(hl,'Interpreter','latex','FontSize',lfont);
+    ylabel('\boldmath$[m/s]$','FontSize',labfont,'Interpreter','latex')
+    set(gca,'FontSize',afont);
+    subplot 313
+    plot(t,ddxLd(2,:),'r--','Linewidth',2)
+        hl = legend('\boldmath$\ddot{y}_{L,d}$');
+    set(hl,'Interpreter','latex','FontSize',lfont);
+    ylabel('\boldmath$[m/s^2]$','FontSize',labfont,'Interpreter','latex')
+    xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+    set(gca,'FontSize',afont);
+    hLPosOverview = gcf;
+    saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
+    
+end
 
+%% xLdesplot
 filename = 'xLdesplot';
 figure('Name',filename)
 h_sup = suptitle('Desired Load Position');
@@ -265,7 +381,7 @@ plot3(xLd(1,end),xLd(2,end),xLd(3,end),'rd','LineWidth',3)
 grid on
 hold off
 hl = legend('\boldmath$x_{L,d}$','Start','End');
-view(-27,16)
+view(-80,30)
 xlabel('\boldmath$x [m]$','FontSize',labfont,'Interpreter','latex')
 ylabel('\boldmath$y [m]$','FontSize',labfont,'Interpreter','latex')
 zlabel('\boldmath$z [m]$','FontSize',labfont,'Interpreter','latex')
@@ -273,8 +389,34 @@ set(gca,'FontSize',afont);
 set(hl,'Interpreter','latex','FontSize',lfont);
 saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')  
 
+filename = 'xLdesplot';
+for nplot = 1:3
+    figure('Name',filename)
+    if nplot == 1
+        h_sup = suptitle('Desired Load Position (x,y)');
+        set(h_sup,'FontSize',supfont,'Interpreter','latex');
+        plot(xLd(1,:),xLd(2,:),'LineWidth',3)
+            xlabel('\boldmath$x [m]$','FontSize',labfont,'Interpreter','latex')
+    ylabel('\boldmath$y [m]$','FontSize',labfont,'Interpreter','latex')
+    elseif nplot == 2
+        h_sup = suptitle('Desired Load Position (x,z)');
+        set(h_sup,'FontSize',supfont,'Interpreter','latex');
+                plot(xLd(1,:),xLd(3,:),'LineWidth',3)
+            xlabel('\boldmath$x [m]$','FontSize',labfont,'Interpreter','latex')
+    ylabel('\boldmath$z [m]$','FontSize',labfont,'Interpreter','latex')
+    else
+        h_sup = suptitle('Desired Load Position (y,z)');
+        set(h_sup,'FontSize',supfont,'Interpreter','latex');
+                plot(xLd(2,:),xLd(3,:),'LineWidth',3)
+            xlabel('\boldmath$y [m]$','FontSize',labfont,'Interpreter','latex')
+    ylabel('\boldmath$z [m]$','FontSize',labfont,'Interpreter','latex')
+    end
+
+    set(gca,'FontSize',afont);
+    saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nplot),'-',num2str(nfile)),'png')
 end
-      
+
+%%
 
 % filename = 'QRpos';
 % figure('Name',filename)
@@ -325,73 +467,73 @@ end
 % saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
 %%
-filename = 'QRang';
-figure('Name',filename)
-h_sup = suptitle('QR Angle');
-set(h_sup,'FontSize',supfont,'Interpreter','latex');
-subplot 211
-plot(t,angleQ(:,1),t,angleQ(:,2),'Linewidth',2)
-hl = legend('\boldmath$\phi_Q$','\boldmath$\theta_Q$');
-ylabel('\boldmath$[^\circ]$','FontSize',labfont,'Interpreter','latex')
-set(hl,'Interpreter','latex','FontSize',lfont);
-set(gca,'color','none','FontSize',afont)
-set(gca,'FontSize',afont);
-subplot 212
-plot(t,angleQ(:,3),'r','Linewidth',2)
-hl = legend('\boldmath$\psi_Q$');
-ylabel('\boldmath$[^\circ]$','FontSize',labfont,'Interpreter','latex')
-set(hl,'Interpreter','latex','FontSize',lfont);
-set(gca,'color','none','FontSize',afont)
-xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
-set(gca,'FontSize',afont);
-saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
-
-filename = 'QRvel';
-figure('Name',filename)
-h_sup = suptitle('QR $\Omega$/$\dot{\Omega}$');
-set(h_sup,'FontSize',supfont,'Interpreter','latex');
-subplot 211
-plot(t,OmegaQ,'Linewidth',2)
-hl = legend('\boldmath$p_Q$','\boldmath$q_Q$','\boldmath$r_Q$');
-set(hl,'Interpreter','latex','FontSize',lfont);
-ylabel('\boldmath$[^\circ/s]$','FontSize',labfont,'Interpreter','latex')
-set(gca,'FontSize',afont);
-subplot 212
-plot(t,dOmegaQ,'Linewidth',2)
-hl = legend('\boldmath$\dot{p}_Q$','\boldmath$\dot{q}_Q$','\boldmath$\dot{r}_Q$');
-set(hl,'Interpreter','latex','FontSize',lfont);
-ylabel('\boldmath$[^\circ/s^2]$','FontSize',labfont,'Interpreter','latex')
-xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
-set(gca,'FontSize',afont);
-saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
-
-filename = 'Lang';
-figure('Name',filename)
-h_sup = suptitle('Load Angle/$\Omega$');
-set(h_sup,'FontSize',supfont,'Interpreter','latex');
-subplot 311
-% plot(t,angleL,'Linewidth',2)
-% hl = legend('\boldmath$\phi_L$','\boldmath$\theta_L$','\boldmath$\psi_L$');
-plot(t,angleL(:,1),t,angleL(:,2),'Linewidth',2)
-hl = legend('\boldmath$\phi_L$','\boldmath$\theta_L$');
-ylabel('\boldmath$[^\circ]$','FontSize',labfont,'Interpreter','latex')
-set(hl,'Interpreter','latex','FontSize',lfont);
-set(gca,'color','none','FontSize',afont)
-subplot 312
-% plot(t,OmegaL,'Linewidth',2)
-% hl = legend('\boldmath$p_L$','\boldmath$q_L$','\boldmath$r_L$');
-plot(t,OmegaL(:,1),t,OmegaL(:,2),'Linewidth',2)
-hl = legend('\boldmath$p_L$','\boldmath$q_L$');
-set(hl,'Interpreter','latex','FontSize',lfont);
-ylabel('\boldmath$[^\circ/s]$','FontSize',labfont,'Interpreter','latex')
-set(gca,'FontSize',afont);
-% subplot 313
-% plot(t,dOmegaL,'Linewidth',2)
-% hl = legend('$\dot{p}_L$','$\dot{q}_L$','$\dot{r}_L$');
+% filename = 'QRang';
+% figure('Name',filename)
+% h_sup = suptitle('QR Angle');
+% set(h_sup,'FontSize',supfont,'Interpreter','latex');
+% subplot 211
+% plot(t,angleQ(:,1),t,angleQ(:,2),'Linewidth',2)
+% hl = legend('\boldmath$\phi_Q$','\boldmath$\theta_Q$');
+% ylabel('\boldmath$[^\circ]$','FontSize',labfont,'Interpreter','latex')
 % set(hl,'Interpreter','latex','FontSize',lfont);
-% ylabel('\boldmath$acc [^\circ/s^2]$','FontSize',labfont,'Interpreter','latex')
+% set(gca,'color','none','FontSize',afont)
+% set(gca,'FontSize',afont);
+% subplot 212
+% plot(t,angleQ(:,3),'r','Linewidth',2)
+% hl = legend('\boldmath$\psi_Q$');
+% ylabel('\boldmath$[^\circ]$','FontSize',labfont,'Interpreter','latex')
+% set(hl,'Interpreter','latex','FontSize',lfont);
+% set(gca,'color','none','FontSize',afont)
 % xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
-saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
+% set(gca,'FontSize',afont);
+% saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
+% 
+% filename = 'QRvel';
+% figure('Name',filename)
+% h_sup = suptitle('QR $\Omega$/$\dot{\Omega}$');
+% set(h_sup,'FontSize',supfont,'Interpreter','latex');
+% subplot 211
+% plot(t,OmegaQ,'Linewidth',2)
+% hl = legend('\boldmath$p_Q$','\boldmath$q_Q$','\boldmath$r_Q$');
+% set(hl,'Interpreter','latex','FontSize',lfont);
+% ylabel('\boldmath$[^\circ/s]$','FontSize',labfont,'Interpreter','latex')
+% set(gca,'FontSize',afont);
+% subplot 212
+% plot(t,dOmegaQ,'Linewidth',2)
+% hl = legend('\boldmath$\dot{p}_Q$','\boldmath$\dot{q}_Q$','\boldmath$\dot{r}_Q$');
+% set(hl,'Interpreter','latex','FontSize',lfont);
+% ylabel('\boldmath$[^\circ/s^2]$','FontSize',labfont,'Interpreter','latex')
+% xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+% set(gca,'FontSize',afont);
+% saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
+
+% filename = 'Lang';
+% figure('Name',filename)
+% h_sup = suptitle('Load Angle/$\Omega$');
+% set(h_sup,'FontSize',supfont,'Interpreter','latex');
+% subplot 311
+% % plot(t,angleL,'Linewidth',2)
+% % hl = legend('\boldmath$\phi_L$','\boldmath$\theta_L$','\boldmath$\psi_L$');
+% plot(t,angleL(:,1),t,angleL(:,2),'Linewidth',2)
+% hl = legend('\boldmath$\phi_L$','\boldmath$\theta_L$');
+% ylabel('\boldmath$[^\circ]$','FontSize',labfont,'Interpreter','latex')
+% set(hl,'Interpreter','latex','FontSize',lfont);
+% set(gca,'color','none','FontSize',afont)
+% subplot 312
+% % plot(t,OmegaL,'Linewidth',2)
+% % hl = legend('\boldmath$p_L$','\boldmath$q_L$','\boldmath$r_L$');
+% plot(t,OmegaL(:,1),t,OmegaL(:,2),'Linewidth',2)
+% hl = legend('\boldmath$p_L$','\boldmath$q_L$');
+% set(hl,'Interpreter','latex','FontSize',lfont);
+% ylabel('\boldmath$[^\circ/s]$','FontSize',labfont,'Interpreter','latex')
+% set(gca,'FontSize',afont);
+% % subplot 313
+% % plot(t,dOmegaL,'Linewidth',2)
+% % hl = legend('$\dot{p}_L$','$\dot{q}_L$','$\dot{r}_L$');
+% % set(hl,'Interpreter','latex','FontSize',lfont);
+% % ylabel('\boldmath$acc [^\circ/s^2]$','FontSize',labfont,'Interpreter','latex')
+% % xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+% saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
 % figure
 % plot(t,pos,'Linewidth',2)
@@ -401,104 +543,104 @@ saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 % set(hl,'Interpreter','latex','FontSize',lfont)
 
 %% Rotation Matrix
-
-filename = 'Rotations';
-figure('Name',filename)
-h_sup = suptitle('Rotation $R\in\Re^{3\times3}$');
-set(h_sup,'FontSize',supfont,'Interpreter','latex');
-for j=1:3
-    for n=1:3
-        k=(j-1)*3+n;
-        subplot(3,3,k)
-        Rplot = reshape(simoutR.signals.values(j,n,:),[length(simoutR.signals.values),1]);
-        Rcplot = reshape(simoutRc.signals.values(j,n,:),[length(simoutRc.signals.values),1]);
-        hold on
-        axis([0 t(end) -1.1 1.1])
-%         axis([0 4 -1.2 1.2])
-        plot(t,Rplot,'Linewidth',2)
-        plot(t,Rcplot,'r--','Linewidth',2)
-        set(gca,'FontSize',afont);
-        if k==8
-            xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
-        end
-    end
-end
-switch mode
-    case 2 % QRL Attitude Controlled Mode
-        hl = legend('\boldmath$R$','\boldmath$R_d$');
-    otherwise
-        hl = legend('\boldmath$R$','\boldmath$R_c$');
-end
-set(hl,'Interpreter','latex','FontSize',lfont,'Position',[.8,.8,.1,.1]);
-saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
+% 
+% filename = 'Rotations';
+% figure('Name',filename)
+% h_sup = suptitle('Rotation $R\in\Re^{3\times3}$');
+% set(h_sup,'FontSize',supfont,'Interpreter','latex');
+% for j=1:3
+%     for n=1:3
+%         k=(j-1)*3+n;
+%         subplot(3,3,k)
+%         Rplot = reshape(simoutR.signals.values(j,n,:),[length(simoutR.signals.values),1]);
+%         Rcplot = reshape(simoutRc.signals.values(j,n,:),[length(simoutRc.signals.values),1]);
+%         hold on
+%         axis([0 t(end) -1.1 1.1])
+% %         axis([0 4 -1.2 1.2])
+%         plot(t,Rplot,'Linewidth',2)
+%         plot(t,Rcplot,'r--','Linewidth',2)
+%         set(gca,'FontSize',afont);
+%         if k==8
+%             xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+%         end
+%     end
+% end
+% switch mode
+%     case 2 % QRL Attitude Controlled Mode
+%         hl = legend('\boldmath$R$','\boldmath$R_d$');
+%     otherwise
+%         hl = legend('\boldmath$R$','\boldmath$R_c$');
+% end
+% set(hl,'Interpreter','latex','FontSize',lfont,'Position',[.8,.8,.1,.1]);
+% saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
 %% q
 
-filename = 'q';
-figure('Name',filename)
-h_suptitle = suptitle('Unit vector $q$ from QR to Load');
-set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
-plot(t,q,'LineWidth',2)
-
-% hl = legend('$\vec{q}\cdot\vec{b}_1$','$\vec{q}\cdot\vec{b}_2$','$\vec{q}\cdot\vec{b}_3$');
-switch mode
-    case 3 % QRL Load Attitude Controlled Mode
-        subplot 311
-        plot(t,q(1,:),t,qcplot(1,:),'r--','Linewidth',2)
-        ylabel('\boldmath$\vec{q}\cdot\vec{b}_1$','FontSize',labfont,'Interpreter','latex')
-        set(gca,'FontSize',afont);
-        subplot 312
-        plot(t,q(2,:),t,qcplot(2,:),'r--','Linewidth',2)
-        ylabel('\boldmath$\vec{q}\cdot\vec{b}_2$','FontSize',labfont,'Interpreter','latex')
-        set(gca,'FontSize',afont);
-        subplot 313
-        plot(t,q(3,:),t,qcplot(3,:),'r--','Linewidth',2)
-        ylabel('\boldmath$\vec{q}\cdot\vec{b}_3$','FontSize',labfont,'Interpreter','latex')
-        set(gca,'FontSize',afont);
-        hl = legend('\boldmath$\vec{q}$','\boldmath$\vec{q}_d$');        
-    case 4 % QRL Load Position Controlled Mode
-        subplot 311
-        plot(t,q(1,:),t,qcplot(1,:),'r--','Linewidth',2)
-        ylabel('\boldmath$\vec{q}\cdot\vec{b}_1$','FontSize',labfont,'Interpreter','latex')
-        set(gca,'FontSize',afont);
-        subplot 312
-        plot(t,q(2,:),t,qcplot(2,:),'r--','Linewidth',2)
-        ylabel('\boldmath$\vec{q}\cdot\vec{b}_2$','FontSize',labfont,'Interpreter','latex')
-        set(gca,'FontSize',afont);
-        subplot 313
-        plot(t,q(3,:),t,qcplot(3,:),'r--','Linewidth',2)
-        ylabel('\boldmath$\vec{q}\cdot\vec{b}_3$','FontSize',labfont,'Interpreter','latex')
-        set(gca,'FontSize',afont);
-        hl = legend('\boldmath$\vec{q}$','\boldmath$\vec{q}_c$');  
-end
-set(hl,'Interpreter','latex','FontSize',lfont,'Position',[.8,.8,.1,.1]);
-xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex');
-saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
+% filename = 'q';
+% figure('Name',filename)
+% h_suptitle = suptitle('Unit vector $q$ from QR to Load');
+% set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
+% plot(t,q,'LineWidth',2)
+% 
+% % hl = legend('$\vec{q}\cdot\vec{b}_1$','$\vec{q}\cdot\vec{b}_2$','$\vec{q}\cdot\vec{b}_3$');
+% switch mode
+%     case 3 % QRL Load Attitude Controlled Mode
+%         subplot 311
+%         plot(t,q(1,:),t,qcplot(1,:),'r--','Linewidth',2)
+%         ylabel('\boldmath$\vec{q}\cdot\vec{b}_1$','FontSize',labfont,'Interpreter','latex')
+%         set(gca,'FontSize',afont);
+%         subplot 312
+%         plot(t,q(2,:),t,qcplot(2,:),'r--','Linewidth',2)
+%         ylabel('\boldmath$\vec{q}\cdot\vec{b}_2$','FontSize',labfont,'Interpreter','latex')
+%         set(gca,'FontSize',afont);
+%         subplot 313
+%         plot(t,q(3,:),t,qcplot(3,:),'r--','Linewidth',2)
+%         ylabel('\boldmath$\vec{q}\cdot\vec{b}_3$','FontSize',labfont,'Interpreter','latex')
+%         set(gca,'FontSize',afont);
+%         hl = legend('\boldmath$\vec{q}$','\boldmath$\vec{q}_d$');        
+%     case 4 % QRL Load Position Controlled Mode
+%         subplot 311
+%         plot(t,q(1,:),t,qcplot(1,:),'r--','Linewidth',2)
+%         ylabel('\boldmath$\vec{q}\cdot\vec{b}_1$','FontSize',labfont,'Interpreter','latex')
+%         set(gca,'FontSize',afont);
+%         subplot 312
+%         plot(t,q(2,:),t,qcplot(2,:),'r--','Linewidth',2)
+%         ylabel('\boldmath$\vec{q}\cdot\vec{b}_2$','FontSize',labfont,'Interpreter','latex')
+%         set(gca,'FontSize',afont);
+%         subplot 313
+%         plot(t,q(3,:),t,qcplot(3,:),'r--','Linewidth',2)
+%         ylabel('\boldmath$\vec{q}\cdot\vec{b}_3$','FontSize',labfont,'Interpreter','latex')
+%         set(gca,'FontSize',afont);
+%         hl = legend('\boldmath$\vec{q}$','\boldmath$\vec{q}_c$');  
+% end
+% set(hl,'Interpreter','latex','FontSize',lfont,'Position',[.8,.8,.1,.1]);
+% xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex');
+% saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
 %% qplots
 
-filename = 'qplots';
-figure('Name',filename)
-h_suptitle = suptitle('Unit vector $q$ from QR to Load');
-set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
-plot(t,q,'LineWidth',2)
-subplot 311
-plot(t,q,'LineWidth',2)
-ylabel('\boldmath$q$','FontSize',labfont,'Interpreter','latex')
-set(gca,'FontSize',afont);
-subplot 312
-plot(t,dq,'LineWidth',2)
-ylabel('\boldmath$\dot{q}$','FontSize',labfont,'Interpreter','latex')
-set(gca,'FontSize',afont);
-subplot 313
-plot(t,ddq,'LineWidth',2)
-ylabel('\boldmath$\ddot{q}$','FontSize',labfont,'Interpreter','latex')
-set(gca,'FontSize',afont);
-hl = legend('\boldmath$\vec{b}_1$','\boldmath$\vec{b}_2$','\boldmath$\vec{b}_3$');  
-
-set(hl,'Interpreter','latex','FontSize',lfont,'Position',[.8,.8,.1,.1]);
-xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex');
-saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
+% filename = 'qplots';
+% figure('Name',filename)
+% h_suptitle = suptitle('Unit vector $q$ from QR to Load');
+% set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
+% plot(t,q,'LineWidth',2)
+% subplot 311
+% plot(t,q,'LineWidth',2)
+% ylabel('\boldmath$q$','FontSize',labfont,'Interpreter','latex')
+% set(gca,'FontSize',afont);
+% subplot 312
+% plot(t,dq,'LineWidth',2)
+% ylabel('\boldmath$\dot{q}$','FontSize',labfont,'Interpreter','latex')
+% set(gca,'FontSize',afont);
+% subplot 313
+% plot(t,ddq,'LineWidth',2)
+% ylabel('\boldmath$\ddot{q}$','FontSize',labfont,'Interpreter','latex')
+% set(gca,'FontSize',afont);
+% hl = legend('\boldmath$\vec{b}_1$','\boldmath$\vec{b}_2$','\boldmath$\vec{b}_3$');  
+% 
+% set(hl,'Interpreter','latex','FontSize',lfont,'Position',[.8,.8,.1,.1]);
+% xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex');
+% saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
 %% Errors
 
@@ -542,7 +684,7 @@ saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png')
 
 filename = 'exL';
 figure('Name',filename)
-h_suptitle = suptitle('Load Position Error $[m]$');
+h_suptitle = suptitle('Load Error Pos.$[m]$/Vel.$[m/s]$');
 set(h_suptitle,'FontSize',supfont,'Interpreter','latex');
 subplot 211
 plot(t,exL,'Linewidth',2)
@@ -587,18 +729,75 @@ figure('Name',filename)
 h_sup = suptitle('Trajectory generation $[m]$');
 set(h_sup,'FontSize',supfont,'Interpreter','latex');
 subplot 311
-plot(t,caseBsine,'r--','Linewidth',2)
+plot(t,caseBsigA,'r--','Linewidth',2)
 % hl = legend('\boldmath$x_{L,d}$');
 ylabel('\boldmath$sign.A$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 subplot 312
-plot(t,caseBgrow,'r--','Linewidth',2)
+plot(t,caseBsigB,'r--','Linewidth',2)
 ylabel('\boldmath$sign.B$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 subplot 313
-plot(t,caseBend,'r--','Linewidth',2)
+plot(t,caseBsigC,'r--','Linewidth',2)
 ylabel('\boldmath$sign.C$','FontSize',labfont,'Interpreter','latex')
 xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 % set(hl,'Interpreter','latex','FontSize',lfont);
 saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png') 
+
+% Plot Case B2
+if nfile > 74
+filename = 'sineCaseBB';
+figure('Name',filename)
+h_sup = suptitle('Trajectory generation $[m]$');
+set(h_sup,'FontSize',supfont,'Interpreter','latex');
+subplot 311
+plot(t,caseBsigC,'r--','Linewidth',2)
+hl = legend('\boldmath$x_{L,d}$');
+ylabel('\boldmath$sign.C$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+subplot 312
+plot(t,caseBsigD,'r--','Linewidth',2)
+ylabel('\boldmath$sign.D$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+subplot 313
+plot(t,caseBsigE,'r--','Linewidth',2)
+ylabel('\boldmath$sign.E$','FontSize',labfont,'Interpreter','latex')
+xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+set(hl,'Interpreter','latex','FontSize',lfont);
+saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png') 
+end
+
+%% Plot signals all cases 
+if nfile > 77
+allcasesigA = simoutwokkel1.signals.values(:,1)';
+allcasesigB = simoutwokkel1.signals.values(:,2)';
+allcasesigC = simoutwokkel1.signals.values(:,3)';
+allcasesigD = simoutwokkel1.signals.values(:,4)';
+
+filename = 'allcasesig';
+figure('Name',filename)
+h_sup = suptitle('Trajectory generation Signals:');
+set(h_sup,'FontSize',supfont,'Interpreter','latex');
+subplot 411
+plot(t,allcasesigA,'r--','Linewidth',2)
+% hl = legend('\boldmath$x_{L,d}$');
+ylabel('\boldmath$A$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+subplot 412
+plot(t,allcasesigB,'r--','Linewidth',2)
+ylabel('\boldmath$B$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+subplot 413
+plot(t,allcasesigC,'r--','Linewidth',2)
+ylabel('\boldmath$C$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+subplot 414
+plot(t,allcasesigD,'r--','Linewidth',2)
+ylabel('\boldmath$D$','FontSize',labfont,'Interpreter','latex')
+xlabel('\boldmath$Time [s]$','FontSize',labfont,'Interpreter','latex')
+set(gca,'FontSize',afont);
+% set(hl,'Interpreter','latex','FontSize',lfont);
+saveas(gcf,strcat(foldername,modecode,'-',filename,num2str(nfile)),'png') 
+end

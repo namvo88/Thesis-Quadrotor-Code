@@ -1,4 +1,4 @@
-pausefactor = 1;
+pausefactor = 0.00001;
 
 afont = 16; %Axis Fontsize
 labfont = 24; %Label Fontsize
@@ -187,14 +187,14 @@ axis([midx-difax midx+difax midy-difax midy+difax midz-difax midz+difax ],'vis3d
 % axis([-1.5 1.5 -1.5 1.5 -1.5 1.5],'vis3d')
 view(150,30)
 % view(90,0)
-view(0,0)
+% view(0,0)
 grid on
 xlabel('$x$','FontSize',labfont,'Interpreter','latex')
 ylabel('$y$','FontSize',labfont,'Interpreter','latex') 
 zlabel('$z$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
 % lfont = 18; %Legend Fontsize
-% hleg = legend([hL hLd],'$x_L$','$x_{L,des}$');
+% hleg = legend([lqrhQ lqrhQd lqrhL lqrhLd],'$x_Q$','$x_{Q,des}$','$x_L$','$x_{L,des}$');
 % set(hleg,'Interpreter','latex','FontSize',lfont);
 
 %% ANIMATION

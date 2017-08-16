@@ -1,4 +1,4 @@
-clear; clc; close all;
+% clear; clc; close all;
 %% Parameter overview
 % R - Rotation Matrix
 % q - Load attitude unit vector from QR to Load
@@ -30,12 +30,9 @@ clear; clc; close all;
 
 animation    = 0; % Turn animation on/off
 
-plots        = 0; % Turn plot generation + save matfiles on/off
-comment      = strcat('step-Bebop-LQR',date); % comment added to save file
-comment2     = ('CFv2'); % comment added to save file
-
+plots        = 1; % Turn plot generation + save matfiles on/off
 loadgain     = 0;
-nameloadgain = 'Gains63'; %Gain file to load
+nameloadgain = 'Gains75'; %Gain file to load
 
 
 %% Input signals
@@ -54,7 +51,7 @@ mode      = 4;
 % Inverted 1
 qmode     = -1;
 
-Tsim_end  = 10;
+Tsim_end  = 30;
 Tsim_s    = 0.01;
 
 switch mode
@@ -189,43 +186,44 @@ if loadgain == 1
     foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\MatlabImages\';
     load(strcat(foldername,nameloadgain));
 elseif loadgain == 0
-%     eps         = 0.99; % 0<eps<1
+    eps         = 0.99; % 0<eps<1
 %     
 %     Gains QR Attitude
-%     facR        = 0.1;
+    facR        = 1;
 %     kR          = 9.81*facR; %Lee2010
-    kR          = 1.5; %Lee2010
-    kOmega      = .2;
+    kR          = 0.9; %Lee2010
+    kOmega      = 0.1;
 %     
 %     Gains Load Attitude
-%     facq        = 0.1;
-    kq          = 3;
-    komega      = 1.5;
+    facq        = 1;
+    kq          = 3.9;
+    komega      = 2;
 %     
 %     Gains Load Position
-%     facx        = 0.1; %4;
-    kpx         = 18;%20.4
-    kdx         = 3;%11.7
+    facx        = 1; %4;
+    kpx         = 6;%20.4
+    kdx         = 2.75;%11.7
 %     
 %     Step block parameters
-    stept   = 2;
+    stept   = 1;
     stepamp = 0.25;
 %     
 %     Command Filter Low Pass filter 3th order
-    omega_n1_xL  = 60;
+    omega_n1_xL  = 25;
 %     omega_n2_xL  = 60;
 %     omega_n1_CFP = 2;
 %     omega_n2_CFP = 2;
-%     zeta_xL      = 0.98;
-    omega_n1_q   = 50;
+    zeta_xL      = 0.98;
+    omega_n1_q   = 25;
 %     omega_n2_q   = 50;
-%     zeta_q       = 0.98;
-    omega_n1_R   = 40;
+    zeta_q       = 0.98;
+    omega_n1_R   = 30;
 %     omega_n2_R   = 80;
-%     zeta_R       = 0.98;
+    zeta_R       = 0.98;
 
-fsat   = 20*[1 -1];
-Msat   = 1*[1 -1];
+fsat   = 4*1.96*[1 -1]; %1.96 N max thrust per rotor %Cornelis2014
+Msat   = 2*l*1.96*[1 -1];
+
 end
 
 % Simulation
@@ -276,14 +274,19 @@ if mode == 4
 end
 
 %% Plots
+casename     = 'C';
+comment      = strcat('case',casename,'-Bebop-LQR',date); % comment added to save file
+comment2     = ('wokkel-CFv2'); % comment added to save file
+foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\MatlabImages\';
+
 if plots == 1
     QRLplots;
     QRLplotsLQR;
 end
-
+close all
 %% Animation
 if animation == 1
     QRLanimation
 %     QRLanimationLQR
-%     QRLanimationboth
+    QRLanimationboth
 end
