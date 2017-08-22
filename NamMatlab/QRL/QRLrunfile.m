@@ -1,7 +1,10 @@
 % clear; clc; close all;
-%% Parameter overview
+
+%% Overview
+% QR - Quadrotor
+% QRL - Quadrotor-Load
 % R - Rotation Matrix
-% q - Load attitude unit vector from QR to Load
+% q - Load attitude: unit vector from QR to Load
 % eR - QR Attitude error
 % eOmega - QR Angular velocity error
 % eq - Load Attitude error
@@ -10,13 +13,14 @@
 % ev - Load velocity error
 % 
 % Quadrotor Parameters
+% xQ/dxQ/ddxQ - QR position/velocity/acceleration
 % mQ - QR mass
 % 
 % Load Parameters
 % xL/dxL/ddxL - Load position/velocity/acceleration
 % mL - Load mass
 
-%% Settings
+%% Matlab Settings
 % Warning: Using a default value of 0.2 for maximum step size.  The simulation step size will be
 % equal to or less than this value.  You can disable this diagnostic by setting 'Automatic solver
 % parameter selection' diagnostic to 'none' in the Diagnostics page of the configuration
@@ -28,11 +32,13 @@
 % 'Data Import/Export' page of the Configuration Parameters dialog to either 'Structure' or 'Structure with time'.
 % >> Changed to 'Structure with time'
 
+
+%% Settings
 animation    = 0; % Turn animation on/off
 
 plots        = 1; % Turn plot generation + save matfiles on/off
 loadgain     = 0;
-nameloadgain = 'Gains75'; %Gain file to load
+nameloadgain = 'Gains78'; %Gain file to load
 
 
 %% Input signals
@@ -44,7 +50,6 @@ nameloadgain = 'Gains75'; %Gain file to load
 % QRL Load Attitude Controlled mode 3
 % QRL Load Position Controlled mode 4
 mode      = 4;
-% mode = [4*ones(1,2000) 3*ones(1,125) 4*ones(1,126)];
 
 % LOAD ATTITUDE MODE
 % Normal -1
@@ -79,6 +84,7 @@ qd  = [0; 0; qmode];
 
 
 %% Constants
+% Model parameters
 
 % Parrot Bebop 1
 % Weight 410 g 
@@ -129,6 +135,7 @@ e3     = [0;0;1];
 % fc     = (mQ+mL)*g;
 
 %% Initial Conditions QR
+% Initial conditions of the QR attitude
 
 phiQ0      = deg2rad(0);
 thetaQ0    = deg2rad(0);
@@ -150,6 +157,7 @@ Rzyx       = (Rx*Ry*Rz);
 R0         = Rzyx;
 
 %% Initial Conditions Load
+% Initial conditions of the load attitude and load position
 
 dxL0       = 0;
 dyL0       = 0;
@@ -182,6 +190,9 @@ zL0        = L+q0(3)*L;
 % x0 = [xL0;yL0;zL0];
 
 %% Gains 
+% Controller gains
+
+    epsi         = 0.99; % 0<epsi<1
 if loadgain == 1
     foldername = 'C:\Users\Nam\Documents\Git\Thesis-Quadrotor-Code\NamMatlab\QRL\MatlabImages\';
     load(strcat(foldername,nameloadgain));
@@ -230,7 +241,9 @@ end
 LQRrunfile
 sim('QRLsim');
 
-%% Conditions check
+%% Initial conditions check
+% This section checks whether the initial conditions are met. Sreenath 2013
+
 Psiq   = simoutPsiq.signals.values(:,1);
 PsiR   = simoutPsiR.signals.values(:,1);
 eOmega = simouterrorR.signals.values(:,4:6);
@@ -286,7 +299,7 @@ end
 close all
 %% Animation
 if animation == 1
-    QRLanimation
+%     QRLanimation
 %     QRLanimationLQR
     QRLanimationboth
 end
