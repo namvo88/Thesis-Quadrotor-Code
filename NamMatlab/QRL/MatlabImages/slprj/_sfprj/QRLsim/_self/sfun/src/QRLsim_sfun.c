@@ -318,10 +318,10 @@ unsigned int sf_QRLsim_process_check_sum_call( int nlhs, mxArray * plhs[], int
       return 0;
     }
   } else {
-    ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(4077949774U);
-    ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(3101290097U);
-    ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(2514187429U);
-    ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(2548335046U);
+    ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2605066542U);
+    ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2147766216U);
+    ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(46954773U);
+    ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(2952635214U);
   }
 
   return 1;
@@ -551,7 +551,7 @@ unsigned int sf_QRLsim_autoinheritance_info( int nlhs, mxArray * plhs[], int
 
      case 46:
       {
-        if (strcmp(aiChksum, "krM8Y33xFdY4UTEbKBCClE") == 0) {
+        if (strcmp(aiChksum, "C8bJ5COLPfSw7WTHecEtVF") == 0) {
           extern mxArray *sf_c46_QRLsim_get_autoinheritance_info(void);
           plhs[0] = sf_c46_QRLsim_get_autoinheritance_info();
           break;
@@ -969,7 +969,7 @@ unsigned int sf_QRLsim_third_party_uses_info( int nlhs, mxArray * plhs[], int
 
      case 46:
       {
-        if (strcmp(tpChksum, "nYYlsqQqt1ClMp0nvwwJ6E") == 0) {
+        if (strcmp(tpChksum, "OZwGE9bJ0W6BKPIjoz9vSB") == 0) {
           extern mxArray *sf_c46_QRLsim_third_party_uses_info(void);
           plhs[0] = sf_c46_QRLsim_third_party_uses_info();
           break;
@@ -1159,7 +1159,7 @@ unsigned int sf_QRLsim_updateBuildInfo_args_info( int nlhs, mxArray * plhs[],
 
      case 46:
       {
-        if (strcmp(tpChksum, "nYYlsqQqt1ClMp0nvwwJ6E") == 0) {
+        if (strcmp(tpChksum, "OZwGE9bJ0W6BKPIjoz9vSB") == 0) {
           extern mxArray *sf_c46_QRLsim_updateBuildInfo_args_info(void);
           plhs[0] = sf_c46_QRLsim_updateBuildInfo_args_info();
           break;

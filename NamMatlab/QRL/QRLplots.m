@@ -51,8 +51,6 @@ exL       = simoutexL.signals.values(:,1:3)';
 edxL      = simoutexL.signals.values(:,4:6)';
 lqrexL    = lqrsimoutexL.signals.values(:,1:3)';
 
-% F            = reshape(simoutF.signals.values,3,length(t));
-% F            = simoutF.signals.values(:,10:12);
 qcplot    = reshape(simoutqc.signals.values,[3,length(simoutqc.signals.values)]);
 
 posQ      = posL - q*L;
@@ -83,7 +81,7 @@ for nfile = 40:100
     savename = strcat(foldername,'Gains',num2str(nfile),'.mat');
     if exist(savename,'file') == 0
     
-        save(savename,'comment','comment2','eps','facR','kR','kOmega','facq','kq','komega',...
+        save(savename,'comment','comment2','epsi','facR','kR','kOmega','facq','kq','komega',...
             'facx','kpx','kdx','omega_n1_xL','omega_n2_xL','omega_n1_q',...
             'omega_n2_q','omega_n1_R','omega_n2_R','omega_n1_CFP','omega_n2_CFP','zeta_xL','zeta_q',...
             'zeta_R','LQRA','LQRB','LQRC','LQRD','K','LQRQ','LQRR','stept','stepamp','fsat','Msat');

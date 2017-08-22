@@ -1,4 +1,4 @@
-pausefactor = 0.00001;
+pausefactor = 5;
 
 afont = 16; %Axis Fontsize
 labfont = 24; %Label Fontsize
@@ -84,7 +84,7 @@ maxax = max(max(max(XQR,YQR),ZQR));
 midx = max(XQR)-(max(XQR)-min(XQR))/2;
 midy = max(YQR)-(max(YQR)-min(YQR))/2;
 midz = max(ZQR)-(max(ZQR)-min(ZQR))/2;
-difax = (maxax-minax)/2+1;
+difax = (maxax-minax)/2+0.5;
 
 figure
 screenSize = get(0,'Screensize');
@@ -96,10 +96,10 @@ plottitle = title('NGC Controller');
 set(plottitle,'FontSize',supfont,'Interpreter','latex');
 hold on
 
-% draw Iframe
-hIx  = line([0 Ix(1)],[0 Ix(2)],[0 Ix(3)],'Color','red','LineWidth',2);
-hIy  = line([0 Iy(1)],[0 Iy(2)],[0 Iy(3)],'Color','green','LineWidth',2);
-hIz  = line([0 Iz(1)],[0 Iz(2)],[0 Iz(3)],'Color','blue','LineWidth',2);
+% % draw Iframe
+% hIx  = line([0 Ix(1)],[0 Ix(2)],[0 Ix(3)],'Color','red','LineWidth',2);
+% hIy  = line([0 Iy(1)],[0 Iy(2)],[0 Iy(3)],'Color','green','LineWidth',2);
+% hIz  = line([0 Iz(1)],[0 Iz(2)],[0 Iz(3)],'Color','blue','LineWidth',2);
 
 % QR initial position
 hBx  = line([XQR(1) Bx(1)],[YQR(1) Bx(2)],[ZQR(1) Bx(3)],'Color','red','LineWidth',2);
@@ -131,12 +131,13 @@ axis([midx-difax midx+difax midy-difax midy+difax midz-difax midz+difax ],'vis3d
 % axis([minax maxax minax maxax minax maxax],'vis3d')
 % axis([-1.5 1.5 -1.5 1.5 -1.5 1.5],'vis3d')
 view(150,30)
-% view(90,0)
+% view(0,0)
 grid on
 xlabel('$x$','FontSize',labfont,'Interpreter','latex')
 ylabel('$y$','FontSize',labfont,'Interpreter','latex') 
 zlabel('$z$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
+
 % lfont = 18; %Legend Fontsize
 % hleg = legend([hL hLd],'$x_L$','$x_{L,des}$');
 % set(hleg,'Interpreter','latex','FontSize',lfont);
@@ -186,16 +187,17 @@ axis([midx-difax midx+difax midy-difax midy+difax midz-difax midz+difax ],'vis3d
 % axis([minax maxax minax maxax minax maxax],'vis3d')
 % axis([-1.5 1.5 -1.5 1.5 -1.5 1.5],'vis3d')
 view(150,30)
-% view(90,0)
+% view(0,0)
 % view(0,0)
 grid on
 xlabel('$x$','FontSize',labfont,'Interpreter','latex')
 ylabel('$y$','FontSize',labfont,'Interpreter','latex') 
 zlabel('$z$','FontSize',labfont,'Interpreter','latex')
 set(gca,'FontSize',afont);
-% lfont = 18; %Legend Fontsize
-% hleg = legend([lqrhQ lqrhQd lqrhL lqrhLd],'$x_Q$','$x_{Q,des}$','$x_L$','$x_{L,des}$');
-% set(hleg,'Interpreter','latex','FontSize',lfont);
+lfont = 20; %Legend Fontsize
+[hleg,hobj,~,~] = legend([lqrhQ lqrhQd lqrhL lqrhLd],'$x_Q$','$x_{Q,des}$','$x_L$','$x_{L,des}$','LineWidth',3);
+set(hleg,'Interpreter','latex','FontSize',lfont);
+set(hobj,'linewidth',3);
 
 %% ANIMATION
 
@@ -203,6 +205,11 @@ while waitforbuttonpress ~= 0 ;
   pause(0.01) ; % allow for ctrl-c
 end
 for k=1:length(t)
+    if k<250
+        m=1;
+    else m=k-249;
+    end
+if(mod(k,3)==0)
 %     axis([XQR(k)-1.5 XQR(k)+1.5 YQR(k)-1.5 YQR(k)+1.5 ZQR(k)-1.5 ZQR(k)+1.5],'square'); %Uncomment to zoom in into QR
     set(hBx,'xdata',[XQR(k) Bx(1,k)],'ydata',[YQR(k) Bx(2,k)],'zdata',[ZQR(k) Bx(3,k)]);
     set(hBy,'xdata',[XQR(k) By(1,k)],'ydata',[YQR(k) By(2,k)],'zdata',[ZQR(k) By(3,k)]);
@@ -217,24 +224,26 @@ for k=1:length(t)
     set(lqrhQRx,'xdata',[2*lqrXQ(k)-lqrBxQ(1,k) lqrBxQ(1,k)],'ydata',[2*lqrYQ(k)-lqrBxQ(2,k) lqrBxQ(2,k)],'zdata',[2*lqrZQ(k)-lqrBxQ(3,k) lqrBxQ(3,k)]);
     set(lqrhQRy,'xdata',[2*lqrXQ(k)-lqrByQ(1,k) lqrByQ(1,k)],'ydata',[2*lqrYQ(k)-lqrByQ(2,k) lqrByQ(2,k)],'zdata',[2*lqrZQ(k)-lqrByQ(3,k) lqrByQ(3,k)]);
        
-    set(hL,'xdata',XL(1:k),'ydata',YL(1:k),'zdata',ZL(1:k));
+    set(hL,'xdata',XL(m:k),'ydata',YL(m:k),'zdata',ZL(m:k));
     set(hLk,'xdata',XL(k),'ydata',YL(k),'zdata',ZL(k));
     set(hC,'xdata',[XQR(k) XL(k)],'ydata',[YQR(k) YL(k)],'zdata',[ZQR(k) ZL(k)]);
-    set(lqrhL,'xdata',lqrXL(1:k),'ydata',lqrYL(1:k),'zdata',lqrZL(1:k));
+    set(lqrhL,'xdata',lqrXL(m:k),'ydata',lqrYL(m:k),'zdata',lqrZL(m:k));
     set(lqrhLk,'xdata',lqrXL(k),'ydata',lqrYL(k),'zdata',lqrZL(k));
     set(lqrhC,'xdata',[lqrXQ(k) lqrXL(k)],'ydata',[lqrYQ(k) lqrYL(k)],'zdata',[lqrZQ(k) lqrZL(k)]);
 
-    set(lqrhQ,'xdata',lqrXQ(1:k),'ydata',lqrYQ(1:k),'zdata',lqrZQ(1:k));    
-    set(lqrhQd,'xdata',lqrXQd(1:k),'ydata',lqrYQd(1:k),'zdata',lqrZQd(1:k));
+    set(lqrhQ,'xdata',lqrXQ(m:k),'ydata',lqrYQ(m:k),'zdata',lqrZQ(m:k));    
+    set(lqrhQd,'xdata',lqrXQd(m:k),'ydata',lqrYQd(m:k),'zdata',lqrZQd(m:k));
     set(lqrhQdk,'xdata',lqrXQd(k),'ydata',lqrYQd(k),'zdata',lqrZQd(k));
         
-    set(hLd,'xdata',XLd(1:k),'ydata',YLd(1:k),'zdata',ZLd(1:k));
+    set(hLd,'xdata',XLd(m:k),'ydata',YLd(m:k),'zdata',ZLd(m:k));
     set(hLdk,'xdata',XLd(k),'ydata',YLd(k),'zdata',ZLd(k));
-    set(lqrhLd,'xdata',XLd(1:k),'ydata',YLd(1:k),'zdata',ZLd(1:k));
+    set(lqrhLd,'xdata',XLd(m:k),'ydata',YLd(m:k),'zdata',ZLd(m:k));
     set(lqrhLdk,'xdata',XLd(k),'ydata',YLd(k),'zdata',ZLd(k));    
     
     pause(ts*pausefactor);
+    
 %     mov(k)=getframe(gcf);
+end
     
 end
 
